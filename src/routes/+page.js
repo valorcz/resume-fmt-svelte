@@ -1,5 +1,6 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
+import { base } from '$app/paths';
 
 export async function load({ fetch, url }) {
   const gistId = url.searchParams.get('gist');
@@ -24,7 +25,7 @@ export async function load({ fetch, url }) {
         throw new Error("The Gist content is not valid JSON.");
       }
     } else {
-      const res = await fetch('/index.json');
+      const res = await fetch(`${base}/index.json`);
       if (!res.ok) throw new Error(`Failed to load local index.json (Status: ${res.status})`);
       resume = await res.json();
     }
