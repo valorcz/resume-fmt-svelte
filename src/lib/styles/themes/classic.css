@@ -46,19 +46,28 @@
 .theme-classic .cv-section { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; margin-bottom: 1.5rem; }
 
 /* 3. Left Column: Titles */
-.theme-classic .section-title { text-align: right; font-size: 1.2rem; font-weight: 800; color: var(--accent); border: none; padding: 0; margin: 0; }
+.theme-classic .section-title { text-align: right; font-size: 1.15rem; font-weight: 800; color: var(--accent); border: none; padding: 0; margin: 0; }
 .theme-classic .section-title::before { display: none; }
 
 /* 4. Right Column: Dotted border content */
 .theme-classic .section-content { border-left: 2px dotted var(--border-heavy); padding-left: 1.5rem; }
 
-/* --- Nested Item Grids (Dates on the left) --- */
-.theme-classic .item-card, .theme-classic .side-item { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 1.5rem; }
-.theme-classic .item-date { font-size: 0.8rem; color: var(--muted); font-weight: 600; margin: 0; grid-column: 1; grid-row: 1; }
-.theme-classic .item-header { display: block; grid-column: 2; grid-row: 1; margin-bottom: 0.5rem; }
-.theme-classic .item-title { font-size: 1rem; font-weight: 800; color: var(--ink); }
-.theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); }
-.theme-classic .item-body, .theme-classic .item-summary, .theme-classic .item-highlights { grid-column: 2; }
+/* --- Stacked Items (Company & Year in the main flow) --- */
+.theme-classic .item-card, .theme-classic .side-item { 
+  display: block; 
+  margin-bottom: 2rem; 
+}
+
+.theme-classic .item-header { 
+  display: flex; 
+  flex-direction: column; /* Stacks Title, Subtitle, and Date vertically */
+  align-items: flex-start; 
+  margin-bottom: 0.8rem; 
+}
+
+.theme-classic .item-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
+.theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 0.2rem; }
+.theme-classic .item-date { font-size: 0.85rem; color: var(--muted); font-weight: 600; margin: 0; }
 
 /* --- Skills Formatted as comma strings --- */
 .theme-classic .skill-group { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 0.8rem; }
@@ -71,15 +80,19 @@
 @media print {
   .theme-classic .cv-wrapper { padding: 0 !important; font-size: 9pt !important; }
   
+  /* Preserve the top left block on print */
+  .theme-classic .cv-wrapper::before { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
   /* Disable flex-row splitting logic from print-core, we want grid! */
   .theme-classic .cv-layout { display: block !important; }
   .theme-classic .cv-main, .theme-classic .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
   
   /* Keep the section grid for print */
   .theme-classic .cv-section { display: grid !important; grid-template-columns: 160px 1fr !important; }
-  .theme-classic .section-title { display: block !important; font-size: 11.5pt !important; }
+  .theme-classic .section-title { display: block !important; font-size: 11pt !important; }
   .theme-classic .section-content { display: block !important; }
   
   .theme-classic .item-title { font-size: 10pt !important; }
-  .theme-classic .item-date { font-size: 9pt !important; }
+  .theme-classic .item-subtitle { font-size: 9pt !important; }
+  .theme-classic .item-date { font-size: 8.5pt !important; }
 }

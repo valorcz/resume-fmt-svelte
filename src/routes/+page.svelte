@@ -1,20 +1,37 @@
 <script>
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   
-  // Data comes from +page.js
+  // 1. Data loaded from +page.js
   export let data;
   const resume = data.resume;
 
-  // Theme State
-  let currentTheme = 'theme-gov'; 
-  const themes = [
-    { id: 'theme-verge', label: '1', name: 'The Verge' },
-    { id: 'theme-editorial', label: '2', name: 'Editorial' },
-    { id: 'theme-terminal', label: '3', name: 'Terminal' },
-    { id: 'theme-gov', label: '4', name: 'Federal Dossier' },
-    { id: 'theme-classic', label: '4', name: 'Classic' },
-  ];
+  // 2. DYNAMIC THEME DISCOVERY
+  // { eager: true } forces Vite to bundle and inject all these CSS files automatically.
+  const themeFiles = import.meta.glob('/src/lib/styles/themes/*.css', { eager: true });
 
+  // 3. Generate the array for the ThemeSwitcher UI
+  const themes = Object.keys(themeFiles).map((path, index) => {
+    // Extract filename: "/src/lib/styles/themes/federal-dossier.css" -> "federal-dossier"
+    const filename = path.split('/').pop().replace('.css', '');
+    
+    // Create a pretty UI name: "federal-dossier" -> "Federal Dossier"
+    const prettyName = filename
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    return {
+      id: `theme-${filename}`,
+      label: `${index + 1}`,
+      name: prettyName
+    };
+  });
+
+  // 4. Set the default theme (Defaults to the first CSS file found alphabetically, 
+  // or you can hardcode a fallback like 'theme-federal-dossier')
+  let currentTheme = themes.length > 0 ? themes[0].id : '';
+
+  // Helper function for dates
   function getYear(dateString) {
     if (!dateString) return 'Present';
     return new Date(dateString).getFullYear();
