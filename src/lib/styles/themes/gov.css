@@ -6,7 +6,8 @@
   --surface: #f3f4f6;
   --ink: #111827;
   --muted: #4b5563;
-  --accent: #0f4761; 
+  /* --accent: #0f4761;  */
+  --accent: #3b82f6; 
   --border: #d1d5db;
   --border-heavy: #111827;
   --font-body: 'Public Sans', sans-serif;

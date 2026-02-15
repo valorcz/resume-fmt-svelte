@@ -1,18 +1,24 @@
 /* ==========================================================================
    THEME: CLASSIC MODERNIZED (Original Word CV)
    ========================================================================== */
+/* 1. Import the Fira font family specific to this theme */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Fira+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap');
+
 .theme-classic {
   --bg: #ffffff;
   --surface: #f8fafc;
   --ink: #334155; 
   --muted: #64748b;
   --accent: #3b82f6; 
-  --header-block: #94a3b8; /* Classic steel block */
+  --header-block: #94a3b8; 
   --border: #cbd5e1;
   --border-heavy: #94a3b8;
-  --font-body: 'Inter', sans-serif;
-  --font-heading: 'Inter', sans-serif; 
-  --font-mono: 'Inter', sans-serif;
+  
+  /* 2. Map the new fonts to the layout variables */
+  --font-body: 'Fira Sans', sans-serif;
+  --font-heading: 'Fira Sans', sans-serif; 
+  --font-mono: 'Fira Code', monospace;
+  
   --screen-shadow: 0 4px 15px rgba(0,0,0,0.05);
 }
 
@@ -66,7 +72,16 @@
 }
 
 .theme-classic .item-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
-.theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 0.2rem; }
+/* .theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 0.2rem; } */
+.theme-classic .item-subtitle { 
+  font-family: var(--font-body); /* Forces it to use Fira Sans instead of Fira Code */
+  font-size: 1rem; 
+  font-weight: 400; 
+  font-style: italic; 
+  color: var(--ink); 
+  margin-bottom: 0.2rem; 
+}
+
 .theme-classic .item-date { font-size: 0.85rem; color: var(--muted); font-weight: 600; margin: 0; }
 
 /* --- Skills Formatted as comma strings --- */
