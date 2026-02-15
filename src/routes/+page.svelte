@@ -1,46 +1,57 @@
 <script>
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
   
-  // 1. Data loaded from +page.js
   export let data;
-  const resume = data.resume;
+  const { resume, error, message, details } = data;
 
-  // 2. DYNAMIC THEME DISCOVERY
-  // { eager: true } forces Vite to bundle and inject all these CSS files automatically.
   const themeFiles = import.meta.glob('/src/lib/styles/themes/*.css', { eager: true });
-
-  // 3. Generate the array for the ThemeSwitcher UI
   const themes = Object.keys(themeFiles).map((path, index) => {
-    // Extract filename: "/src/lib/styles/themes/federal-dossier.css" -> "federal-dossier"
     const filename = path.split('/').pop().replace('.css', '');
-    
-    // Create a pretty UI name: "federal-dossier" -> "Federal Dossier"
-    const prettyName = filename
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-
-    return {
-      id: `theme-${filename}`,
-      label: `${index + 1}`,
-      name: prettyName
-    };
+    const prettyName = filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+    return { id: `theme-${filename}`, label: `${index + 1}`, name: prettyName };
   });
 
-  // 4. Set the default theme (Defaults to the first CSS file found alphabetically, 
-  // or you can hardcode a fallback like 'theme-federal-dossier')
   let currentTheme = themes.length > 0 ? themes[0].id : '';
 
-  // Helper function for dates
   function getYear(dateString) {
     if (!dateString) return 'Present';
     return new Date(dateString).getFullYear();
   }
+
+  // Format Ajv errors nicely (e.g., "/work/0/startDate" -> "work[0].startDate")
+  function formatPath(path) {
+    if (!path) return "root";
+    return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
+  }
 </script>
 
 <svelte:head>
-  <title>Resume - {resume.basics.name}</title>
+  <title>{error ? 'Error Loading Resume' : `Resume - ${resume.basics.name}`}</title>
 </svelte:head>
+
+{#if error}
+  <div class="schema-error-container">
+    <div class="schema-error-box">
+      <h1>⚠️ Failed to Load Resume</h1>
+      <p class="error-desc">{message}</p>
+      
+      {#if details && details.length > 0}
+        <div class="error-terminal">
+          <div class="terminal-header">Schema Validation Report</div>
+          <ul>
+            {#each details as err}
+              <li>
+                <span class="err-path">{formatPath(err.instancePath)}</span> 
+                <span class="err-msg">{err.message}</span>
+              </li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+      <button class="retry-btn" on:click={() => window.location.href = '/'}>Return to Default Resume</button>
+    </div>
+  </div>
+{:else}
 
 <div class="app-container {currentTheme}">
   <ThemeSwitcher bind:currentTheme {themes} />
@@ -189,3 +200,5 @@
     </div>
   </div>
 </div>
+
+{/if}
