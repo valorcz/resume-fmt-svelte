@@ -15,8 +15,7 @@ const config = {
 			strict: true }),
 	},
 	paths: {
-		base: process.env.BASE_PATH || '/resume',
-		relative: false
+		base: process.env.BASE_PATH || '/resume'
 	},
         preprocess: vitePreprocess(),
 };

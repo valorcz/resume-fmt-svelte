@@ -1,0 +1,64 @@
+/* ==========================================================================
+   THEME: THE VERGE (Dark Tech)
+   ========================================================================== */
+.theme-the-verge {
+  --bg: #050505;
+  --surface: #111111;
+  --ink: #ffffff;
+  --muted: #a0a0a0;
+  --accent: #ff005d; /* Verge Magenta */
+  --border: #2a2a2a;
+  --border-heavy: #333333;
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Oswald', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --screen-shadow: none;
+}
+
+/* --- UI Overrides --- */
+.theme-the-verge .cv-wrapper { border-top: 4px solid var(--accent); border-radius: 0; }
+.theme-the-verge .cv-name { text-transform: uppercase; font-size: 3.2rem; letter-spacing: -1px; }
+
+/* The signature magenta square bullet points */
+.theme-the-verge .section-title::before { 
+  content: ''; 
+  display: inline-block; 
+  width: 10px; 
+  height: 10px; 
+  background-color: var(--accent); 
+  margin-right: 10px; 
+}
+
+/* --- A4 Print Typography & Ink-Saver Inversion --- */
+@media print {
+  /* We force a white background and black text on paper to save printer ink */
+  .theme-the-verge .cv-wrapper { 
+    background-color: #ffffff !important; 
+    color: #111111 !important;
+    border-top: 6pt solid var(--accent) !important;
+    font-size: 8.5pt !important; 
+    line-height: 1.35 !important; 
+  }
+  
+  /* Invert specific text elements that were mapped to the dark theme variables */
+  .theme-the-verge .cv-name, 
+  .theme-the-verge .skill-name,
+  .theme-the-verge .item-title { color: #000000 !important; }
+  
+  .theme-the-verge .cv-contact a { color: #111111 !important; }
+  .theme-the-verge .skill-tag { 
+    background-color: #f4f4f5 !important; 
+    color: #111111 !important;
+    border-color: #cccccc !important;
+  }
+
+  /* Scaling */
+  .theme-the-verge .cv-name { font-size: 24pt !important; }
+  .theme-the-verge .cv-title { font-size: 10pt !important; margin-bottom: 0.4rem !important; }
+  .theme-the-verge .cv-contact { font-size: 7.5pt !important; padding-bottom: 0.4rem !important; margin-bottom: 1.2rem !important; }
+  .theme-the-verge .item-title { font-size: 9.5pt !important; }
+  .theme-the-verge .item-subtitle { font-size: 8.5pt !important; }
+  .theme-the-verge .item-date { font-size: 7.5pt !important; }
+  .theme-the-verge .skill-name { font-size: 8pt !important; }
+  .theme-the-verge .skill-tag { font-size: 7.5pt !important; padding: 1pt 5pt !important; }
+}
