@@ -1,0 +1,50 @@
+/* ==========================================================================
+   THEME: SUBTLE TERMINAL
+   ========================================================================== */
+.theme-terminal {
+  --bg: #ffffff;
+  --surface: #f4f4f5;
+  --ink: #1a1a1a;
+  --muted: #52525b;
+  --accent: #b30000; 
+  --border: #e4e4e7;
+  --border-heavy: #d4d4d8;
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --screen-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+/* --- UI Overrides --- */
+.theme-terminal .cv-wrapper { border-top: 5px solid var(--ink); }
+.theme-terminal .cv-name { text-transform: uppercase; letter-spacing: -1px; }
+.theme-terminal .skill-tag { border-radius: 6px; }
+
+/* --- Font Awesome Icons --- */
+.theme-terminal .cv-contact span::before, .theme-terminal .section-title::before { font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); display: inline-block; }
+.theme-terminal .cv-contact span::before { margin-right: 0.4rem; font-size: 0.8rem; }
+.theme-terminal .cv-contact span:nth-child(1)::before { content: "\f3c5"; }
+.theme-terminal .cv-contact span:nth-child(2)::before { content: "\f095"; }
+.theme-terminal .cv-contact span:nth-child(3)::before { content: "\f0e0"; }
+.theme-terminal .cv-contact span:nth-child(n+4)::before { content: "\f0c1"; }
+.theme-terminal .section-title::before { margin-right: 0.5rem; width: 1.1rem; text-align: center; }
+.theme-terminal .section-experience .section-title::before { content: "\f0b1"; }
+.theme-terminal .section-projects .section-title::before { content: "\f5fc"; }
+.theme-terminal .section-skills .section-title::before { content: "\f085"; }
+.theme-terminal .section-languages .section-title::before { content: "\f0ac"; }
+.theme-terminal .section-certs .section-title::before { content: "\f0a3"; }
+.theme-terminal .section-education .section-title::before { content: "\f19d"; }
+.theme-terminal .section-volunteer .section-title::before { content: "\f51c"; }
+
+/* --- A4 Print Typography Mapping --- */
+@media print {
+  .theme-terminal .cv-wrapper { font-size: 9.5pt !important; line-height: 1.4 !important; border-top: 4pt solid var(--ink) !important; }
+  .theme-terminal .cv-name { font-size: 22pt !important; }
+  .theme-terminal .cv-title { font-size: 10.5pt !important; margin-bottom: 0.4rem !important; }
+  .theme-terminal .cv-contact { font-size: 8pt !important; padding-bottom: 0.4rem !important; margin-bottom: 1.2rem !important; }
+  .theme-terminal .item-title { font-size: 10.5pt !important; }
+  .theme-terminal .item-subtitle { font-size: 9pt !important; }
+  .theme-terminal .item-date { font-size: 8.5pt !important; }
+  .theme-terminal .skill-name { font-size: 8.5pt !important; }
+  .theme-terminal .skill-tag { font-size: 8pt !important; border: 0.5pt solid var(--border-heavy) !important; padding: 1pt 5pt !important; }
+}

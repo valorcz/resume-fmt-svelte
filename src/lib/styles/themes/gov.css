@@ -1,0 +1,55 @@
+/* ==========================================================================
+   THEME: FEDERAL DOSSIER
+   ========================================================================== */
+.theme-gov {
+  --bg: #ffffff;
+  --surface: #f3f4f6;
+  --ink: #111827;
+  --muted: #4b5563;
+  --accent: #0f4761; 
+  --border: #d1d5db;
+  --border-heavy: #111827;
+  --font-body: 'Public Sans', sans-serif;
+  --font-heading: 'Public Sans', sans-serif;
+  --font-mono: 'Public Sans', sans-serif;
+  --screen-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* --- UI Overrides --- */
+.theme-gov .cv-wrapper { border-top: 6px solid var(--accent); }
+.theme-gov .cv-name { text-transform: uppercase; letter-spacing: -0.5px; }
+.theme-gov .skill-tag { border-radius: 9999px; padding: 0.2rem 0.6rem; }
+.theme-gov .cv-contact span:not(:last-child)::after { content: "|"; margin-left: 0.8rem; color: var(--border); }
+
+/* List Chevron Fix */
+.theme-gov .item-highlights li { list-style-type: none; position: relative; padding-left: 1.2rem; }
+.theme-gov .item-highlights li::before { content: "\f105"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; top: 0.2rem; }
+
+/* --- Font Awesome Icons --- */
+.theme-gov .cv-contact span::before, .theme-gov .section-title::before { font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); display: inline-block; }
+.theme-gov .cv-contact span::before { margin-right: 0.4rem; font-size: 0.8rem; }
+.theme-gov .cv-contact span:nth-child(1)::before { content: "\f3c5"; } 
+.theme-gov .cv-contact span:nth-child(2)::before { content: "\f095"; } 
+.theme-gov .cv-contact span:nth-child(3)::before { content: "\f0e0"; } 
+.theme-gov .cv-contact span:nth-child(n+4)::before { content: "\f0c1"; } 
+.theme-gov .section-title::before { margin-right: 0.5rem; width: 1.1rem; text-align: center; }
+.theme-gov .section-experience .section-title::before { content: "\f0b1"; }
+.theme-gov .section-projects .section-title::before { content: "\f5fc"; }
+.theme-gov .section-skills .section-title::before { content: "\f085"; }
+.theme-gov .section-languages .section-title::before { content: "\f0ac"; }
+.theme-gov .section-certs .section-title::before { content: "\f0a3"; }
+.theme-gov .section-education .section-title::before { content: "\f19d"; }
+.theme-gov .section-volunteer .section-title::before { content: "\f51c"; }
+
+/* --- A4 Print Typography Mapping --- */
+@media print {
+  .theme-gov .cv-wrapper { font-size: 8.5pt !important; line-height: 1.35 !important; border-top: 6pt solid var(--accent) !important; }
+  .theme-gov .cv-name { font-size: 20pt !important; }
+  .theme-gov .cv-title { font-size: 10pt !important; margin-bottom: 0.4rem !important; }
+  .theme-gov .cv-contact { font-size: 7.5pt !important; padding-bottom: 0.4rem !important; margin-bottom: 1.2rem !important; }
+  .theme-gov .item-title { font-size: 9.5pt !important; }
+  .theme-gov .item-subtitle { font-size: 8.5pt !important; }
+  .theme-gov .item-date { font-size: 7.5pt !important; }
+  .theme-gov .skill-name { font-size: 8pt !important; }
+  .theme-gov .skill-tag { font-size: 7.5pt !important; border: 0.5pt solid var(--border) !important; padding: 1pt 5pt !important; }
+}

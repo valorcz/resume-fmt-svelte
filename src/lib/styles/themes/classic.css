@@ -1,0 +1,85 @@
+/* ==========================================================================
+   THEME: CLASSIC MODERNIZED (Original Word CV)
+   ========================================================================== */
+.theme-classic {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --ink: #334155; 
+  --muted: #64748b;
+  --accent: #3b82f6; 
+  --header-block: #94a3b8; /* Classic steel block */
+  --border: #cbd5e1;
+  --border-heavy: #94a3b8;
+  --font-body: 'Inter', sans-serif;
+  --font-heading: 'Inter', sans-serif; 
+  --font-mono: 'Inter', sans-serif;
+  --screen-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* --- Massive Layout Overrides --- */
+.theme-classic .cv-wrapper { position: relative; padding-top: 4rem; border: none; }
+
+/* Solid Block in Top Left */
+.theme-classic .cv-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 40%;
+  height: 3rem;
+  background-color: var(--header-block);
+}
+
+/* Right-aligned Header */
+.theme-classic .cv-header { display: flex; flex-direction: column; align-items: flex-end; text-align: right; margin-bottom: 3.5rem; }
+.theme-classic .cv-name { font-size: 3.2rem; font-weight: 700; color: var(--header-block); margin-bottom: 0; }
+.theme-classic .cv-title, .theme-classic .cv-summary { display: none; } /* Hide for strict fidelity */
+
+/* Stacked Contact Info */
+.theme-classic .cv-contact { flex-direction: column; align-items: flex-end; gap: 0.2rem; border: none; padding: 0; margin-top: 1rem; font-size: 0.85rem; }
+.theme-classic .cv-contact span::before, .theme-classic .cv-contact span:not(:last-child)::after { display: none; }
+
+/* 1. Stack the master layout vertically */
+.theme-classic .cv-layout { display: block; }
+.theme-classic .cv-main, .theme-classic .cv-sidebar { width: 100%; }
+
+/* 2. Turn Sections into a 2-column grid */
+.theme-classic .cv-section { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; margin-bottom: 1.5rem; }
+
+/* 3. Left Column: Titles */
+.theme-classic .section-title { text-align: right; font-size: 1.2rem; font-weight: 800; color: var(--accent); border: none; padding: 0; margin: 0; }
+.theme-classic .section-title::before { display: none; }
+
+/* 4. Right Column: Dotted border content */
+.theme-classic .section-content { border-left: 2px dotted var(--border-heavy); padding-left: 1.5rem; }
+
+/* --- Nested Item Grids (Dates on the left) --- */
+.theme-classic .item-card, .theme-classic .side-item { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.theme-classic .item-date { font-size: 0.8rem; color: var(--muted); font-weight: 600; margin: 0; grid-column: 1; grid-row: 1; }
+.theme-classic .item-header { display: block; grid-column: 2; grid-row: 1; margin-bottom: 0.5rem; }
+.theme-classic .item-title { font-size: 1rem; font-weight: 800; color: var(--ink); }
+.theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); }
+.theme-classic .item-body, .theme-classic .item-summary, .theme-classic .item-highlights { grid-column: 2; }
+
+/* --- Skills Formatted as comma strings --- */
+.theme-classic .skill-group { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 0.8rem; }
+.theme-classic .skill-name { text-align: left; font-size: 0.85rem; color: var(--muted); margin: 0; }
+.theme-classic .skill-tag { background: none; border: none; padding: 0; font-size: 0.85rem; font-weight: 400; }
+.theme-classic .skill-tag::after { content: ", "; }
+.theme-classic .skill-tag:last-child::after { content: ""; }
+
+/* --- A4 Print Optimization --- */
+@media print {
+  .theme-classic .cv-wrapper { padding: 0 !important; font-size: 9pt !important; }
+  
+  /* Disable flex-row splitting logic from print-core, we want grid! */
+  .theme-classic .cv-layout { display: block !important; }
+  .theme-classic .cv-main, .theme-classic .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
+  
+  /* Keep the section grid for print */
+  .theme-classic .cv-section { display: grid !important; grid-template-columns: 160px 1fr !important; }
+  .theme-classic .section-title { display: block !important; font-size: 11.5pt !important; }
+  .theme-classic .section-content { display: block !important; }
+  
+  .theme-classic .item-title { font-size: 10pt !important; }
+  .theme-classic .item-date { font-size: 9pt !important; }
+}
