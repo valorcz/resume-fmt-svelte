@@ -28,8 +28,8 @@
 			"name": "Konica Minolta ",
 			"position": "Security Architect ",
 			"location": "Brno ",
-			"startDate": "2020-01-01 ",
-			"endDate": "2021-01-01 ",
+			"startDate": "2020-01-01",
+			"endDate": "2021-01-01",
 			"summary": "Architected and integrated robust security controls into the Workplace Hub product, successfully embedding security practices into agile development lifecycles.",
 			"highlights": [
 				"Spearheaded the enterprise-wide implementation of Secure SDLC methodologies.",
@@ -41,8 +41,8 @@
 			"name": "Oracle + NetSuite ",
 			"position": "Senior Security Analyst / SOC Tier1 Manager ",
 			"location": "Brno ",
-			"startDate": "2016-01-01 ",
-			"endDate": "2020-01-01 ",
+			"startDate": "2016-01-01",
+			"endDate": "2020-01-01",
 			"summary": "Architected and managed enterprise SIEM solutions, establishing scalable log management, data onboarding strategies, and tool integrations.",
 			"highlights": [
 				"Overhauled internal SOC processes, communication protocols, and documentation to ensure rigorous, auditable security monitoring.",
@@ -54,8 +54,8 @@
 			"name": "Honeywell, s.r.o. ",
 			"position": "IT Security Analyst / Team Lead ",
 			"location": "Brno ",
-			"startDate": "2011-01-01 ",
-			"endDate": "2016-01-01 ",
+			"startDate": "2011-01-01",
+			"endDate": "2016-01-01",
 			"summary": "Led the Incident Response and Threat Analysis team, establishing foundational processes for advanced forensics and security scanning.",
 			"highlights": [
 				"Engineered automated host triage solutions and routine security tasks, drastically reducing manual investigation times.",
@@ -67,8 +67,8 @@
 			"name": "Institute of Computer Science ",
 			"position": "Senior Network Administrator / Network Administrator ",
 			"location": "Brno ",
-			"startDate": "2001-01-01 ",
-			"endDate": "2011-01-01 ",
+			"startDate": "2001-01-01",
+			"endDate": "2011-01-01",
 			"summary": "Administered complex network infrastructures and implemented scalable, auditable network security solutions.",
 			"highlights": [
 				"Designed and implemented decentralized, auditable firewall deployments for various faculties using open-source solutions.",
@@ -81,7 +81,7 @@
 		{
 			"organization": "Masaryk University ",
 			"position": "Instructor - Introduction to Threat Modelling ",
-			"startDate": "2023-01-01 ",
+			"startDate": "2023-01-01",
 			"summary": "Taught risk-based thinking, structured threat modeling, and security reasoning for systems and applications.",
 			"highlights": [
 				"Delivered a brief introduction and working sessions focused on the need for risk-based thinking in security disciplines."
@@ -90,7 +90,7 @@
 		{
 			"organization": "Independent Seminar ",
 			"position": "Instructor - Small Peek into Big Data Analytics ",
-			"startDate": "2018-01-01 ",
+			"startDate": "2018-01-01",
 			"summary": "Delivered motivational lectures on data analysis in security, using real-world scenarios and past assignments.",
 			"highlights": [
 				"Focused on common mistakes, visualization approaches, and practical lessons learned from enterprise security assignments."
@@ -99,7 +99,7 @@
 		{
 			"organization": "Independent Workshop ",
 			"position": "Instructor - In-Memory Malware Analysis ",
-			"startDate": "2013-01-01 ",
+			"startDate": "2013-01-01",
 			"summary": "Conducted workshops providing hands-on experience with memory forensics and real malware analysis.",
 			"highlights": [
 				"Introduced practical applications of memory forensics through interactive, hands-on workshops with live malware samples."
@@ -111,33 +111,33 @@
 			"institution": "Faculty of Informatics, Masaryk University, Brno ",
 			"area": "Computer Security ",
 			"studyType": "RNDr. (MSc. equivalent) ",
-			"startDate": "2005-01-01 ",
-			"endDate": "2009-01-01 "
+			"startDate": "2005-01-01",
+			"endDate": "2009-01-01"
 		},
 		{
 			"institution": "Faculty of Informatics, Masaryk University, Brno ",
 			"area": "Informatics ",
 			"studyType": "Mgr. (MSc. equivalent) ",
-			"startDate": "1999-01-01 ",
-			"endDate": "2005-01-01 "
+			"startDate": "1999-01-01",
+			"endDate": "2005-01-01"
 		}
 	],
 	"certificates": [
 		{
 			"name": "SANS Hacker Tools, Techniques, Exploits, and Incident Handling (SEC504) ",
-			"date": "2017-10-01 "
+			"date": "2017-10-01"
 		},
 		{
 			"name": "SANS Advanced Network Forensics and Analysis (FOR572) ",
-			"date": "2014-05-01 "
+			"date": "2014-05-01"
 		},
 		{
 			"name": "SANS Reverse Engineering of Malware (FOR610), GREM certified ",
-			"date": "2013-10-01 "
+			"date": "2013-10-01"
 		},
 		{
 			"name": "SANS Computer Forensic Investigations (FOR408) ",
-			"date": "2012-10-01 "
+			"date": "2012-10-01"
 		}
 	],
 	"skills": [
