@@ -1,0 +1,89 @@
+/* ==========================================================================
+   UNIVERSAL A4 PRINT MECHANICS
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4;
+    margin: 1.5cm; 
+  }
+
+  body {
+    background: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .app-container { padding: 0; background: none !important; }
+  .no-print { display: none !important; }
+
+  /* Reset Wrapper for Paper */
+  .cv-wrapper {
+    box-shadow: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  /* 1. Flexbox Print Grid Bypass (Prevents massive blank gaps) */
+  .cv-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important; 
+    gap: 0 !important; 
+    width: 100% !important;
+  }
+
+  .cv-main {
+    flex: 0 0 68% !important;
+    max-width: 68% !important;
+    padding-right: 2.5rem !important; 
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  .cv-sidebar {
+    flex: 0 0 32% !important;
+    max-width: 32% !important;
+    page-break-inside: auto !important;
+    break-inside: auto !important;
+  }
+
+  /* 2. Table-Header Repeating Trick for Section Titles */
+  .cv-section {
+    display: table;
+    width: 100%;
+    page-break-inside: auto;
+  }
+
+  .section-title {
+    display: table-header-group;
+    page-break-after: avoid !important;
+    break-after: avoid !important;
+  }
+
+  .section-content { display: table-row-group; }
+
+  /* 3. Anti-Orphan / Block Preservation */
+  .item-card, .skill-group, .side-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    margin-bottom: 1rem !important; 
+  }
+
+  .cv-sidebar .cv-section {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  /* 4. Force Print Icons & Top-left blocks */
+  .cv-contact span::before, 
+  .section-title::before, 
+  .item-highlights li::before,
+  .cv-wrapper::before {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
