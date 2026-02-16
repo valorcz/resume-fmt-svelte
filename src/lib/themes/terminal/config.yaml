@@ -10,7 +10,6 @@ i18n:
 layout:
   main:
     - work
-    - education
     - volunteer
     - projects
     - publications
@@ -18,6 +17,7 @@ layout:
     - skills
     - languages
     - certificates
+    - education
     - awards
     - interests
     - references

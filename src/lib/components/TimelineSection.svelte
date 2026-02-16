@@ -2,12 +2,15 @@
   export let items = []; 
   export let sectionTitle = "Section"; 
   export let sectionId = "default"; 
+  export let location = "main";
   
   export let titleKey = "position"; 
   export let subtitleKey = "name"; 
   export let dateKey = "startDate"; 
   export let endDateKey = "endDate"; 
   export let summaryKey = "summary"; 
+
+  export let areaKey = null;
 </script>
 
 {#if items && items.length > 0}
@@ -18,8 +21,13 @@
       {#each items as item}
         <div class="item-card">
           <div class="item-header">
-            {#if item[titleKey]}<span class="item-title">{item[titleKey]}</span>{/if}
             {#if item[subtitleKey]}<span class="item-subtitle">{item[subtitleKey]}</span>{/if}
+            
+            {#if item[titleKey] || (areaKey && item[areaKey])}
+              <span class="item-title">
+                {item[titleKey] || ''}{#if item[titleKey] && areaKey && item[areaKey]} | {/if} {areaKey && item[areaKey] ? item[areaKey] : ''}
+              </span>
+            {/if}
             
             <span class="item-date">
               {#if item[dateKey]}

@@ -87,7 +87,7 @@
 /* --- Skills Formatted as comma strings --- */
 .theme-classic .skill-group { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 0.8rem; }
 .theme-classic .skill-name { text-align: left; font-size: 0.85rem; color: var(--muted); margin: 0; }
-.theme-classic .skill-tag { background: none; border: none; padding: 0; font-size: 0.85rem; font-weight: 400; }
+.theme-classic .skill-tag { font-family: var(--font-body); background: none; border: none; padding: 0; font-size: 0.85rem; font-weight: 400; }
 .theme-classic .skill-tag::after { content: ", "; }
 .theme-classic .skill-tag:last-child::after { content: ""; }
 

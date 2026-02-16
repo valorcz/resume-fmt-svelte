@@ -10,14 +10,14 @@ i18n:
 layout:
   main:
     - work
-    - education
-    - volunteer
     - projects
     - publications
+    - volunteer
   sidebar:
     - skills
     - languages
     - certificates
+    - education
     - awards
     - interests
     - references

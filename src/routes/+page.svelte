@@ -24,9 +24,9 @@
   // The Component Mapping Dictionary
   $: sectionRenderer = {
     work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name' } },
-    education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'degree', subtitleKey: 'institution' } },
+    education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'studyType', subtitleKey: 'institution', areaKey: 'area' } },
     volunteer: { component: TimelineSection, props: { items: resume?.volunteer, titleKey: 'position', subtitleKey: 'organization' } },
-    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description' } },
+    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null } },
     awards: { component: TimelineSection, props: { items: resume?.awards, titleKey: 'title', subtitleKey: 'awarder', dateKey: 'date', endDateKey: null } },
     publications: { component: TimelineSection, props: { items: resume?.publications, titleKey: 'name', subtitleKey: 'publisher', dateKey: 'releaseDate', endDateKey: null } },
     certificates: { component: TimelineSection, props: { items: resume?.certificates, titleKey: 'name', subtitleKey: 'issuer', dateKey: 'date', endDateKey: null } },

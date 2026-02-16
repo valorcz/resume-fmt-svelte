@@ -10,13 +10,13 @@ i18n:
 layout:
   main:
     - work
-    - education
     - volunteer
     - projects
     - publications
   sidebar:
     - skills
     - languages
+    - education
     - certificates
     - awards
     - interests

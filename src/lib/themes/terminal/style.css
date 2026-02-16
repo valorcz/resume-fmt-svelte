@@ -28,11 +28,11 @@
 .theme-terminal .cv-contact span:nth-child(3)::before { content: "\f0e0"; }
 .theme-terminal .cv-contact span:nth-child(n+4)::before { content: "\f0c1"; }
 .theme-terminal .section-title::before { margin-right: 0.5rem; width: 1.1rem; text-align: center; }
-.theme-terminal .section-experience .section-title::before { content: "\f0b1"; }
+.theme-terminal .section-work .section-title::before { content: "\f120"; }
 .theme-terminal .section-projects .section-title::before { content: "\f5fc"; }
 .theme-terminal .section-skills .section-title::before { content: "\f085"; }
 .theme-terminal .section-languages .section-title::before { content: "\f0ac"; }
-.theme-terminal .section-certs .section-title::before { content: "\f0a3"; }
+.theme-terminal .section-certificates .section-title::before { content: "\f0a3"; }
 .theme-terminal .section-education .section-title::before { content: "\f19d"; }
 .theme-terminal .section-volunteer .section-title::before { content: "\f51c"; }
 
