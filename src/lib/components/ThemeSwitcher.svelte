@@ -42,6 +42,16 @@
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     border: 1px solid #e5e7eb;
     gap: 0.5rem;
+   padding: 0.5rem 1.25rem;
+   background: rgba(255, 255, 255, 0.85);
+   backdrop-filter: blur(12px);
+   -webkit-backdrop-filter: blur(12px);
+   border: 1px solid rgba(0, 0, 0, 0.1);
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+   border-radius: 50px; /* Pill shape */
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+   user-select: none;
+   color: #333;
   }
 
   .switcher-label {
