@@ -1,215 +1,96 @@
 <script>
+  import TimelineSection from '$lib/components/TimelineSection.svelte';
+  import SkillsSection from '$lib/components/SkillsSection.svelte';
+  import LanguageSection from '$lib/components/LanguageSection.svelte';
+  import ReferenceSection from '$lib/components/ReferenceSection.svelte';
   import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+  import { themeRegistry } from '$lib/themeRegistry';
   
   export let data;
-  const { resume, error, message, details } = data;
+  $: resume = data.resume;
 
-  const themeFiles = import.meta.glob('/src/lib/styles/themes/*.css', { eager: true });
-  const themes = Object.keys(themeFiles).map((path, index) => {
-    const filename = path.split('/').pop().replace('.css', '');
-    const prettyName = filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    return { id: `theme-${filename}`, label: `${index + 1}`, name: prettyName };
-  });
+  // Extract the list of available themes dynamically from the registry folders
+  const availableThemes = Object.keys(themeRegistry);
 
-  let currentTheme = themes.length > 0 ? themes[0].id : '';
+  // Set the initial theme based on the user's config, or default to elegant-split
+  let activeTheme = data.config?.theme || 'elegant-split';
 
-  function getYear(dateString) {
-    if (!dateString) return 'Present';
-    return new Date(dateString).getFullYear();
-  }
+  // REACTIVE MAGIC: Whenever activeTheme changes, instantly recalculate the layout and translations!
+  $: activeLayout = themeRegistry[activeTheme]?.layout || data.config.layout;
+  
+  // We merge the theme's default i18n with any custom overrides the user provided in their config
+  $: activeI18n = { ...themeRegistry[activeTheme]?.i18n, ...data.config?.i18n };
 
-  // Format Ajv errors nicely (e.g., "/work/0/startDate" -> "work[0].startDate")
-  function formatPath(path) {
-    if (!path) return "root";
-    return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
-  }
+  // The Component Mapping Dictionary
+  $: sectionRenderer = {
+    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name' } },
+    education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'degree', subtitleKey: 'institution' } },
+    volunteer: { component: TimelineSection, props: { items: resume?.volunteer, titleKey: 'position', subtitleKey: 'organization' } },
+    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description' } },
+    awards: { component: TimelineSection, props: { items: resume?.awards, titleKey: 'title', subtitleKey: 'awarder', dateKey: 'date', endDateKey: null } },
+    publications: { component: TimelineSection, props: { items: resume?.publications, titleKey: 'name', subtitleKey: 'publisher', dateKey: 'releaseDate', endDateKey: null } },
+    certificates: { component: TimelineSection, props: { items: resume?.certificates, titleKey: 'name', subtitleKey: 'issuer', dateKey: 'date', endDateKey: null } },
+    skills: { component: SkillsSection, props: { items: resume?.skills } },
+    interests: { component: SkillsSection, props: { items: resume?.interests } },
+    languages: { component: LanguageSection, props: { items: resume?.languages } },
+    references: { component: ReferenceSection, props: { items: resume?.references } }
+  };
 </script>
 
-<svelte:head>
-  <title>{error ? 'Error Loading Resume' : `Resume - ${resume.basics.name}`}</title>
-</svelte:head>
-
-{#if error}
-  <div class="schema-error-container">
-    <div class="schema-error-box">
-      <h1>⚠️ Failed to Load Resume</h1>
-      <p class="error-desc">{message}</p>
-      
-      {#if details && details.length > 0}
-        <div class="error-terminal">
-          <div class="terminal-header">Schema Validation Report</div>
-          <ul>
-            {#each details as err}
-              <li>
-                <span class="err-path">{formatPath(err.instancePath)}</span> 
-                <span class="err-msg">{err.message}</span>
-              </li>
-            {/each}
-          </ul>
-        </div>
-      {/if}
-      <button class="retry-btn" on:click={() => window.location.href = '/'}>Return to Default Resume</button>
-    </div>
+{#if data.error}
+  <div class="error-banner">
+    <h2>Error loading resume</h2>
+    <p>{data.message}</p>
   </div>
 {:else}
+  <ThemeSwitcher themes={availableThemes} bind:activeTheme={activeTheme} />
 
-<div class="app-container {currentTheme}">
-  <ThemeSwitcher bind:currentTheme {themes} />
-
-  <div class="cv-wrapper">
+  <div class="cv-wrapper theme-{activeTheme}">
+    
     <header class="cv-header">
+      {#if resume.basics.image}
+        <img class="cv-image" src={resume.basics.image} alt="Profile" />
+      {/if}
       <h1 class="cv-name">{resume.basics.name}</h1>
-      <h2 class="cv-title">{resume.basics.label}</h2>
+      <h2 class="cv-title">{resume.basics.label || resume.basics.headline}</h2>
       
       <div class="cv-contact">
-        <span>{resume.basics.location.city}, {resume.basics.location.countryCode}</span>
-        <span>{resume.basics.phone}</span>
-        <span><a href="mailto:{resume.basics.email}">{resume.basics.email}</a></span>
-        {#if resume.basics.profiles}
-          {#each resume.basics.profiles as profile}
-            <span><a href={profile.url} target="_blank">{profile.network}</a></span>
-          {/each}
-        {/if}
+        {#if resume.basics.email}<span>{resume.basics.email}</span>{/if}
+        {#if resume.basics.phone}<span>{resume.basics.phone}</span>{/if}
+        {#if resume.basics.url}<span><a href={resume.basics.url}>{resume.basics.url}</a></span>{/if}
       </div>
-
-      <div class="cv-summary"><p>{resume.basics.summary}</p></div>
+      
+      {#if resume.basics.summary}
+        <div class="cv-summary">{@html resume.basics.summary}</div>
+      {/if}
     </header>
 
     <div class="cv-layout">
-      <main class="cv-main">
-        <section class="cv-section section-experience">
-          <h3 class="section-title">Experience</h3>
-          <div class="section-content">
-            {#each resume.work as job}
-              <article class="item-card">
-                <div class="item-header">
-                  <h4 class="item-title">{job.position}</h4>
-                  <div class="item-subtitle">{job.name}</div>
-                  <div class="item-date">{getYear(job.startDate)} — {getYear(job.endDate)}</div>
-                </div>
-                <div class="item-body">
-                  <p class="item-summary">{job.summary}</p>
-                  {#if job.highlights}
-                    <ul class="item-highlights">
-                      {#each job.highlights as highlight}
-                        <li>{highlight}</li>
-                      {/each}
-                    </ul>
-                  {/if}
-                </div>
-              </article>
-            {/each}
-          </div>
-        </section>
-
-        {#if resume.projects}
-          <section class="cv-section section-projects">
-            <h3 class="section-title">Selected Projects</h3>
-            <div class="section-content projects-grid">
-              {#each resume.projects as proj}
-                <article class="item-card project-card">
-                  <h4 class="item-title">{proj.name}</h4>
-                  <p class="item-summary">{proj.description}</p>
-                  {#if proj.highlights}
-                    <ul class="item-highlights">
-                      {#each proj.highlights as highlight}<li>{highlight}</li>{/each}
-                    </ul>
-                  {/if}
-                </article>
-              {/each}
-            </div>
-          </section>
-        {/if}
-      </main>
+      
+	<main class="cv-main">
+	  {#each activeLayout.main as sectionKey (sectionKey)}
+	    {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
+	      <svelte:component 
+		this={sectionRenderer[sectionKey].component} 
+		{...sectionRenderer[sectionKey].props}
+		sectionTitle={activeI18n[sectionKey] || sectionKey} 
+		sectionId={sectionKey} />
+	    {/if}
+	  {/each}
+	</main>
 
       <aside class="cv-sidebar">
-        {#if resume.skills}
-          <section class="cv-section section-skills">
-            <h3 class="section-title">Skills</h3>
-            <div class="section-content">
-              {#each resume.skills as skillGroup}
-                <div class="skill-group">
-                  <strong class="skill-name">{skillGroup.name}</strong>
-                  <div class="skill-keywords">
-                    {#each skillGroup.keywords as kw}<span class="skill-tag">{kw}</span>{/each}
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.languages}
-          <section class="cv-section section-languages">
-            <h3 class="section-title">Languages</h3>
-            <div class="section-content">
-              {#each resume.languages as lang}
-                <div class="side-item" style="margin-bottom: 0.75rem;">
-                  <div class="item-title">{lang.language}</div>
-                  <div class="item-subtitle">{lang.fluency}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.certificates}
-          <section class="cv-section section-certs">
-            <h3 class="section-title">Certifications</h3>
-            <div class="section-content">
-              {#each resume.certificates as cert}
-                <div class="side-item">
-                  <div class="item-title">{cert.name}</div>
-                  <div class="item-date">{getYear(cert.date)} // {cert.issuer}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.education}
-          <section class="cv-section section-education">
-            <h3 class="section-title">Education</h3>
-            <div class="section-content">
-              {#each resume.education as edu}
-                <div class="side-item">
-                  <div class="item-title">{edu.studyType} in {edu.area}</div>
-                  <div class="item-subtitle">{edu.institution}</div>
-                  <div class="item-date">{getYear(edu.startDate)} — {getYear(edu.endDate)}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.volunteer}
-          <section class="cv-section section-volunteer">
-            <h3 class="section-title">Teaching</h3>
-            <div class="section-content">
-              {#each resume.volunteer as vol}
-                <div class="side-item">
-                  <div class="item-title">{vol.position}</div>
-                  <div class="item-subtitle">{vol.organization}</div>
-                  <div class="item-date">{getYear(vol.startDate)} — {getYear(vol.endDate)}</div>
-                  <p class="item-summary" style="font-weight:normal;">{vol.summary}</p>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
+        {#each activeLayout.sidebar as sectionKey (sectionKey)}
+          {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
+	      <svelte:component 
+		this={sectionRenderer[sectionKey].component} 
+		{...sectionRenderer[sectionKey].props}
+		sectionTitle={activeI18n[sectionKey] || sectionKey} 
+		sectionId={sectionKey} />
+          {/if}
+        {/each}
       </aside>
-    </div>
 
-<!--
-   <div class="print-footer no-screen">
-      <span>{resume.basics.name}</span>
-      <span class="footer-separator">•</span>
-      <span>Curriculum Vitae</span>
-      <span class="footer-separator">•</span>
-      <span>{resume.basics.email}</span>
     </div>
--->
   </div>
-</div>
-
 {/if}

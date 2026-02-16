@@ -1,1 +1,230 @@
-index.json.current
+{
+	"basics": {
+		"name": "Václav Lorenc",
+		"label": "Principal Information Security Engineer",
+		"email": "vaclav.lorenc@gmail.com",
+		"phone": "+420 608 143 418",
+		"location": {
+			"city": "Brno",
+			"countryCode": "CZ",
+			"region": "Czech Republic"
+		},
+		"summary": "Information security engineer and architect with extensive experience in vulnerability management, SIEM architecture, incident response, malware analysis, and Secure SDLC implementation. Strong background in automation, forensic investigations, and security process improvements across enterprise environments.",
+		"profiles": [
+			{
+				"network": "GitHub",
+				"username": "valorcz",
+				"url": "https://github.com/valorcz"
+			},
+			{
+				"network": "LinkedIn",
+				"username": "valor",
+				"url": "https://www.linkedin.com/in/valor/"
+			}
+		]
+	},
+	"work": [
+		{
+			"name": "HERE Czech Republic",
+			"position": "Principal Information Security Engineer",
+			"location": "Brno",
+			"startDate": "2021-01-01",
+			"summary": "Directed the architectural design and execution of enterprise-wide vulnerability management frameworks.",
+			"highlights": [
+				"Engineered automated systems for threat escalation, queue management, and remediation planning, significantly enhancing risk visibility.",
+				"Maintained, scaled, and documented proprietary security infrastructure to ensure continuous operational compliance.",
+				"Drove continuous process improvements focusing on automation and rigorous documentation standards."
+			]
+		},
+		{
+			"name": "Konica Minolta ",
+			"position": "Security Architect ",
+			"location": "Brno ",
+			"startDate": "2020-01-01",
+			"endDate": "2021-01-01",
+			"summary": "Architected and integrated robust security controls into the Workplace Hub product, successfully embedding security practices into agile development lifecycles.",
+			"highlights": [
+				"Spearheaded the enterprise-wide implementation of Secure SDLC methodologies.",
+				"Designed and delivered structured security architecture training programs to establish a standardized engineering culture.",
+				"Led foundational security-focused data analytics training for monitoring teams."
+			]
+		},
+		{
+			"name": "Oracle + NetSuite ",
+			"position": "Senior Security Analyst / SOC Tier1 Manager ",
+			"location": "Brno ",
+			"startDate": "2016-01-01",
+			"endDate": "2020-01-01",
+			"summary": "Architected and managed enterprise SIEM solutions, establishing scalable log management, data onboarding strategies, and tool integrations.",
+			"highlights": [
+				"Overhauled internal SOC processes, communication protocols, and documentation to ensure rigorous, auditable security monitoring.",
+				"Designed adaptable log monitoring architectures capable of mitigating system inconsistencies across highly complex environments.",
+				"Ensured the effective handling of log data and integration with related tools under varying levels of uncertainty."
+			]
+		},
+		{
+			"name": "Honeywell, s.r.o. ",
+			"position": "IT Security Analyst / Team Lead ",
+			"location": "Brno ",
+			"startDate": "2011-01-01",
+			"endDate": "2016-01-01",
+			"summary": "Led the Incident Response and Threat Analysis team, establishing foundational processes for advanced forensics and security scanning.",
+			"highlights": [
+				"Engineered automated host triage solutions and routine security tasks, drastically reducing manual investigation times.",
+				"Developed and standardized comprehensive training curriculums to systematically elevate the capabilities of junior personnel.",
+				"Conducted independent malware reverse engineering and advanced forensics to support threat analysis and incident response."
+			]
+		},
+		{
+			"name": "Institute of Computer Science ",
+			"position": "Senior Network Administrator / Network Administrator ",
+			"location": "Brno ",
+			"startDate": "2001-01-01",
+			"endDate": "2011-01-01",
+			"summary": "Administered complex network infrastructures and implemented scalable, auditable network security solutions.",
+			"highlights": [
+				"Designed and implemented decentralized, auditable firewall deployments for various faculties using open-source solutions.",
+				"Established a combination of technical measures, wiki-based documentation, and structured trainings to ensure reliable network operations.",
+				"Configured and maintained enterprise networking equipment, including Cisco, 3Com, and Juniper technologies."
+			]
+		}
+	],
+	"volunteer": [
+		{
+			"organization": "Masaryk University",
+			"position": "Invited Lecture - Introduction to Threat Modelling",
+			"startDate": "2023-01-01",
+			"summary": "Taught risk-based thinking, structured threat modeling, and security reasoning for systems and applications.",
+			"highlights": [
+				"Delivered a brief introduction and working sessions focused on the need for risk-based thinking in security disciplines."
+			]
+		},
+		{
+			"organization": "Masaryk University",
+			"position": "Invited Lecture - Small Peek into Big Data Analytics ",
+			"startDate": "2018-01-01",
+			"summary": "Delivered motivational lectures on data analysis in security, using real-world scenarios and past assignments.",
+			"highlights": [
+				"Focused on common mistakes, visualization approaches, and practical lessons learned from enterprise security assignments."
+			]
+		},
+		{
+			"organization": "Masaryk University",
+			"position": "Invited Lecture - In-Memory Malware Analysis ",
+			"startDate": "2013-01-01",
+			"summary": "Conducted workshops providing hands-on experience with memory forensics and real malware analysis.",
+			"highlights": [
+				"Introduced practical applications of memory forensics through interactive, hands-on workshops with live malware samples."
+			]
+		}
+	],
+	"education": [
+		{
+			"institution": "Faculty of Informatics, Masaryk University, Brno",
+			"area": "Computer Security",
+			"studyType": "RNDr. (MSc. equivalent) ",
+			"startDate": "2005-01-01",
+			"endDate": "2009-01-01"
+		},
+		{
+			"institution": "Faculty of Informatics, Masaryk University, Brno ",
+			"area": "Informatics ",
+			"studyType": "Mgr. (MSc. equivalent) ",
+			"startDate": "1999-01-01",
+			"endDate": "2005-01-01"
+		}
+	],
+	"certificates": [
+		{
+			"name": "SANS Hacker Tools, Techniques, Exploits, and Incident Handling (SEC504) ",
+			"date": "2017-10-01"
+		},
+		{
+			"name": "SANS Advanced Network Forensics and Analysis (FOR572) ",
+			"date": "2014-05-01"
+		},
+		{
+			"name": "SANS Reverse Engineering of Malware (FOR610), GREM certified ",
+			"date": "2013-10-01"
+		},
+		{
+			"name": "SANS Computer Forensic Investigations (FOR408) ",
+			"date": "2012-10-01"
+		}
+	],
+	"skills": [
+		{
+			"name": "Computer Security",
+			"keywords": [
+				"Incident Response",
+				"Risk Management",
+				"Vulnerability Management",
+				"Cryptography",
+				"PCI-DSS / SOC audits"
+			]
+		},
+		{
+			"name": "Platforms",
+			"keywords": [
+				"Linux (advanced)",
+				"Windows"
+			]
+		},
+		{
+			"name": "Applications",
+			"keywords": [
+				"Splunk/ELK",
+				"Atlassian stack",
+				"CrowdStrike",
+				"Tenable/Nessus"
+			]
+		},
+		{
+			"name": "Programming Languages",
+			"keywords": [
+				"Python",
+				"Bash",
+				"Golang",
+				"C",
+				"SQL"
+			]
+		},
+		{
+			"name": "Networking ",
+			"keywords": [
+				"Switching & Routing",
+				"Cisco/3Com/Juniper",
+				"VPN & 802.1x",
+				"Firewalling & IDS/IPS"
+			]
+		}
+	],
+	"languages": [
+		{
+			"language": "Czech",
+			"fluency": "Native or Bilingual Proficiency"
+		},
+		{
+			"language": "English",
+			"fluency": "Full Professional Proficiency"
+		}
+	],
+	"projects": [
+		{
+			"name": "Centralized Audited IDS Managed ",
+			"description": "Designed a decentralized, open-source manageable IDS solution resolving configuration inconsistencies.",
+			"highlights": [
+				"Implemented a purely open-source solution using git, GitLab, and bash/Python to provide peer-reviewed, auditable, and reversible configurations.",
+				"Maintained the system flawlessly in production for 3 years, complete with proactive sensor health-check scripts."
+			]
+		},
+		{
+			"name": "University Firewalls Project ",
+			"description": "Deployed decentralized firewalls for various faculties to ensure auditable and error-free administration.",
+			"highlights": [
+				"Utilized open-source solutions to establish a highly manageable architecture for local administrators.",
+				"Combined technical measures with wiki-based documentation and training to ensure structural integrity."
+			]
+		}
+	]
+}

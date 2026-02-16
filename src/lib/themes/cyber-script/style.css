@@ -120,11 +120,11 @@
   color: var(--accent); 
   font-size: 1.1rem;
 }
-.theme-cyber-script .section-experience .section-title::before { content: "\f120"; } /* terminal */
+.theme-cyber-script .section-work .section-title::before { content: "\f120"; } /* terminal */
 .theme-cyber-script .section-projects .section-title::before { content: "\f5fc"; } /* laptop code */
 .theme-cyber-script .section-skills .section-title::before { content: "\f085"; } /* gears */
 .theme-cyber-script .section-languages .section-title::before { content: "\f0ac"; } /* globe */
-.theme-cyber-script .section-certs .section-title::before { content: "\f023"; } /* lock */
+.theme-cyber-script .section-certificates .section-title::before { content: "\f023"; } /* lock */
 .theme-cyber-script .section-education .section-title::before { content: "\f19d"; } /* grad cap */
 .theme-cyber-script .section-volunteer .section-title::before { content: "\f0c4"; } /* cut/scissors */
 
