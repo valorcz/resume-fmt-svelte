@@ -1,54 +1,80 @@
-import Ajv from 'ajv';
+import Ajv from 'ajv-draft-04';
 import addFormats from 'ajv-formats';
 import { base } from '$app/paths';
+import yaml from 'js-yaml';
 
 export async function load({ fetch, url }) {
   const gistId = url.searchParams.get('gist');
   let resume = null;
+  let format = 'yaml'; // Default to YAML for local loads
 
   try {
-    // 1. Fetch from Gist OR local index.json
+    // --- 1. FETCH & PARSE DATA ---
     if (gistId) {
       const res = await fetch(`https://api.github.com/gists/${gistId}`);
-      if (!res.ok) throw new Error(`GitHub Gist not found or API limit reached (Status: ${res.status})`);
+      if (!res.ok) throw new Error(`GitHub Gist not found (Status: ${res.status})`);
       
       const gistData = await res.json();
       
-      // Look for a .json file in the gist, otherwise fallback to the first file
-      const fileKey = Object.keys(gistData.files).find(k => k.endsWith('.json')) || Object.keys(gistData.files)[0];
+      // Smart file discovery: Look for .yaml, .yml, or .json
+      const fileKey = Object.keys(gistData.files).find(k => k.match(/\.(ya?ml|json)$/i)) 
+                   || Object.keys(gistData.files)[0];
       
       if (!fileKey) throw new Error("No files found in this Gist.");
       
+      const rawContent = gistData.files[fileKey].content;
+      
       try {
-        resume = JSON.parse(gistData.files[fileKey].content);
+        // Detect format and parse accordingly
+        if (fileKey.toLowerCase().endsWith('.json')) {
+          format = 'json';
+          resume = JSON.parse(rawContent);
+        } else {
+          format = 'yaml';
+          resume = yaml.load(rawContent);
+        }
       } catch (e) {
-        throw new Error("The Gist content is not valid JSON.");
+        throw new Error(`Failed to parse ${fileKey}. Ensure it is valid ${format.toUpperCase()}.`);
       }
     } else {
-      const res = await fetch(`${base}/index.json`);
-      if (!res.ok) throw new Error(`Failed to load local index.json (Status: ${res.status})`);
-      resume = await res.json();
+      // Local Fetch: Assumes you are using resume.yaml locally
+      format = 'yaml';
+      const res = await fetch(`${base}/resume.yaml`); 
+      if (!res.ok) throw new Error(`Failed to load local resume.yaml (Status: ${res.status})`);
+      
+      const text = await res.text();
+      resume = yaml.load(text);      
     }
 
-    // 2. Fetch the Official JSONResume Schema
-    const schemaRes = await fetch('https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json');
+    // --- 2. FETCH THE CONTEXT-AWARE SCHEMA ---
+    const schemaUrl = format === 'json' 
+      ? 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json'
+      : 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json';
+/*
+      : 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json';
+      : 'https://yamlresume.dev/schemas/v0.11.0/schema.json';
+		*/
+
+    const schemaRes = await fetch(schemaUrl);
+    if (!schemaRes.ok) throw new Error(`Failed to fetch the validation schema from ${schemaUrl}`);
+    
     const schema = await schemaRes.json();
+    
+    // Bypass strict versioning issues (works for both Draft-04 and newer YAML schemas)
+    delete schema.$schema; 
 
-    delete schema.$schema; // Forces Ajv to ignore the old Draft-04 requirement
-
-    // 3. Initialize AJV Validator
-    // { strict: false } prevents crashes from older JSON schema draft versions
+    // --- 3. VALIDATE ---
     const ajv = new Ajv({ strict: false, allErrors: true }); 
     addFormats(ajv);
     
     const validate = ajv.compile(schema);
     const isValid = validate(resume);
 
-    // 4. Handle Validation Failure
     if (!isValid) {
+      const schemaName = format === 'json' ? 'JSON Resume' : 'YAML Resume';
       return {
         error: true,
-        message: "Your JSON data does not match the official JSONResume schema.",
+        message: `Your data does not match the official ${schemaName} schema.`,
         details: validate.errors
       };
     }
