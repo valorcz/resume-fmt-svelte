@@ -87,3 +87,35 @@
     print-color-adjust: exact;
   }
 }
+
+/* Hide it on screens, only show on paper */
+  .no-screen { display: none !important; }
+
+  @media print {
+    .no-screen { display: block !important; }
+    
+    /* Ensure the content doesn't print over the footer */
+    .cv-wrapper {
+      padding-bottom: 1.0cm !important; 
+    }
+
+    /* The Repeating Footer */
+    .print-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding-top: 0.5cm;
+      border-top: 1pt solid var(--border);
+      font-family: var(--font-mono); /* Uses theme-specific mono font */
+      font-size: 7.5pt !important;
+      color: var(--muted);
+      background-color: #ffffff;
+    }
+
+    .footer-separator {
+      margin: 0 0.5rem;
+      color: var(--border);
+    }
+  }

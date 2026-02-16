@@ -190,6 +190,7 @@
                 <div class="side-item">
                   <div class="item-title">{vol.position}</div>
                   <div class="item-subtitle">{vol.organization}</div>
+                  <div class="item-date">{getYear(vol.startDate)} — {getYear(vol.endDate)}</div>
                   <p class="item-summary" style="font-weight:normal;">{vol.summary}</p>
                 </div>
               {/each}
@@ -198,6 +199,16 @@
         {/if}
       </aside>
     </div>
+
+<!--
+   <div class="print-footer no-screen">
+      <span>{resume.basics.name}</span>
+      <span class="footer-separator">•</span>
+      <span>Curriculum Vitae</span>
+      <span class="footer-separator">•</span>
+      <span>{resume.basics.email}</span>
+    </div>
+-->
   </div>
 </div>
 

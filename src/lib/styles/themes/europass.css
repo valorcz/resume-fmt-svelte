@@ -1,0 +1,228 @@
+/* ==========================================================================
+   THEME: EUROPASS (Official EU Bureaucratic Format)
+   ========================================================================== */
+.theme-europass {
+  --bg: #ffffff;
+  --surface: #f3f6f9; /* Subtle EU grey-blue */
+  --ink: #1a1a1a;
+  --muted: #4a4a4a;
+  --accent: #0e4194; /* Official Europass Blue */
+  --border: #cccccc;
+  --border-heavy: #0e4194;
+  
+  /* Europass uses incredibly standard, clean, system sans-serifs */
+  --font-body: 'Inter', Helvetica, Arial, sans-serif;
+  --font-heading: 'Inter', Helvetica, Arial, sans-serif;
+  --font-mono: 'Inter', Helvetica, Arial, sans-serif;
+  
+  --screen-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* --- Document Header & Logo Fake --- */
+.theme-europass .cv-wrapper {
+  position: relative;
+  border-top: 10px solid var(--accent);
+  border-radius: 0;
+  padding-top: 4rem;
+}
+
+/* Injecting the "Europass" text header at the very top */
+.theme-europass .cv-wrapper::before {
+  content: 'Curriculum Vitae';
+  position: absolute;
+  top: 1.5rem;
+  left: 4rem;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: -0.5px;
+}
+
+/* --- Personal Information Block (Forced into Grid) --- */
+.theme-europass .cv-header {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2rem;
+  align-items: start;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Inject "PERSONAL INFORMATION" label into the left column */
+.theme-europass .cv-header::before {
+  content: 'PERSONAL INFORMATION';
+  text-align: right;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-top: 0.5rem;
+}
+
+.theme-europass .cv-name { grid-column: 2; font-size: 2.2rem; color: var(--accent); margin-top: 0; }
+.theme-europass .cv-title { grid-column: 2; font-size: 1.1rem; color: var(--ink); margin-bottom: 1rem; }
+.theme-europass .cv-summary { grid-column: 2; }
+
+/* Contact info rendered as a rigid bureaucratic list */
+.theme-europass .cv-contact { 
+  grid-column: 2; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 0.3rem; 
+  border: none; 
+  padding: 0; 
+  margin-bottom: 1rem;
+}
+.theme-europass .cv-contact span::after { display: none; } /* Remove separators */
+
+/* Inject text labels instead of icons (Location:, Phone:, Email:) */
+.theme-europass .cv-contact span::before { font-weight: 700; color: var(--accent); width: 80px; display: inline-block; }
+.theme-europass .cv-contact span:nth-child(1)::before { content: "Location"; }
+.theme-europass .cv-contact span:nth-child(2)::before { content: "Phone"; }
+.theme-europass .cv-contact span:nth-child(3)::before { content: "Email"; }
+.theme-europass .cv-contact span:nth-child(n+4)::before { content: "Link"; }
+
+/* --- Master Layout (Flattened & Tabular) --- */
+.theme-europass .cv-layout { display: block; }
+.theme-europass .cv-main, .theme-europass .cv-sidebar { width: 100%; }
+
+/* Sections form the main 2-column tabular grid */
+.theme-europass .cv-section {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.theme-europass .section-title {
+  text-align: right;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-transform: uppercase;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+.theme-europass .section-title::before { display: none; } /* Remove icons */
+
+/* The iconic vertical blue line separating labels from content */
+.theme-europass .section-content {
+  border-left: 2px solid var(--accent);
+  padding-left: 1.5rem;
+}
+
+/* --- Nested Item Grids (Dates in blue on the left) --- */
+
+/* --- Flattened Items (Fixes the wrapping bug & wasted space) --- */
+.theme-europass .item-card, 
+.theme-europass .side-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.theme-europass .item-header { 
+  display: flex; 
+  flex-direction: column;
+  margin-bottom: 0.5rem; 
+}
+
+.theme-europass .item-title { 
+  font-size: 1.05rem; 
+  font-weight: 700; 
+  color: var(--ink); 
+  margin-bottom: 0.2rem;
+}
+
+.theme-europass .item-subtitle { 
+  font-size: 0.95rem; 
+  font-weight: 400; 
+  color: var(--muted); 
+  margin-bottom: 0.2rem;
+}
+
+.theme-europass .item-date {
+  font-size: 0.85rem;
+  color: var(--accent); /* Classic EU Blue dates */
+  font-weight: 700;
+  margin: 0;
+  order: 3; /* Ensures date securely anchors the bottom of the title block */
+}
+
+/* Pushes descriptions safely below the headers */
+.theme-europass .item-body, 
+.theme-europass .item-summary, 
+.theme-europass .item-highlights { 
+  order: 4; 
+  margin-top: 0.2rem;
+}
+
+/* Remove standard list styling, use simple dashes or nothing */
+.theme-europass .item-highlights li { list-style-type: disc; margin-left: 1.2rem; padding-left: 0; }
+.theme-europass .item-highlights li::before { display: none; }
+
+/* --- Skills Formatted as strict lists --- */
+.theme-europass .skill-group { 
+  display: flex; 
+  align-items: baseline; 
+  gap: 1rem; 
+  margin-bottom: 0.8rem; 
+}
+.theme-europass .skill-name { 
+  flex: 0 0 130px; /* Aligns the categories neatly in a sub-column */
+  text-align: left; 
+  font-size: 0.85rem; 
+  color: var(--accent); 
+  margin: 0; 
+}
+.theme-europass .skill-keywords { flex: 1; }
+.theme-europass .skill-tag { background: none; border: none; padding: 0; font-size: 0.85rem; font-weight: 400; }
+.theme-europass .skill-tag::after { content: " | "; color: var(--border); }
+.theme-europass .skill-tag:last-child::after { content: ""; }
+
+
+/* --- A4 Print Optimization --- */
+@media print {
+ /* .theme-europass .cv-wrapper { padding: 0 !important; font-size: 9pt !important; border-top: 8pt solid var(--accent) !important; } */
+
+/* Restore top padding to prevent the text collision */
+  .theme-europass .cv-wrapper { 
+    padding: 3.5rem 0 0 0 !important; /* Keeps sides at 0, restores 3.5rem at the top */
+    font-size: 9pt !important; 
+    border-top: 8pt solid var(--accent) !important; 
+  }
+  
+  /* Align the text neatly to the print margin */
+  .theme-europass .cv-wrapper::before {
+    top: 1.2rem !important;
+    left: 0 !important; 
+  }
+  
+  /* Preserve the injected labels on print */
+  .theme-europass .cv-wrapper::before,
+  .theme-europass .cv-header::before,
+  .theme-europass .cv-contact span::before {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Force Grid over the Print-core Flexbox */
+  .theme-europass .cv-layout { display: block !important; }
+  .theme-europass .cv-main, .theme-europass .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
+  
+  /* Scale the master grids for paper */
+  .theme-europass .cv-header, .theme-europass .cv-section { display: grid !important; grid-template-columns: 140px 1fr !important; gap: 1.5rem !important; }
+  .theme-europass .section-title { display: block !important; font-size: 9.5pt !important; }
+  .theme-europass .section-content { display: block !important; border-left: 1.5pt solid var(--accent) !important;}
+  
+  /* Print-safe flattened items */
+  .theme-europass .item-card, .theme-europass .side-item { display: flex !important; flex-direction: column !important; margin-bottom: 1.2rem !important; }
+  .theme-europass .item-title { font-size: 10pt !important; }
+  .theme-europass .item-date { font-size: 8.5pt !important; }
+  
+  /* Print-safe skills */
+  .theme-europass .skill-group { display: flex !important; align-items: baseline !important; gap: 1rem !important; margin-bottom: 0.6rem !important; }
+  .theme-europass .skill-name { flex: 0 0 110px !important; }
+}
+
