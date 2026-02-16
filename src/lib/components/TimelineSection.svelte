@@ -1,7 +1,7 @@
 <script>
   export let items = []; 
   export let sectionTitle = "Section"; 
-  export let sectionId = "default"; // 👈 Add the new prop
+  export let sectionId = "default"; 
   
   export let titleKey = "position"; 
   export let subtitleKey = "name"; 

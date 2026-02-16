@@ -13,13 +13,13 @@
       <div class="item-card reference-item">
         
         {#if item.reference}
-          <blockquote class="item-summary reference-quote" style="margin: 0 0 0.5rem 0; font-style: italic;">
+          <blockquote class="item-summary reference-quote">
             "{@html item.reference}"
           </blockquote>
         {/if}
         
         {#if item.name}
-          <div class="item-title reference-name" style="text-align: right; font-size: 0.95rem;">
+          <div class="item-title reference-name">
             &mdash; {item.name}
           </div>
         {/if}

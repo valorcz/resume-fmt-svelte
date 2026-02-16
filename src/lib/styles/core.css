@@ -154,10 +154,17 @@ body {
   font-weight: 600;
 }
 
+/* Not used anymore in the modernized themes with layouts */
 .side-item { margin-bottom: 1.2rem; }
 .side-item .item-title { font-size: 0.85rem; margin-bottom: 0.1rem; }
 .side-item .item-subtitle { font-size: 0.8rem; color: var(--accent); }
 .side-item .item-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
+.cv-sidebar .item-card { margin-bottom: 1.2rem; }
+.cv-sidebar .item-card .item-title { font-size: 0.85rem; margin-bottom: 0.1rem; }
+.cv-sidebar .item-card .item-subtitle { font-size: 0.8rem; color: var(--accent); }
+.cv-sidebar .item-card .item-date { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); }
+
 
 /* ==========================================================================
    SCHEMA ERROR UI

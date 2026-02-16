@@ -10,26 +10,18 @@
 
     <div class="section-content">
     
-    <div class="languages-list">
       {#each items as item}
-        <div class="item-card language-item" style="margin-bottom: 0.8rem;">
-          <div class="item-header" style="margin-bottom: 0;">
+        <div class="item-card">
             {#if item.language}
-              <span class="item-title" style="margin-right: 0.5rem; font-weight: bold;">
-                {item.language}
-              </span>
+              <div class="item-title">{item.language}</div>
             {/if}
             
             {#if item.fluency}
-              <span class="item-summary fluency-text">
-                {item.fluency}
-              </span>
+              <div class="item-subtitle">{item.fluency}</div>
             {/if}
-          </div>
         </div>
       {/each}
 
-      </div>
     </div>
   </div>
 {/if}
