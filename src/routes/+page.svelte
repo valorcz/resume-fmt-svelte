@@ -35,17 +35,41 @@
     languages: { component: LanguageSection, props: { items: resume?.languages } },
     references: { component: ReferenceSection, props: { items: resume?.references } }
   };
+
+  // Format Ajv errors nicely (e.g., "/work/0/startDate" -> "work[0].startDate")
+  function formatPath(path) {
+     if (!path) return "root";
+     return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
+  }
 </script>
 
 {#if data.error}
-  <div class="error-banner">
-    <h2>Error loading resume</h2>
-    <p>{data.message}</p>
+  <div class="schema-error-container">
+    <div class="schema-error-box">
+      <h1>⚠ Failed to Load Resume</h1>
+      <p class="error-desc">{data.message}</p>
+
+      {#if data.details && data.details.length > 0}
+        <div class="error-terminal">
+          <div class="terminal-header">Schema Validation Report</div>
+          <ul>
+            {#each data.details as err}
+              <li>
+                <span class="err-path">{formatPath(err.instancePath)}</span>
+                <span class="err-msg">{err.message}</span>
+              </li>
+            {/each}
+          </ul>
+        </div>
+      {/if}
+      <button class="retry-btn" on:click={() => window.location.href = '/'}>Return to Default Resume</button>
+    </div>
   </div>
 {:else}
+  <div class="app-container theme-{activeTheme}">
   <ThemeSwitcher themes={availableThemes} bind:activeTheme={activeTheme} />
 
-  <div class="cv-wrapper theme-{activeTheme}">
+  <div class="cv-wrapper">
     
     <header class="cv-header">
       {#if resume.basics.image}
@@ -55,9 +79,15 @@
       <h2 class="cv-title">{resume.basics.label || resume.basics.headline}</h2>
       
       <div class="cv-contact">
-        {#if resume.basics.email}<span>{resume.basics.email}</span>{/if}
+        {#if resume.basics.email}<span><a href="mailto:{resume.basics.email}">{resume.basics.email}</a></span>{/if}
         {#if resume.basics.phone}<span>{resume.basics.phone}</span>{/if}
         {#if resume.basics.url}<span><a href={resume.basics.url}>{resume.basics.url}</a></span>{/if}
+        <span>{resume.basics.location.city}, {resume.basics.location.countryCode}</span>
+        {#if resume.basics.profiles}
+           {#each resume.basics.profiles as profile}
+             <span><a href={profile.url} target="_blank">{profile.network}</a></span>
+           {/each}
+	{/if}
       </div>
       
       {#if resume.basics.summary}
@@ -92,5 +122,6 @@
       </aside>
 
     </div>
+  </div>
   </div>
 {/if}

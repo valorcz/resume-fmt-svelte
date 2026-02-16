@@ -18,8 +18,8 @@
       {#each items as item}
         <div class="item-card">
           <div class="item-header">
-            {#if item[subtitleKey]}<span class="item-subtitle">{item[subtitleKey]}</span>{/if}
             {#if item[titleKey]}<span class="item-title">{item[titleKey]}</span>{/if}
+            {#if item[subtitleKey]}<span class="item-subtitle">{item[subtitleKey]}</span>{/if}
             
             <span class="item-date">
               {#if item[dateKey]}
