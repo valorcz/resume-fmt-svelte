@@ -2,7 +2,6 @@
   export let items = []; 
   export let sectionTitle = "Section"; 
   export let sectionId = "default"; 
-  export let location = "main";
   
   export let titleKey = "position"; 
   export let subtitleKey = "name"; 

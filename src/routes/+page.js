@@ -1,6 +1,7 @@
 import Ajv from 'ajv-draft-04';
 import addFormats from 'ajv-formats';
 import yaml from 'js-yaml';
+import { base } from '$app/paths';
 import { themeRegistry, fallbackConfig } from '$lib/themeRegistry';
 
 function mergeConfigs(serverConfig, userConfig) {
@@ -36,7 +37,7 @@ export async function load({ fetch, url }) {
       }
     } else {
       // Local fallback
-      const res = await fetch('/resume.yaml'); 
+      const res = await fetch(`${base}/resume.yaml`); 
       resume = yaml.load(await res.text());
     }
 
