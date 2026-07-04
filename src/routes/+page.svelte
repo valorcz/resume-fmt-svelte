@@ -12,8 +12,8 @@
   // Extract the list of available themes dynamically from the registry folders
   const availableThemes = Object.keys(themeRegistry);
 
-  // Set the initial theme based on the user's config, or default to elegant-split
-  let activeTheme = data.config?.theme || 'elegant-split';
+  // Set the initial theme based on the user's config
+  let activeTheme;
 
   // REACTIVE MAGIC: Whenever activeTheme changes, instantly recalculate the layout and translations!
   $: activeLayout = themeRegistry[activeTheme]?.layout || data.config.layout;

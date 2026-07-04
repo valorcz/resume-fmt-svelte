@@ -48,7 +48,7 @@ export async function load({ fetch, url }) {
     }
 
     // 4. Resolve Theme Config
-    const requestedTheme = userConfig?.theme || 'elegant-split';
+    const requestedTheme = userConfig?.theme || 'classic';
     const serverConfig = themeRegistry[requestedTheme] || fallbackConfig;
     const finalConfig = mergeConfigs(serverConfig, userConfig);
 
