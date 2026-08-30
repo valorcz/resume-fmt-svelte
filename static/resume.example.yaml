@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
+
+# Optional embedded theme configuration
+_config:
+  theme: modern-timeline
+  layout:
+    main:
+      - work
+      - projects
+      - volunteer
+    sidebar:
+      - skills
+      - education
+      - certificates
+      - languages
+
+basics:
+  name: Jane Doe
+  label: Senior Systems Architect
+  image: https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80
+  email: jane.doe@example.com
+  phone: +1 (555) 234-5678
+  url: https://janedoe.dev
+  summary: >
+    Systems architect with experience building distributed applications 
+    and microservices in TypeScript, Go, and Rust.
+  location:
+    city: San Francisco
+    region: California
+    countryCode: US
+  profiles:
+    - network: GitHub
+      username: janedoe
+      url: https://github.com/janedoe
+    - network: LinkedIn
+      username: janedoe
+      url: https://linkedin.com/in/janedoe
+
+work:
+  - name: Acme Cloud Systems
+    position: Lead Systems Architect
+    location: San Francisco, CA
+    startDate: '2021-03-01'
+    summary: Architected and scaled cloud infrastructure pipelines.
+    highlights:
+      - Reduced infrastructure costs by 35% through autoscaling policies.
+      - Mentored an engineering team of 14 across distributed timezones.
+
+education:
+  - institution: UC Berkeley
+    area: Computer Science
+    studyType: Bachelor of Science
+    startDate: '2013-09-01'
+    endDate: '2017-05-30'
+
+skills:
+  - name: Core Technologies
+    keywords:
+      - TypeScript
+      - Go
+      - Rust
+      - SvelteKit
+      - Kubernetes
+      - PostgreSQL
