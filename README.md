@@ -1,86 +1,85 @@
-# 📄 Svelte JSON & YAML Resume
+# Svelte JSON & YAML Resume
 
-An ultra-fast, responsive, and printable resume viewer and customization studio built with **Svelte 5 (Runes)** and **SvelteKit**. Fully compliant with the official **[JSON Resume](https://jsonresume.org/)** open standard, with first-class support for clean **YAML** resumes, live GitHub Gist loading, 18 bespoke themes, drag-and-drop layout editing, and instant URL synchronization.
+A clean, printable resume viewer and customization studio built with Svelte 5 and SvelteKit. It renders resumes conforming to the standard [JSON Resume schema](https://jsonresume.org/schema/), with native YAML support, theme customization, drag-and-drop column layout editing, and print-ready stylesheets.
 
----
-
-## ✨ Features
-
-- **⚡ Modern Svelte 5 Core**: Powered by Svelte 5 runes (`$state`, `$derived`, `$effect`, `$props`) for reactive performance and small bundle size.
-- **🎨 18 Bespoke Themes**: Curated collection ranging from classic academic Harvard styles to modern timelines, split layouts, cyber aesthetics, and retro demo computing.
-- **🎛️ Interactive Resume Studio**:
-  - **Theme Picker**: Switch between 18 themes.
-  - **Color Palette & Accent Customizer**: Choose from curated tonal palettes or enter any custom HEX color (applies to screen and print).
-  - **Visual Column & Layout Manager**: Cross-browser HTML5 drag-and-drop column organizer with section hiding and theme-specific persistence.
-  - **Appearance Mode**: Toggle between **System Auto**, **Light**, and **Dark** modes.
-  - **Live `config.yaml` Generator**: Copy ready-to-use configuration files in real time.
-- **🔗 Zero-Flicker URL Synchronization & Sharing**:
-  - All customizations (`theme`, `accent`, `mode`, `layout`) are seamlessly encoded into the URL via `history.replaceState`.
-  - Shareable links load the exact custom theme and column layout on first paint without screen flickering.
-  - One-click **"Share URL"** button in the Studio drawer.
-- **🌐 GitHub Gist Integration**: Load any public resume on the fly by appending `?gist=<GIST_ID>` to the URL.
-- **🖨️ Universal Print & PDF Engine**:
-  - Pixel-perfect A4 page-break mechanics.
-  - Guaranteed background color and gradient preservation (`print-color-adjust: exact`).
-  - No clipped timeline lines, orphan badges, or awkward page gaps.
-- **🛡️ Built-in Theme Linter**: Automated CLI tool (`npm run lint:themes`) that checks for design token integrity, CSS scoping, brand icon font families, and print hygiene.
+<p align="center">
+  <img src="static/assets/preview.jpg" alt="Resume Studio & Theme Customizer Preview" width="100%" />
+</p>
 
 ---
 
-## 📋 JSON & YAML Resume Standard
+## Features
 
-This viewer validates against the official **JSON Resume Schema v1.0.0**:
-- **Official Specification**: [https://jsonresume.org/schema/](https://jsonresume.org/schema/)
-- **Schema Validator**: Precompiled with Ajv draft-04 for instantaneous client and server validation.
-
-### Why YAML?
-While standard JSON Resume is fully supported, writing your resume in YAML (`resume.yaml`) offers major advantages:
-- Support for inline comments (`# TODO`).
-- Clean multiline strings (`>` and `|`) without messy `\n` escapes.
-- Human-friendly editing with minimal syntax noise.
+- **JSON Resume Standard**: Validated against JSON Resume Schema v1.0.0 using precompiled Ajv validators.
+- **Native YAML Support**: Write your resume in `resume.yaml` with comments and clean multiline strings without syntax escaping.
+- **18 Themes**: Switch between minimal academic styles, split-column layouts, timelines, corporate formats, and retro computing themes.
+- **Customization Studio**:
+  - Live theme switcher.
+  - Accent color picker with pre-tested palettes or custom HEX values.
+  - HTML5 drag-and-drop column layout manager (reorder sections, move between main/sidebar, hide/restore sections).
+  - Theme mode toggling (System / Light / Dark).
+  - Real-time `config.yaml` generator.
+- **URL Parameter Synchronization**: Theme, accent, color mode, and custom layout selections are automatically synchronized to URL query parameters for one-click sharing.
+- **Print & PDF Export**: Dedicated `@media print` stylesheets with A4 page-break controls and background color preservation.
+- **GitHub Gist Loading**: Load resumes dynamically from any public GitHub Gist via `?gist=<GIST_ID>`.
+- **Theme Linter**: CLI tool (`npm run lint:themes`) that verifies design tokens, CSS scoping, brand font usage, and print rules across all themes.
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1. Clone & Install Dependencies
+### 1. Installation
+
 ```bash
 git clone https://github.com/your-username/resume-json-svelte.git
 cd resume-json-svelte
 npm install
 ```
 
-### 2. Add Your Resume
-Place your resume data in `static/resume.yaml` (or `static/resume.json`):
+### 2. Add Your Resume Data
+
+Copy the provided starter template to `static/resume.yaml`:
+
 ```bash
 cp static/resume.example.yaml static/resume.yaml
 ```
 
-### 3. Run Development Server
+### 3. Start the Development Server
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### 4. Build for Production
-To generate an optimized static website in the `build/` directory (ready for GitHub Pages, Cloudflare Pages, Vercel, Netlify, or S3):
+### 4. Build Static Site
+
 ```bash
 npm run build
 ```
 
-Preview the production build locally:
-```bash
-npm run preview
-```
+The output in `build/` can be deployed to any static hosting provider (Cloudflare Pages, GitHub Pages, Vercel, Netlify, or AWS S3).
 
 ---
 
-## 📑 YAML Resume Example
+## Writing Your Resume
 
-Below is a complete `resume.yaml` snippet conforming to the schema (a full copy is available in [`static/resume.example.yaml`](static/resume.example.yaml)):
+You can supply your resume as either `static/resume.yaml` or `static/resume.json`.
+
+### Schema Validation & IDE Autocomplete
+
+To enable auto-completion, field validation, and documentation tooltips in VS Code, Cursor, and other editors, add this line at the top of your `resume.yaml`:
 
 ```yaml
-# Optional theme & layout configuration
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
+```
+
+### Example `resume.yaml`
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
+
+# Optional embedded theme configuration
 _config:
   theme: modern-timeline
   layout:
@@ -102,8 +101,8 @@ basics:
   phone: +1 (555) 234-5678
   url: https://janedoe.dev
   summary: >
-    Passionate software architect with 10+ years of experience building resilient, 
-    distributed web applications and high-throughput microservices in TypeScript, Go, and Rust.
+    Systems architect with experience building distributed applications 
+    and microservices in TypeScript, Go, and Rust.
   location:
     city: San Francisco
     region: California
@@ -121,9 +120,9 @@ work:
     position: Lead Systems Architect
     location: San Francisco, CA
     startDate: '2021-03-01'
-    summary: Architected and scaled Kubernetes-native data processing pipelines.
+    summary: Architected and scaled cloud infrastructure pipelines.
     highlights:
-      - Reduced cloud infrastructure costs by 35% through autoscaling policies.
+      - Reduced infrastructure costs by 35% through autoscaling policies.
       - Mentored an engineering team of 14 across distributed timezones.
 
 education:
@@ -144,73 +143,97 @@ skills:
       - PostgreSQL
 ```
 
+A complete starter template is available in [`static/resume.example.yaml`](static/resume.example.yaml).
+
 ---
 
-## 🔗 URL Query Parameters
+## URL Parameters & Sharing
 
-You can share pre-configured views of any resume by passing query parameters in the URL:
+The application continuously syncs custom configurations to the browser URL using `history.replaceState`. Anyone opening the link will see the exact theme and layout on initial render:
 
-| Parameter | Type | Example | Description |
-| :--- | :--- | :--- | :--- |
-| `theme` | `string` | `?theme=modern-timeline` | Slug of the theme to load |
-| `accent` | `hex` | `&accent=2563eb` | Custom accent HEX color override |
-| `mode` | `enum` | `&mode=dark` | UI color mode (`system`, `light`, `dark`) |
-| `layout` | `string` | `&layout=work,projects\|skills,education` | Custom column arrangement (`main\|sidebar`) |
-| `gist` | `string` | `?gist=8f9a2b4c6d...` | Public GitHub Gist ID containing `resume.json`/`resume.yaml` |
+| Parameter | Example | Description |
+| :--- | :--- | :--- |
+| `theme` | `?theme=modern-timeline` | Theme name to load |
+| `accent` | `&accent=2563eb` | Custom accent HEX color override |
+| `mode` | `&mode=dark` | UI appearance mode (`system`, `light`, `dark`) |
+| `layout` | `&layout=work,projects\|skills,education` | Custom column layout (`main_sections\|sidebar_sections`) |
+| `gist` | `?gist=8f9a2b4c6d...` | Public GitHub Gist ID containing `resume.yaml` or `resume.json` |
 
-#### Shareable URL Example:
+#### Example Shareable URL:
 ```text
-https://your-resume.com/?theme=modern-timeline&accent=0d9488&mode=dark&layout=work,projects,volunteer|skills,education,certificates
+https://your-domain.com/?theme=modern-timeline&accent=0d9488&mode=dark&layout=work,projects|skills,education
 ```
 
+You can copy this link at any time using the **Share URL** button in the Studio drawer header.
+
 ---
 
-## 🎨 Theme Directory
+## Available Themes
 
-All themes reside in `src/lib/themes/` and provide both screen styling and dedicated `@media print` rules:
+Themes are located in `src/lib/themes/` and include dedicated print rules:
 
-| Theme Slug | Style Description | Recommended Accent |
+| Theme Slug | Description | Default Accent |
 | :--- | :--- | :--- |
-| **`classic`** | Traditional black & white single-column resume | `#111827` (Charcoal) |
-| **`modern-timeline`** | Two-tone header with vertical timeline dots & badges | `#2563eb` (Cobalt) |
-| **`executive-slate`** | Premium corporate split sidebar with dark slate nav | `#1e293b` (Navy Slate) |
-| **`elegant-split`** | Sophisticated dual-pane layout with subtle borders | `#2f5233` (Forest) |
-| **`europass`** | Standardized European Commission tabular CV format | `#0e4194` (EU Blue) |
-| **`gov`** | Formal federal serif CV with top banner accent | `#3b82f6` (Federal Blue) |
-| **`editorial`** | New York Times inspired serif newsprint layout | `#b45309` (Amber Ink) |
-| **`noir-city`** | High-contrast film noir monochrome design | `#18181b` (Zinc) |
-| **`tailwind-blueprint`**| Technical blueprint with monospace accents & grid lines | `#0284c7` (Sky Blue) |
-| **`vibe-glow`** | Neon synthwave glow aesthetic with glassmorphism | `#00f0ff` (Cyan Glow) |
-| **`cyber-script`** | Cyberpunk terminal styling with offset shadows | `#ff0055` (Laser Magenta) |
-| **`terminal`** | Retro CRT phosphor green hacker terminal | `#22c55e` (Matrix Green) |
-| **`bio-vision`** | Clean medical and biotechnology palette | `#0d9488` (Teal) |
-| **`neural-botany`** | Organic emerald and lime foliage tones | `#15803d` (Spruce) |
-| **`16bit-amiga`** | Commodore Amiga Workbench 1.3 retro computing style | `#ff8800` (Workbench Orange) |
-| **`8bit-demo`** | Commodore 64 / ZX Spectrum 8-bit demoscene layout | `#55ffff` (C64 Cyan) |
-| **`the-verge`** | Bold editorial tech magazine styling | `#ff005d` (Verge Pink) |
-| **`executive-baseline`**| Strict Harvard black & white corporate layout | `#000000` (Black) |
+| `classic` | Traditional black & white single-column resume | `#111827` |
+| `modern-timeline` | Two-tone header with vertical timeline dots | `#2563eb` |
+| `executive-slate` | Corporate split sidebar with navy navigation | `#1e293b` |
+| `elegant-split` | Dual-pane layout with soft borders | `#2f5233` |
+| `europass` | Standardized European Commission tabular CV | `#0e4194` |
+| `gov` | Formal federal serif format with top accent bar | `#3b82f6` |
+| `editorial` | Newsprint-style serif layout | `#b45309` |
+| `noir-city` | High-contrast monochrome layout | `#18181b` |
+| `tailwind-blueprint` | Technical layout with monospace grid accents | `#0284c7` |
+| `vibe-glow` | Dark neon glow with glassmorphism | `#00f0ff` |
+| `cyber-script` | Terminal layout with offset shadows | `#ff0055` |
+| `terminal` | CRT phosphor green console layout | `#22c55e` |
+| `bio-vision` | Teal and mint palette for technical/scientific CVs | `#0d9488` |
+| `neural-botany` | Emerald and foliage tones | `#15803d` |
+| `16bit-amiga` | Amiga Workbench 1.3 retro computing style | `#ff8800` |
+| `8bit-demo` | Demoscene 8-bit aesthetic | `#55ffff` |
+| `the-verge` | Tech magazine editorial styling | `#ff005d` |
+| `executive-baseline` | Strict Harvard black & white corporate layout | `#000000` |
 
 ---
 
-## 🛠️ Theme Authoring & Linter
+## Theme Authoring & Validation
 
-To create a new theme:
-1. Create a new directory in `src/lib/themes/<theme-name>/`.
-2. Add `config.yaml` defining default layout and section titles.
+To add a new theme:
+
+1. Create a directory in `src/lib/themes/<theme-name>/`.
+2. Add `config.yaml` specifying default layout (`main` and `sidebar` arrays) and section titles (`i18n`).
 3. Add `style.css` scoped under `.theme-<theme-name>`.
-4. Run the theme validator:
+4. Validate theme conformance:
    ```bash
    npm run lint:themes
    ```
 
-The validator checks for:
-- Required design tokens (`--bg`, `--ink`, `--accent`, `--border`, `--font-body`, `--font-heading`).
-- Universal `@media print` rules and `print-color-adjust` declarations.
-- Dangerous `break-inside: avoid` page-break traps.
-- Proper Font Awesome 6 Brand font scoping.
+The linter validates:
+- Presence of required design tokens (`--bg`, `--ink`, `--accent`, `--border`, `--font-body`, `--font-heading`).
+- Print stylesheet rules and `-webkit-print-color-adjust` declarations.
+- Dangerous `break-inside: avoid` page-break declarations on top-level cards.
+- Proper Font Awesome 6 Brands scoping for social icons.
+- Valid JSON Resume section names in `config.yaml`.
 
 ---
 
-## 📜 License
+## Development Commands
 
-MIT License. Open source and free for personal and commercial use.
+```bash
+# Start local development server
+npm run dev
+
+# Run theme linting suite
+npm run lint:themes
+
+# Build static production bundle
+npm run build
+
+# Preview static build locally
+npm run preview
+```
+
+---
+
+## License
+
+MIT License.
