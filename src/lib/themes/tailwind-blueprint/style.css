@@ -1,0 +1,204 @@
+/* Import Tailwind's signature font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* ==========================================
+   THEME: Tailwind UI Blueprint
+   CHARACTERISTICS: SaaS Dashboard, Slate/Indigo 
+   palette, Crisp Borders, Component Cards
+   ========================================== */
+
+.theme-tailwind-blueprint {
+  /* Core Engine Variables */
+  --bg: #f8fafc;          /* slate-50 */
+  --ink: #0f172a;         /* slate-900 */
+  --ink-muted: #475569;   /* slate-600 */
+  --ink-light: #94a3b8;   /* slate-400 */
+  --accent: #4f46e5;      /* indigo-600 */
+  
+  /* Typography */
+  --font-heading: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Theme-Specific Flourishes */
+  --tw-bg-card: #ffffff;      /* white */
+  --tw-accent-light: #e0e7ff; /* indigo-100 */
+  --tw-border: #e2e8f0;       /* slate-200 */
+  --tw-radius: 0.5rem;        /* rounded-lg */
+  --tw-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+
+  /* Apply Base Styles */
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+}
+
+/* --- Typography Overrides --- */
+.theme-tailwind-blueprint h1, 
+.theme-tailwind-blueprint h2, 
+.theme-tailwind-blueprint h3, 
+.theme-tailwind-blueprint h4 {
+  font-family: var(--font-heading);
+}
+
+/* --- Header Section --- */
+.theme-tailwind-blueprint .cv-header {
+  border-bottom: 1px solid var(--tw-border);
+  padding-bottom: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* --- Section Structure --- */
+.theme-tailwind-blueprint .cv-section {
+  margin-bottom: 2.5rem;
+}
+
+.theme-tailwind-blueprint .section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-light);
+  border-bottom: 1px solid var(--tw-border);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* --- Item Wrappers (The Dashboard Cards) --- */
+.theme-tailwind-blueprint .item-wrapper {
+  background-color: var(--tw-bg-card);
+  border: 1px solid var(--tw-border);
+  border-radius: var(--tw-radius);
+  padding: 1.25rem;
+  box-shadow: var(--tw-shadow);
+  margin-bottom: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+.theme-tailwind-blueprint .item-wrapper:hover {
+  border-color: #cbd5e1; /* slate-300 hover state */
+}
+
+/* Layout Independence: Flatten cards if placed in the narrower sidebar */
+.theme-tailwind-blueprint .cv-sidebar .item-wrapper {
+  padding: 1rem;
+  box-shadow: none;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom: 1px solid var(--tw-border);
+  border-radius: 0;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Item Headers & Metadata --- */
+.theme-tailwind-blueprint .item-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 0.5rem;
+}
+
+.theme-tailwind-blueprint .item-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.theme-tailwind-blueprint .item-subtitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  flex-grow: 1; /* Pushes date to the right */
+}
+
+/* The Dashboard Pill Badge for Dates */
+.theme-tailwind-blueprint .item-date {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  background-color: var(--bg);
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid var(--tw-border);
+  white-space: nowrap;
+}
+
+/* --- Content & Summaries --- */
+.theme-tailwind-blueprint .item-summary {
+  font-size: 0.875rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.theme-tailwind-blueprint .item-summary ul {
+  padding-left: 1.25rem;
+  margin-top: 0.5rem;
+  list-style-type: disc;
+}
+
+/* --- Skills & Tags --- */
+.theme-tailwind-blueprint .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.theme-tailwind-blueprint .skill-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  background-color: var(--tw-accent-light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.375rem; /* rounded-md */
+}
+
+/* ==========================================
+   PRINT OPTIMIZATION
+   Strips shadows, maps to PT, saves ink
+   ========================================== */
+@media print {
+  .theme-tailwind-blueprint {
+    /* Strip dark colors for print economy */
+    --bg: #ffffff;
+    --ink: #000000;
+    --ink-muted: #333333;
+    --ink-light: #555555;
+    --tw-bg-card: #ffffff;
+    --tw-shadow: none;
+    
+    font-size: 10pt; /* Map web relative sizing to physical print points */
+  }
+
+  .theme-tailwind-blueprint .cv-header {
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Remove heavy card borders, replace with simple layout dividers */
+  .theme-tailwind-blueprint .item-wrapper {
+    border: none;
+    padding: 0;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
+    break-inside: avoid; /* Core print mechanic: keeps jobs on the same page */
+  }
+
+  /* Flatten the date pills to save colored ink */
+  .theme-tailwind-blueprint .item-date {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    text-align: right;
+  }
+
+  /* Convert filled tags to outlined tags for print */
+  .theme-tailwind-blueprint .skill-tag {
+    background-color: transparent;
+    border: 1px solid var(--ink-light);
+    color: var(--ink);
+  }
+}

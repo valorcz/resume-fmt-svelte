@@ -1,0 +1,154 @@
+/* Theme: 8-Bit Demoscene
+  Vibe: Retro computing, Amiga/C64 tracker aesthetics, high-contrast dark mode.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Share+Tech+Mono&display=swap');
+
+.theme-8bit-demo {
+  /* 1. Core Variables */
+  --bg: #000018;             /* Deep tracker background */
+  --ink: #00ffcc;            /* Phosphor cyan */
+  --ink-muted: #0099aa;      /* Dimmed cyan */
+  --accent: #ff00ff;         /* Pure magenta */
+  
+  --font-heading: 'Press Start 2P', monospace;
+  --font-body: 'Share Tech Mono', monospace;
+  --font-mono: 'Share Tech Mono', monospace;
+
+  /* Spacing & Layout Overrides */
+  --gap-main: 2rem;
+  --radius: 0px;             /* Absolutely no rounded corners in 8-bit! */
+  --border-thickness: 4px;
+}
+
+/* 2. Theme-Specific Overrides */
+
+.theme-8bit-demo .cv-wrapper {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  /* Subtle CRT scanline effect */
+  background-image: linear-gradient(rgba(0, 255, 204, 0.03) 50%, transparent 50%);
+  background-size: 100% 4px;
+}
+
+.theme-8bit-demo .cv-header {
+  border-bottom: var(--border-thickness) dashed var(--accent);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.theme-8bit-demo .section-title {
+  font-family: var(--font-heading);
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 0px #550055;
+}
+
+.theme-8bit-demo .item-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
+}
+
+.theme-8bit-demo .item-title {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  color: var(--ink);
+  margin-bottom: 0.25rem;
+}
+
+.theme-8bit-demo .item-subtitle {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.theme-8bit-demo .item-date {
+  color: var(--ink-muted);
+}
+
+.theme-8bit-demo .item-summary {
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--ink-muted);
+}
+
+/* 3. Skill Tags - Blocky Retro Look */
+.theme-8bit-demo .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-8bit-demo .skill-tag {
+  background: transparent;
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  padding: 0.25rem 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  /* Solid block shadow for that retro depth */
+  box-shadow: 2px 2px 0px var(--accent);
+  transition: all 0.1s ease;
+}
+
+/* 4. Sidebar Specifics */
+.theme-8bit-demo .cv-sidebar {
+  border-left: var(--border-thickness) dashed var(--accent);
+  padding-left: var(--gap-main);
+}
+
+
+/* --- 5. A4 Print Optimization --- */
+@media print {
+  .theme-8bit-demo {
+    /* Invert colors to save ink and ensure standard readability */
+    --bg: #ffffff !important;
+    --ink: #000000 !important;
+    --ink-muted: #555555 !important;
+    --accent: #000000 !important;
+  }
+
+  .theme-8bit-demo .cv-wrapper {
+    background-image: none !important; /* Remove scanlines */
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  /* Map pixel fonts to physical paper sizes */
+  .theme-8bit-demo .cv-header {
+    border-bottom: 2pt solid #000 !important;
+    padding-bottom: 12pt !important;
+    margin-bottom: 12pt !important;
+  }
+
+  .theme-8bit-demo .section-title {
+    font-size: 14pt !important;
+    text-shadow: none !important;
+    margin-bottom: 10pt !important;
+  }
+
+  .theme-8bit-demo .item-title {
+    font-size: 11pt !important;
+  }
+
+  .theme-8bit-demo .item-summary {
+    font-size: 9.5pt !important;
+    border-left: 1pt solid #000 !important;
+  }
+
+  .theme-8bit-demo .skill-tag {
+    font-size: 7.5pt !important;
+    border: 1pt solid #000 !important;
+    box-shadow: none !important; /* Strip heavy shadows for printing */
+  }
+  
+  .theme-8bit-demo .cv-sidebar {
+    border-left: 1pt dashed #000 !important;
+  }
+}

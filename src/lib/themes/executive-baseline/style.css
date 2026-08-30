@@ -1,0 +1,195 @@
+/* Import traditional typesetter font */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&display=swap');
+
+/* ==========================================
+   THEME: The Executive Baseline
+   CHARACTERISTICS: Wall Street / Harvard standard,
+   High-density, Strict Black & White, Serif-driven
+   ========================================== */
+
+.theme-executive-baseline {
+  /* Core Engine Variables */
+  --bg: #ffffff;          /* Pure White */
+  --ink: #000000;         /* Pure Black */
+  --ink-muted: #222222;   /* Very dark gray */
+  --ink-light: #444444;   /* Dark gray */
+  --accent: #000000;      /* No colors allowed in strict executive */
+  
+  /* Typography */
+  --font-heading: 'EB Garamond', 'Times New Roman', Times, serif;
+  --font-body: 'EB Garamond', 'Times New Roman', Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Theme-Specific Variables */
+  --exec-rule: 1px solid #000000;
+
+  /* Apply Base Styles */
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.4;
+  font-size: 11pt; /* Starts with print-friendly sizing even on web */
+}
+
+/* --- Typography Overrides --- */
+.theme-executive-baseline h1, 
+.theme-executive-baseline h2, 
+.theme-executive-baseline h3, 
+.theme-executive-baseline h4 {
+  font-family: var(--font-heading);
+  color: var(--ink);
+  margin: 0;
+}
+
+/* --- Header Section --- */
+.theme-executive-baseline .cv-header {
+  text-align: center; /* Executive resumes almost always center the header */
+  margin-bottom: 1.5rem;
+}
+
+.theme-executive-baseline .cv-header h1 {
+  font-size: 24pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+/* --- Section Structure --- */
+.theme-executive-baseline .cv-section {
+  margin-bottom: 1.25rem;
+}
+
+.theme-executive-baseline .section-title {
+  font-size: 12pt;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  border-bottom: var(--exec-rule);
+  padding-bottom: 0.15rem;
+  margin-bottom: 0.75rem;
+}
+
+/* --- Item Wrappers (No Cards, Pure Text) --- */
+.theme-executive-baseline .item-wrapper {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  margin-bottom: 0.85rem;
+}
+
+/* Layout Independence: Looks identical in sidebar or main */
+.theme-executive-baseline .cv-sidebar .item-wrapper {
+  margin-bottom: 0.85rem;
+}
+
+/* --- Item Headers & Metadata --- */
+.theme-executive-baseline .item-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline; /* Critical for serif fonts */
+  margin-bottom: 0.15rem;
+}
+
+.theme-executive-baseline .item-title {
+  font-size: 11pt;
+  font-weight: 700; /* Bold the company/title */
+  color: var(--ink);
+}
+
+.theme-executive-baseline .item-subtitle {
+  font-size: 11pt;
+  font-style: italic; /* Classic designation for roles/degrees */
+  font-weight: 400;
+  color: var(--ink);
+  flex-grow: 1;
+  margin-left: 0.5rem;
+}
+
+.theme-executive-baseline .item-subtitle::before {
+  content: "— "; /* Typographical flourish separating title and subtitle */
+}
+
+.theme-executive-baseline .item-date {
+  font-size: 11pt;
+  font-weight: 400;
+  color: var(--ink);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* --- Content & Summaries --- */
+.theme-executive-baseline .item-summary {
+  font-size: 10.5pt;
+  color: var(--ink-muted);
+  line-height: 1.35;
+}
+
+.theme-executive-baseline .item-summary p {
+  margin-bottom: 0.25rem;
+}
+
+.theme-executive-baseline .item-summary ul {
+  padding-left: 1.5rem;
+  margin-top: 0.15rem;
+  margin-bottom: 0;
+  list-style-type: square; /* Formal bullet point */
+}
+
+.theme-executive-baseline .item-summary li {
+  margin-bottom: 0.15rem;
+  padding-left: 0.25rem;
+}
+
+/* --- Skills & Tags (Stripped of Badges) --- */
+.theme-executive-baseline .skill-keywords {
+  display: inline; /* Force inline text rendering instead of flex wrap */
+}
+
+.theme-executive-baseline .skill-tag {
+  font-size: 10.5pt;
+  font-weight: 400;
+  color: var(--ink);
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  display: inline;
+}
+
+/* Automatically add commas between skill tags to mimic a written list */
+.theme-executive-baseline .skill-tag:not(:last-child)::after {
+  content: ", ";
+  margin-right: 0.25rem;
+}
+
+/* ==========================================
+   PRINT OPTIMIZATION
+   Already heavily optimized, enforcing strict
+   pt units and pagination rules.
+   ========================================== */
+@media print {
+  .theme-executive-baseline {
+    --bg: #ffffff;
+    --ink: #000000;
+    --ink-muted: #000000; /* Force pitch black for laser printing */
+    
+    font-size: 11pt;
+  }
+
+  .theme-executive-baseline .cv-header {
+    margin-bottom: 1rem;
+  }
+
+  .theme-executive-baseline .item-wrapper {
+    margin-bottom: 1rem;
+    break-inside: avoid; /* Prevent orphaned dates/titles */
+  }
+
+  /* Ensure the strict black line prints clearly */
+  .theme-executive-baseline .section-title {
+    border-bottom: 1pt solid #000000;
+  }
+}

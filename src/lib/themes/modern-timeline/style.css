@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+.theme-modern-timeline {
+    /* --- Core Variables --- */
+    --accent: #2b2b36; 
+    --accent-text: #ffffff;
+    --bg: #ffffff;
+    --sidebar-bg: #e6e6e6;
+    --ink: #333333;
+    --line-color: #888888;
+    
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.5;
+    box-sizing: border-box; 
+}
+
+.theme-modern-timeline *,
+.theme-modern-timeline *::before,
+.theme-modern-timeline *::after {
+    box-sizing: inherit;
+}
+
+/* --- Layout & Two-Tone Background --- */
+.theme-modern-timeline .cv-wrapper {
+    /* 33% gray on left, 67% white on right */
+    background: linear-gradient(to right, var(--sidebar-bg) 0%, var(--sidebar-bg) 33%, var(--bg) 33%, var(--bg) 100%);
+    min-height: 100vh;
+}
+
+.theme-modern-timeline .cv-layout {
+    display: flex;
+    flex-direction: row !important; /* Force Side-by-Side */
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: flex-start; /* Prevent columns from stretching awkwardly */
+}
+
+/* FIX: Ensure Sidebar is strictly on the left */
+.theme-modern-timeline .cv-sidebar {
+    width: 33%;
+    padding: 2rem 2.5rem;
+    order: 1 !important; 
+}
+
+.theme-modern-timeline .cv-main {
+    width: 67%;
+    padding: 2rem 3rem;
+    order: 2 !important; 
+}
+
+/* --- The Header Grid --- */
+.theme-modern-timeline .cv-header {
+    /* FIX: Isolation creates a new stacking context. 
+       This prevents the -1 z-index bar from falling behind the page background! */
+    isolation: isolate; 
+    position: relative;
+    display: grid;
+    grid-template-columns: 33% 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: center;
+    padding-top: 3rem; 
+    padding-bottom: 2rem;
+}
+
+/* The Spanning Dark Bar */
+.theme-modern-timeline .cv-header::before {
+    content: "";
+    position: absolute;
+    top: 2rem;       
+    bottom: 2rem;    
+    left: 0;         
+    right: 0;        
+    background-color: var(--accent);
+    z-index: -1; /* Safely trapped behind text by isolation: isolate */
+}
+
+.theme-modern-timeline .header-content {
+    grid-column: 2;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Force header text to white */
+.theme-modern-timeline .header-content * {
+    color: var(--accent-text) !important;
+}
+
+.theme-modern-timeline .header-name {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 0.25rem;
+}
+
+.theme-modern-timeline .header-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: lowercase;
+    opacity: 0.9;
+}
+
+.theme-modern-timeline .profile-image {
+    grid-column: 1;
+    grid-row: 1 / 10; 
+    justify-self: center;
+    width: 190px;
+    height: 190px;
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%;
+    border: 8px solid var(--sidebar-bg); 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    object-fit: cover;
+}
+
+/* --- Section Titles --- */
+.theme-modern-timeline .section-title {
+    font-family: var(--font-heading);
+    font-size: 1.25rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 0.5rem;
+}
+
+/* --- Main Content: The Timeline --- */
+/* FIX: Removed the aggressive > div resets that destroyed the Education section */
+.theme-modern-timeline .cv-main .item-card {
+    position: relative;
+    /* Reintroduced natural padding so it breathes */
+    padding: 0 0 2rem 2rem; 
+    border-left: 2px solid var(--ink); /* Thicker line is more robust */
+}
+
+.theme-modern-timeline .cv-main .item-card:last-child {
+    border-left-color: transparent;
+}
+
+.theme-modern-timeline .cv-main .item-card::before {
+    content: "";
+    position: absolute;
+    left: -8px; /* Centers a 14px circle over a 2px border */
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    background-color: var(--bg);
+}
+
+.theme-modern-timeline .item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.theme-modern-timeline .item-title {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--ink);
+}
+
+.theme-modern-timeline .item-date {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--line-color);
+    text-align: right;
+    margin-left: auto; 
+}
+
+.theme-modern-timeline .item-subtitle {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--ink);
+}
+
+/* --- Sidebar Specifics --- */
+.theme-modern-timeline .cv-sidebar .section-title {
+    border-bottom: 1px solid var(--line-color);
+}
+
+.theme-modern-timeline .cv-sidebar .skill-keywords {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; 
+}
+
+.theme-modern-timeline .cv-sidebar .skill-keyword {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    font-size: 0.9rem; 
+}
+
+.theme-modern-timeline .cv-sidebar .skill-keyword::after {
+    content: "";
+    display: block;
+    height: 3px; 
+    background-color: var(--ink);
+    width: 100%;
+    margin-top: 2px; 
+    border-radius: 2px;
+}
+
+/* --- A4 Print Optimization --- */
+@media print {
+    .theme-modern-timeline {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .theme-modern-timeline .cv-wrapper { min-height: 0 !important; }
+    
+    .theme-modern-timeline .cv-layout {
+        display: block !important;
+    }
+
+    .theme-modern-timeline .cv-sidebar {
+        float: left !important;
+        width: 33% !important;
+    }
+
+    .theme-modern-timeline .cv-main {
+        float: left !important;
+        width: 67% !important;
+    }
+
+    .theme-modern-timeline .cv-layout::after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .theme-modern-timeline .item-card {
+        page-break-inside: auto !important;
+        break-inside: auto !important;
+    }
+}

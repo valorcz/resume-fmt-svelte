@@ -36,7 +36,10 @@ body {
 }
 
 /* --- Headers --- */
-.cv-header { margin-bottom: 2rem; }
+.cv-header { 
+   margin-bottom: 2rem; 
+   isolation: isolate;
+}
 
 .cv-name {
   font-family: var(--font-heading);
@@ -76,6 +79,7 @@ body {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2.5rem; 
+  isolation: isolate;
 }
 
 /* --- Sections --- */
