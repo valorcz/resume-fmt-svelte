@@ -1,0 +1,314 @@
+/* ==========================================================================
+   THEME: ELEGANT SPLIT (Academic / White / Right-Sidebar)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap');
+
+.theme-elegant-split {
+  /* Core Variables */
+  --bg: #ffffff;
+  --surface: #f9fafb; /* Soft contrast for skill pills */
+  --ink: #111827; /* Deep slate, softer than absolute black */
+  --muted: #4b5563; 
+  
+  /* Color Palette */
+  --accent: #2f5233; /* Deep, elegant forest green */
+  --accent-light: #dce8d5; /* Soft pale green for borders/accents */
+  
+  --border: #e5e7eb;
+  
+  /* Typography */
+  --font-body: 'Merriweather', serif;
+  --font-heading: 'Merriweather', serif;
+  --font-mono: 'Inter', sans-serif; 
+}
+
+/* --- Master Wrapper & Graphic Flourish --- */
+.theme-elegant-split .cv-wrapper {
+  padding: 4rem;
+  background-color: var(--bg); 
+  color: var(--ink);
+  position: relative;
+}
+
+/* Modern Gradient Top Bar */
+.theme-elegant-split .cv-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%);
+}
+
+/* --- The Header --- */
+.theme-elegant-split .cv-header {
+  display: grid;
+  grid-template-columns: 1fr 240px; 
+  column-gap: 4rem; 
+  grid-template-rows: max-content max-content max-content 1fr;
+  margin-bottom: 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Left Column */
+.theme-elegant-split .cv-name { 
+  grid-column: 1; grid-row: 1;
+  font-family: var(--font-heading);
+  font-size: 3.2rem; 
+  line-height: 1.1; 
+  font-weight: 900; 
+  letter-spacing: -1px;
+  color: var(--ink); 
+  margin: 0 0 0.5rem 0;
+}
+
+.theme-elegant-split .cv-title { 
+  grid-column: 1; grid-row: 2;
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.5rem;
+}
+
+/* Font Awesome Contact Injection */
+.theme-elegant-split .cv-contact { 
+  grid-column: 1; grid-row: 3;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: var(--font-mono); 
+  font-size: 0.95rem;
+  color: var(--muted);
+  padding: 0; margin: 0;
+}
+.theme-elegant-split .cv-contact a { color: var(--muted); text-decoration: none; }
+.theme-elegant-split .cv-contact a:hover { color: var(--accent); }
+
+/* Apply Icons to Contact Items */
+.theme-elegant-split .cv-contact .contact-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.theme-elegant-split .cv-contact .contact-item::before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  color: var(--accent);
+  width: 1.25rem;
+  text-align: center;
+}
+.theme-elegant-split .contact-location::before { content: "\f3c5"; } /* Location */
+.theme-elegant-split .contact-email::before { content: "\f0e0"; }    /* Email */
+.theme-elegant-split .contact-phone::before { content: "\f095"; }    /* Phone */
+.theme-elegant-split .contact-url::before { content: "\f0c1"; }      /* Website */
+.theme-elegant-split .contact-profile::before { content: "\f0c1"; }  /* Default profile */
+.theme-elegant-split .cv-contact .contact-profile-github::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-elegant-split .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-elegant-split .cv-contact .contact-profile-twitter::before,
+.theme-elegant-split .cv-contact .contact-profile-x::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
+/* Right Column */
+.theme-elegant-split .cv-summary { 
+  grid-column: 2; 
+  grid-row: 1 / 4; 
+  align-self: start;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  padding: 0;
+}
+
+.theme-elegant-split .cv-image {
+  grid-column: 2;
+  grid-row: 4; 
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+
+/* --- Master Layout --- */
+.theme-elegant-split .cv-layout {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 4rem; 
+  width: 100%;
+}
+
+.theme-elegant-split .cv-main { order: 1; flex: 1; min-width: 0; }
+.theme-elegant-split .cv-sidebar { order: 2; flex: 0 0 240px; max-width: 240px; }
+
+
+/* --- Font Awesome Section Headers --- */
+.theme-elegant-split .section-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 2px solid var(--accent-light);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-elegant-split .section-title::before {
+  font-family: "Font Awesome 6 Free", "Font Awesome 5 Free";
+  font-weight: 900;
+  color: var(--accent);
+  font-size: 1.1rem;
+}
+.theme-elegant-split .section-work .section-title::before { content: "\f0b1"; }
+.theme-elegant-split .section-education .section-title::before { content: "\f19d"; }
+.theme-elegant-split .section-skills .section-title::before { content: "\f0ad"; }
+.theme-elegant-split .section-languages .section-title::before { content: "\f0ac"; }
+.theme-elegant-split .section-projects .section-title::before { content: "\f02b"; }
+.theme-elegant-split .section-volunteer .section-title::before { content: "\f4c4"; }
+.theme-elegant-split .section-certificates .section-title::before { content: "\f0a3"; }
+.theme-elegant-split .section-references .section-title::before { content: "\f007"; }
+
+
+/* --- Main Column Items --- */
+.theme-elegant-split .item-card { margin-bottom: 2rem; }
+
+.theme-elegant-split .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.theme-elegant-split .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  flex: 1 1 auto;
+}
+
+.theme-elegant-split .item-title { 
+  font-family: var(--font-heading);
+  font-size: 1.05rem; 
+  font-weight: 700;
+  color: var(--ink); 
+}
+
+.theme-elegant-split .item-subtitle { 
+  font-family: var(--font-body);
+  font-size: 1.05rem; 
+  font-weight: 400;
+  color: var(--ink); 
+}
+.theme-elegant-split .item-subtitle::before { content: "— "; color: var(--accent); }
+
+.theme-elegant-split .item-date { 
+  font-family: var(--font-mono);
+  font-size: 0.85rem; 
+  color: var(--accent); 
+  white-space: nowrap;
+  margin-left: auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.theme-elegant-split .item-summary,
+.theme-elegant-split .item-highlights li { 
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.7; 
+  color: var(--muted); 
+}
+.theme-elegant-split .item-highlights li { margin-bottom: 0.5rem; }
+
+
+/* --- Sidebar Specifics & Modern Pills --- */
+.theme-elegant-split .cv-sidebar .item-title { font-weight: 700; color: var(--ink); }
+.theme-elegant-split .cv-sidebar .item-title::before { display: none; }
+.theme-elegant-split .cv-sidebar .item-date { color: var(--muted); margin-bottom: 0.5rem; }
+
+.theme-elegant-split .skill-group { margin-bottom: 1.5rem; }
+.theme-elegant-split .skill-name { 
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  display: block;
+} 
+
+.theme-elegant-split .skill-keywords {
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 0.5rem;
+}
+
+.theme-elegant-split .skill-tag {
+  display: inline-block; 
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-family: var(--font-mono);
+  color: var(--muted);
+  font-size: 0.85rem; 
+}
+
+
+/* --- A4 Print Optimization --- */
+@media print {
+  .theme-elegant-split .cv-wrapper { 
+    padding: 0 !important; 
+    box-shadow: none !important; 
+    font-size: 10pt !important; 
+  }
+  
+  /* Strip web-only graphics for clean ink printing */
+  .theme-elegant-split .cv-wrapper::before { display: none !important; }
+  .theme-elegant-split .skill-tag { 
+    border: none !important; 
+    background: none !important; 
+    padding: 0 !important;
+    font-family: var(--font-body) !important;
+  }
+  .theme-elegant-split .skill-tag::after { content: ", "; }
+  .theme-elegant-split .skill-tag:last-child::after { content: ""; }
+
+  .theme-elegant-split .cv-header { 
+    grid-template-columns: 1fr 180px !important; 
+    gap: 2rem !important; 
+    border-bottom: 1px solid #000 !important;
+  }
+  
+  .theme-elegant-split .section-title {
+    border-bottom: 1px solid #000 !important;
+    color: #000 !important;
+  }
+  .theme-elegant-split .section-title::before,
+  .theme-elegant-split .cv-contact span::before {
+    color: #000 !important;
+  }
+  
+  .theme-elegant-split .item-date,
+  .theme-elegant-split .cv-title { 
+    color: #000 !important; 
+  }
+
+  .theme-elegant-split .cv-layout { gap: 2rem !important; }
+  .theme-elegant-split .cv-sidebar { flex: 0 0 180px !important; }
+}

@@ -1,0 +1,243 @@
+/* Theme: 16-Bit Workbench
+   Vibe: Amiga OS 2.0/3.0, early 90s GUI, professional workstation, 3D bevels.
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+.theme-16bit-amiga {
+  /* 1. Core Variables */
+  --bg: #aaaaaa;             /* Classic Workbench desktop grey */
+  --surface: #ffffff;        /* Application window white */
+  --ink: #000000;            /* Crisp black text */
+  --ink-muted: #444444;      /* Subdued text */
+  --accent: #0055aa;         /* Workbench active blue */
+  --accent-warm: #f57900;    /* Amiga cursor orange */
+  
+  /* Chakra Petch gives that squared-off 16-bit vector feel; Plex Mono ensures high readability */
+  --font-heading: 'Chakra Petch', sans-serif;
+  --font-body: 'IBM Plex Mono', monospace;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Spacing & Custom UI Variables */
+  --gap-main: 1.5rem;
+  --bevel-light: #ffffff;
+  --bevel-dark: #000000;
+}
+
+/* 2. Global Layout & "Desktop" Background */
+.theme-16bit-amiga .cv-wrapper {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  padding: 1rem;
+}
+
+/* 3. The Menu Bar (Header) */
+.theme-16bit-amiga .cv-header {
+  background-color: var(--surface);
+  color: var(--accent);
+  /* Classic 3D Outset Bevel */
+  border-top: 2px solid var(--bevel-light);
+  border-left: 2px solid var(--bevel-light);
+  border-right: 2px solid var(--bevel-dark);
+  border-bottom: 2px solid var(--bevel-dark);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* 4. The Windows (Sections) */
+.theme-16bit-amiga .cv-section {
+  background-color: var(--surface);
+  border-top: 2px solid var(--bevel-light);
+  border-left: 2px solid var(--bevel-light);
+  border-right: 2px solid var(--bevel-dark);
+  border-bottom: 2px solid var(--bevel-dark);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+/* 5. Window Title Bars */
+.theme-16bit-amiga .section-title {
+  background-color: var(--accent);
+  color: var(--bevel-light);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 2px solid var(--bevel-dark);
+  position: relative;
+}
+
+/* Amiga Close Gadget (Left) */
+.theme-16bit-amiga .section-title::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--surface);
+  border-top: 2px solid var(--bevel-light);
+  border-left: 2px solid var(--bevel-light);
+  border-right: 2px solid var(--bevel-dark);
+  border-bottom: 2px solid var(--bevel-dark);
+}
+
+/* Amiga Depth/Scale Gadget (Right) */
+.theme-16bit-amiga .section-title::after {
+  content: "";
+  position: absolute;
+  right: 6px;
+  width: 14px;
+  height: 14px;
+  background-color: var(--surface);
+  border-top: 2px solid var(--bevel-dark);
+  border-left: 2px solid var(--bevel-dark);
+  border-right: 2px solid var(--bevel-light);
+  border-bottom: 2px solid var(--bevel-light);
+}
+
+/* 6. Content Formatting */
+.theme-16bit-amiga .section-content {
+  padding: 0 1.25rem;
+}
+
+.theme-16bit-amiga .item-card,
+.theme-16bit-amiga .item-wrapper {
+  margin-bottom: 1.5rem;
+}
+
+.theme-16bit-amiga .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  border-bottom: 1px dotted var(--bg);
+  padding-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-16bit-amiga .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
+}
+
+.theme-16bit-amiga .item-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.theme-16bit-amiga .item-subtitle {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.theme-16bit-amiga .item-date {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+/* 7. Beveled Buttons (Skills) */
+.theme-16bit-amiga .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-16bit-amiga .skill-tag {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  padding: 0.25rem 0.5rem;
+  /* Outset bevel makes them look like clickable 90s GUI buttons */
+  border-top: 2px solid var(--bevel-light);
+  border-left: 2px solid var(--bevel-light);
+  border-right: 2px solid var(--bevel-dark);
+  border-bottom: 2px solid var(--bevel-dark);
+  text-transform: uppercase;
+}
+
+
+/* --- 8. A4 Print Optimization --- */
+@media print {
+  .theme-16bit-amiga {
+    /* Strip the grey desktop and blue accents to save ink */
+    --bg: #ffffff !important;
+    --surface: #ffffff !important;
+    --ink: #000000 !important;
+    --ink-muted: #555555 !important;
+    --accent: #000000 !important;
+  }
+
+  .theme-16bit-amiga .cv-wrapper {
+    padding: 0 !important;
+  }
+
+  /* Flatten 3D borders into clean, professional lines */
+  .theme-16bit-amiga .cv-header,
+  .theme-16bit-amiga .cv-section {
+    border: none !important;
+    padding-bottom: 0 !important;
+  }
+  
+  .theme-16bit-amiga .cv-header {
+    border-bottom: 2pt solid #000 !important;
+    padding-bottom: 12pt !important;
+  }
+
+  .theme-16bit-amiga .section-title {
+    background-color: transparent !important;
+    color: #000 !important;
+    border-top: 1pt solid #000 !important;
+    border-bottom: 1pt solid #000 !important;
+    font-size: 12pt !important;
+    padding: 4pt 0 !important;
+    justify-content: flex-start !important;
+  }
+
+  /* Remove the Amiga window gadgets for the printed PDF */
+  .theme-16bit-amiga .section-title::before,
+  .theme-16bit-amiga .section-title::after {
+    display: none !important;
+  }
+
+  .theme-16bit-amiga .section-content {
+    padding: 0 !important;
+    margin-top: 8pt !important;
+  }
+
+  /* Typographic pt mapping */
+  .theme-16bit-amiga .item-title {
+    font-size: 11pt !important;
+  }
+
+  .theme-16bit-amiga .item-subtitle,
+  .theme-16bit-amiga .item-date {
+    font-size: 9.5pt !important;
+  }
+
+  .theme-16bit-amiga .item-summary {
+    font-size: 9pt !important;
+  }
+
+  /* Flatten the skill buttons into clean solid retro tags */
+  .theme-16bit-amiga .skill-tag {
+    background-color: #e2e8f0 !important;
+    border: 1pt solid #000000 !important;
+    color: #000000 !important;
+    font-size: 7.5pt !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 2px !important;
+  }
+}

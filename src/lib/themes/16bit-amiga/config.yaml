@@ -1,0 +1,15 @@
+theme: 16bit-amiga
+layout:
+  main:
+    - work
+    - projects
+    - volunteer
+    - publications
+  sidebar:
+    - skills
+    - languages
+    - education
+    - certificates
+    - awards
+    - interests
+    - references

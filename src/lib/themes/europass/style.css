@@ -73,14 +73,25 @@
   padding: 0; 
   margin-bottom: 1rem;
 }
-.theme-europass .cv-contact span::after { display: none; } /* Remove separators */
+.theme-europass .cv-contact .contact-item::after { display: none; } /* Remove separators */
 
-/* Inject text labels instead of icons (Location:, Phone:, Email:) */
-.theme-europass .cv-contact span::before { font-weight: 700; color: var(--accent); width: 80px; display: inline-block; }
-.theme-europass .cv-contact span:nth-child(1)::before { content: "Location"; }
-.theme-europass .cv-contact span:nth-child(2)::before { content: "Phone"; }
-.theme-europass .cv-contact span:nth-child(3)::before { content: "Email"; }
-.theme-europass .cv-contact span:nth-child(n+4)::before { content: "Link"; }
+/* Inject text labels instead of icons (Location:, Phone:, Email:, GitHub:, LinkedIn:) */
+.theme-europass .cv-contact .contact-item::before { 
+  font-family: var(--font-body);
+  font-weight: 700; 
+  color: var(--accent); 
+  width: 80px; 
+  display: inline-block; 
+}
+.theme-europass .contact-location::before { content: "Location"; }
+.theme-europass .contact-phone::before { content: "Phone"; }
+.theme-europass .contact-email::before { content: "Email"; }
+.theme-europass .contact-url::before { content: "Website"; }
+.theme-europass .contact-profile::before { content: "Profile"; }
+.theme-europass .contact-profile-github::before { content: "GitHub"; font-family: var(--font-body); font-weight: 700; }
+.theme-europass .contact-profile-linkedin::before { content: "LinkedIn"; font-family: var(--font-body); font-weight: 700; }
+.theme-europass .contact-profile-twitter::before,
+.theme-europass .contact-profile-x::before { content: "Twitter"; font-family: var(--font-body); font-weight: 700; }
 
 /* --- Master Layout (Flattened & Tabular) --- */
 .theme-europass .cv-layout { display: block; }
@@ -91,6 +102,7 @@
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 2rem;
+  align-items: start;
   margin-bottom: 1.5rem;
 }
 
@@ -103,6 +115,8 @@
   border: none;
   padding: 0;
   margin: 0;
+  align-self: start;
+  display: block;
 }
 .theme-europass .section-title::before { display: none; } /* Remove icons */
 
@@ -124,30 +138,42 @@
 
 .theme-europass .item-header { 
   display: flex; 
-  flex-direction: column;
-  margin-bottom: 0.5rem; 
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.4rem; 
+}
+
+.theme-europass .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
 }
 
 .theme-europass .item-title { 
   font-size: 1.05rem; 
   font-weight: 700; 
   color: var(--ink); 
-  margin-bottom: 0.2rem;
+  margin: 0;
 }
 
 .theme-europass .item-subtitle { 
   font-size: 0.95rem; 
   font-weight: 400; 
   color: var(--muted); 
-  margin-bottom: 0.2rem;
+  margin: 0;
 }
+.theme-europass .item-subtitle::before { content: "— "; color: var(--accent); }
 
 .theme-europass .item-date {
   font-size: 0.85rem;
   color: var(--accent); /* Classic EU Blue dates */
   font-weight: 700;
+  white-space: nowrap;
+  margin-left: auto;
   margin: 0;
-  order: 3; /* Ensures date securely anchors the bottom of the title block */
 }
 
 /* Pushes descriptions safely below the headers */
@@ -202,7 +228,7 @@
   /* Preserve the injected labels on print */
   .theme-europass .cv-wrapper::before,
   .theme-europass .cv-header::before,
-  .theme-europass .cv-contact span::before {
+  .theme-europass .cv-contact .contact-item::before {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -212,8 +238,8 @@
   .theme-europass .cv-main, .theme-europass .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
   
   /* Scale the master grids for paper */
-  .theme-europass .cv-header, .theme-europass .cv-section { display: grid !important; grid-template-columns: 140px 1fr !important; gap: 1.5rem !important; }
-  .theme-europass .section-title { display: block !important; font-size: 9.5pt !important; }
+  .theme-europass .cv-header, .theme-europass .cv-section { display: grid !important; grid-template-columns: 140px 1fr !important; gap: 1.5rem !important; align-items: start !important; }
+  .theme-europass .section-title { display: block !important; font-size: 9.5pt !important; align-self: start !important; }
   .theme-europass .section-content { display: block !important; border-left: 1.5pt solid var(--accent) !important;}
   
   /* Print-safe flattened items */

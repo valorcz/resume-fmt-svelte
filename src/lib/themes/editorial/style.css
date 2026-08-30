@@ -1,0 +1,242 @@
+/* ==========================================================================
+   THEME: EDITORIAL (Newspaper Broadsheet)
+   ========================================================================== */
+
+/* 1. TYPOGRAPHY IMPORT (Mandatory for custom fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+
+/* 2. CORE VARIABLES */
+.theme-editorial {
+  /* Warm, aged newsprint palette */
+  --bg: #f4f1ea; 
+  --surface: #fdfbf7;
+  --ink: #111111;
+  --muted: #4a4a4a;
+  --accent: #8b1a1a; /* Deep editorial red for subtle highlights */
+  --border: #dcd7ca;
+  --border-heavy: #111111;
+  
+  /* Classic editorial font stack */
+  --font-body: 'Lora', serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-mono: 'Inter', sans-serif;
+  
+  --screen-shadow: 0 10px 40px rgba(0,0,0,0.06);
+}
+
+/* ==========================================================================
+   3. UI OVERRIDES (The Newspaper Aesthetic)
+   ========================================================================== */
+
+/* --- The Masthead (Header) --- */
+.theme-editorial .cv-header {
+  text-align: center;
+  border-bottom: 5px double var(--border-heavy);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 5px);
+}
+
+.theme-editorial .cv-name {
+  font-family: var(--font-heading);
+  font-size: 4rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.theme-editorial .cv-title {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.theme-editorial .cv-contact {
+  justify-content: center;
+  border-top: 1px solid var(--border-heavy);
+  padding-top: 0.8rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+/* --- Section Headlines --- */
+.theme-editorial .section-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-top: 3px solid var(--border-heavy);
+  border-bottom: 1px solid var(--border-heavy);
+  padding: 0.4rem 0;
+  margin-bottom: 1.5rem;
+  color: var(--ink);
+}
+
+/* --- The "Lead Article" Drop Cap (Summary) --- */
+.theme-editorial .cv-summary p::first-letter,
+.theme-editorial .section-summary p::first-letter {
+  font-family: var(--font-heading);
+  font-size: 4.2rem;
+  float: left;
+  line-height: 0.7;
+  padding-right: 8px;
+  padding-top: 6px;
+  color: var(--ink);
+}
+
+/* --- Item Styling (The Articles) --- */
+.theme-editorial .item-card,
+.theme-editorial .item-wrapper {
+  margin-bottom: 1.8rem;
+}
+
+.theme-editorial .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.theme-editorial .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
+}
+
+.theme-editorial .item-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.theme-editorial .item-subtitle {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink);
+  margin: 0;
+}
+.theme-editorial .item-subtitle::before { content: "— "; font-style: normal; color: var(--accent); }
+
+/* Dateline styling for dates */
+.theme-editorial .item-date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+.theme-editorial .section-publications .item-date::before { 
+  content: "— PUBLISHED: "; 
+  color: var(--muted);
+}
+
+/* --- Sidebar Column Separator --- */
+.theme-editorial .cv-layout {
+  gap: 2.5rem;
+}
+
+.theme-editorial .cv-sidebar {
+  border-left: 1px solid var(--border);
+  padding-left: 2.5rem;
+}
+
+/* --- Dot-separated Skills --- */
+.theme-editorial .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.theme-editorial .skill-tag {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.95rem;
+  font-family: var(--font-body);
+}
+
+.theme-editorial .skill-tag::after {
+  content: " \2022 "; /* Bullet point */
+  color: var(--accent);
+  margin: 0 0.5rem;
+}
+
+.theme-editorial .skill-tag:last-child::after {
+  content: "";
+}
+
+/* ==========================================================================
+   4. A4 PRINT OPTIMIZATION
+   ========================================================================== */
+@media print {
+  .theme-editorial {
+    /* Strip the newsprint color to save printer ink */
+    --bg: #ffffff !important;
+    --surface: #ffffff !important;
+    --screen-shadow: none !important;
+  }
+
+  .theme-editorial .cv-wrapper { 
+    font-size: 10pt !important; 
+    line-height: 1.4 !important; 
+  }
+  
+  .theme-editorial .cv-name { 
+    font-size: 28pt !important; 
+  }
+  
+  .theme-editorial .cv-title { 
+    font-size: 10pt !important; 
+  }
+  
+  .theme-editorial .cv-header {
+    border-bottom: 3pt double #000 !important;
+    padding-bottom: 12pt !important;
+    margin-bottom: 16pt !important;
+    background-image: none !important;
+  }
+
+  .theme-editorial .cv-contact { 
+    font-size: 8.5pt !important; 
+    border-top: 1pt solid #000 !important;
+  }
+  
+  .theme-editorial .section-title { 
+    font-size: 13pt !important; 
+    border-top: 2pt solid #000 !important;
+    border-bottom: 0.5pt solid #000 !important;
+  }
+  
+  .theme-editorial .item-title { 
+    font-size: 12pt !important; 
+  }
+  
+  .theme-editorial .item-subtitle { 
+    font-size: 10pt !important; 
+  }
+  
+  .theme-editorial .item-date { 
+    font-size: 8pt !important; 
+    color: #000 !important; /* Force black ink */
+  }
+
+  .theme-editorial .cv-sidebar {
+    border-left: 0.5pt solid #ccc !important;
+    padding-left: 18pt !important;
+  }
+}

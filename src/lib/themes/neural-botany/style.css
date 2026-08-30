@@ -1,0 +1,327 @@
+/* Import Fonts: Space Grotesk (Tech/AI) and Inter (Clean Body) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Space+Grotesk:wght@400;600;700&family=Fira+Code:wght@400&display=swap');
+
+/* --- Biological Pulse Animation --- */
+@keyframes bio-pulse {
+  0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.3); }
+  50% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); border-color: rgba(16, 185, 129, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.3); }
+}
+
+/* --- Base Theme Variables & Scope --- */
+.theme-neural-botany {
+  /* Colors: Canopy Dark, Bioluminescent Green, and Cyan */
+  --bg: #080c0a; 
+  --ink: #e2e8e4;
+  --text-muted: #94a39b;
+  --accent: #10b981; 
+  --accent-glow: #00ff88;
+  --accent-secondary: #0ea5e9; /* Neural net cyan */
+  --surface-glass: rgba(16, 185, 129, 0.03);
+  --border-subtle: rgba(16, 185, 129, 0.15);
+  
+  /* Typography */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+  
+  /* Structural variables */
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  
+  /* Subtle organic background pattern (Microscope grid / Cell structure) */
+  background-image: 
+    radial-gradient(circle at 100% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 25%),
+    radial-gradient(circle at 0% 100%, rgba(14, 165, 233, 0.05) 0%, transparent 25%),
+    linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+/* --- Global Typography & Structure --- */
+.theme-neural-botany .cv-header {
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+/* Glowing top border flourish */
+.theme-neural-botany .cv-header::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: 0;
+  width: 100px;
+  height: 4px;
+  background: var(--accent-glow);
+  box-shadow: 0 0 10px var(--accent-glow);
+  border-radius: 2px;
+}
+
+.theme-neural-botany h1, 
+.theme-neural-botany h2, 
+.theme-neural-botany h3 {
+  font-family: var(--font-heading);
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* --- Contact Info & Icons --- */
+.theme-neural-botany .cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.theme-neural-botany .cv-contact .contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.theme-neural-botany .cv-contact .contact-item::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent-glow);
+  font-size: 0.875rem;
+}
+
+.theme-neural-botany .contact-location::before { content: "\f3c5"; } /* map pin */
+.theme-neural-botany .contact-email::before    { content: "\f0e0"; } /* envelope */
+.theme-neural-botany .contact-phone::before    { content: "\f095"; } /* phone */
+.theme-neural-botany .contact-url::before      { content: "\f0c1"; } /* link */
+.theme-neural-botany .contact-profile::before  { content: "\f0c1"; }
+.theme-neural-botany .cv-contact .contact-profile-github::before   { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-neural-botany .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-neural-botany .cv-contact .contact-profile-twitter::before,
+.theme-neural-botany .cv-contact .contact-profile-x::before        { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
+/* --- Section Headers with AI & Botany Icons --- */
+.theme-neural-botany .section-title {
+  color: var(--accent-glow);
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 0.5rem;
+}
+
+/* Injecting Icons via CSS Content Mapping */
+.theme-neural-botany .section-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent-glow);
+  text-shadow: 0 0 8px var(--accent);
+  width: 1.5rem;
+  text-align: center;
+}
+
+/* Specific Section Icons mapping */
+.theme-neural-botany .section-work .section-title::before         { content: "\f6ff"; } /* network-wired (AI) */
+.theme-neural-botany .section-education .section-title::before    { content: "\f19d"; } /* graduation cap */
+.theme-neural-botany .section-skills .section-title::before       { content: "\f2db"; } /* microchip (Tech) */
+.theme-neural-botany .section-projects .section-title::before     { content: "\f5fc"; } /* laptop code */
+.theme-neural-botany .section-volunteer .section-title::before    { content: "\f4c4"; } /* helping hands */
+.theme-neural-botany .section-languages .section-title::before    { content: "\f0ac"; } /* globe */
+.theme-neural-botany .section-certificates .section-title::before { content: "\f0a3"; } /* certificate ribbon */
+.theme-neural-botany .section-references .section-title::before   { content: "\f007"; } /* user */
+
+/* --- Item Wrappers (Glassmorphism & Tech Borders) --- */
+.theme-neural-botany .item-wrapper {
+  background: var(--surface-glass);
+  border-left: 2px solid var(--border-subtle);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0 8px 8px 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Hover effects: AI processing "glow" */
+.theme-neural-botany .item-wrapper:hover {
+  background: rgba(16, 185, 129, 0.06);
+  border-left-color: var(--accent-glow);
+  box-shadow: 4px 0 15px -5px rgba(16, 185, 129, 0.3);
+  transform: translateX(4px);
+}
+
+.theme-neural-botany .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-neural-botany .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
+}
+
+.theme-neural-botany .item-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+.theme-neural-botany .item-subtitle {
+  color: var(--accent-secondary);
+  font-weight: 600;
+}
+
+.theme-neural-botany .item-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-left: auto;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  border: 1px solid var(--border-subtle);
+}
+
+.theme-neural-botany .item-summary {
+  color: var(--text-muted);
+}
+
+/* --- Skill Tags (Organic Tech Pills) --- */
+.theme-neural-botany .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.theme-neural-botany .skill-tag {
+  background: transparent;
+  color: var(--accent-glow);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px; /* Organic roundness */
+  border: 1px solid var(--border-subtle);
+  animation: bio-pulse 4s infinite alternate; /* Biological breathing glow */
+}
+
+.theme-neural-botany .skill-tag:hover {
+  background: var(--accent);
+  color: var(--bg);
+  animation: none;
+  border-color: var(--accent);
+}
+
+/* --- Layout Independence (Sidebar Handling) --- */
+.theme-neural-botany .cv-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.theme-neural-botany .cv-main {
+  flex: 1;
+}
+
+.theme-neural-botany .cv-sidebar {
+  flex: 0 0 300px;
+}
+
+/* When items are in the sidebar, make them more compact */
+.theme-neural-botany .cv-sidebar .item-wrapper {
+  padding: 1rem;
+  border-left-width: 1px;
+}
+.theme-neural-botany .cv-sidebar .item-title {
+  font-size: 1rem;
+}
+
+/* --- A4 Print Optimization --- */
+@media print {
+  .theme-neural-botany {
+    /* Map to pure black and white for physical ink saving */
+    --bg: #ffffff !important;
+    --ink: #000000 !important;
+    --text-muted: #333333 !important;
+    --accent: #000000 !important;
+    --accent-glow: #000000 !important;
+    --accent-secondary: #555555 !important;
+    --border-subtle: #cccccc !important;
+    --surface-glass: transparent !important;
+    
+    background-image: none !important;
+    background-color: var(--bg) !important;
+  }
+
+  /* Physical scaling */
+  .theme-neural-botany {
+    font-size: 10pt !important;
+  }
+  
+  .theme-neural-botany .section-title {
+    font-size: 14pt !important;
+    color: var(--ink) !important;
+    border-bottom: 1px solid var(--ink) !important;
+    text-shadow: none !important;
+  }
+  
+  .theme-neural-botany .cv-header::before {
+    display: none !important; /* Remove heavy ink blocks */
+  }
+
+  /* Remove animations, glowing borders, and glass backgrounds */
+  .theme-neural-botany .item-card,
+  .theme-neural-botany .item-wrapper {
+    background: transparent !important;
+    border-left: 2px solid #000 !important;
+    border-radius: 0 !important;
+    padding: 0 0 0 10pt !important;
+    margin-bottom: 12pt !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .theme-neural-botany .skill-tag {
+    animation: none !important;
+    background-color: #f0fdfa !important;
+    border: 0.5pt solid #99f6e4 !important;
+    color: #115e59 !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+  }
+
+  .theme-neural-botany .item-date {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #000 !important;
+  }
+
+  /* Respect print-core.css pagination */
+  .theme-neural-botany .cv-layout {
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+  
+  .theme-neural-botany .cv-section {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

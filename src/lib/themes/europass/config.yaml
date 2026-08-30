@@ -1,0 +1,23 @@
+theme: europass
+i18n:
+  work: "Experience"
+  education: "Education"
+  volunteer: "Volunteering"
+  skills: "Skills"
+  languages: "Languages"
+  certificates: "Certifications"
+  projects: "Selected Projects"
+layout:
+  main:
+    - work
+    - projects
+    - publications
+    - volunteer
+  sidebar:
+    - skills
+    - languages
+    - certificates
+    - education
+    - awards
+    - interests
+    - references

@@ -45,11 +45,11 @@
   .theme-the-verge .skill-name,
   .theme-the-verge .item-title { color: #000000 !important; }
   
-  .theme-the-verge .cv-contact a { color: #111111 !important; }
   .theme-the-verge .skill-tag { 
-    background-color: #f4f4f5 !important; 
+    background-color: transparent !important; 
     color: #111111 !important;
-    border-color: #cccccc !important;
+    border: 0.5pt solid #cbd5e1 !important;
+    box-shadow: none !important;
   }
 
   /* Scaling */

@@ -1,215 +1,315 @@
 <script>
-  import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
+  import TimelineSection from '$lib/components/TimelineSection.svelte';
+  import SkillsSection from '$lib/components/SkillsSection.svelte';
+  import LanguageSection from '$lib/components/LanguageSection.svelte';
+  import ReferenceSection from '$lib/components/ReferenceSection.svelte';
+  import ConfigDrawer from '$lib/components/ConfigDrawer.svelte';
+  import { loadTheme, availableThemes } from '$lib/themeRegistry';
   
-  export let data;
-  const { resume, error, message, details } = data;
+  let { data } = $props();
+  
+  let resume = $derived(data.resume);
+  let themesList = $derived(data.availableThemes || availableThemes);
 
-  const themeFiles = import.meta.glob('/src/lib/styles/themes/*.css', { eager: true });
-  const themes = Object.keys(themeFiles).map((path, index) => {
-    const filename = path.split('/').pop().replace('.css', '');
-    const prettyName = filename.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-    return { id: `theme-${filename}`, label: `${index + 1}`, name: prettyName };
+  // User-selected active theme state
+  let selectedTheme = $state(null);
+  let loadedThemeData = $state(null);
+
+  // Custom accent & layout & mode state
+  let customAccent = $state(null);
+  let customLayout = $state(null);
+  let colorMode = $state('system');
+
+  // Reactively synchronize state when incoming data / urlParams update
+  $effect(() => {
+    if (data.urlParams?.theme) {
+      selectedTheme = data.urlParams.theme;
+    }
+    if (data.urlParams?.accent) {
+      customAccent = data.urlParams.accent;
+    }
+    if (data.urlParams?.layout) {
+      customLayout = data.urlParams.layout;
+    }
+    if (data.urlParams?.mode) {
+      colorMode = data.urlParams.mode;
+    }
   });
 
-  let currentTheme = themes.length > 0 ? themes[0].id : '';
+  let activeTheme = $derived(selectedTheme || data.initialTheme || 'classic');
 
-  function getYear(dateString) {
-    if (!dateString) return 'Present';
-    return new Date(dateString).getFullYear();
-  }
+  // Reactively load theme assets and theme-specific custom layout whenever activeTheme changes
+  $effect(() => {
+    if (activeTheme) {
+      loadTheme(activeTheme).then((themeData) => {
+        loadedThemeData = themeData;
+      });
+
+      if (typeof window !== 'undefined' && !data.urlParams?.layout) {
+        const savedLayout = localStorage.getItem(`resume-layout-${activeTheme}`);
+        if (savedLayout) {
+          try {
+            customLayout = JSON.parse(savedLayout);
+          } catch (e) {
+            customLayout = null;
+          }
+        } else {
+          customLayout = null;
+        }
+      }
+    }
+  });
+
+  // Keep browser URL search parameters synchronized with active settings
+  $effect(() => {
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href);
+      if (activeTheme) {
+        url.searchParams.set('theme', activeTheme);
+      }
+      if (customAccent) {
+        url.searchParams.set('accent', customAccent.replace('#', ''));
+      } else {
+        url.searchParams.delete('accent');
+      }
+      if (colorMode && colorMode !== 'system') {
+        url.searchParams.set('mode', colorMode);
+      } else {
+        url.searchParams.delete('mode');
+      }
+      if (customLayout) {
+        const enc = (customLayout.main || []).join(',') + '|' + (customLayout.sidebar || []).join(',');
+        url.searchParams.set('layout', enc);
+      } else {
+        url.searchParams.delete('layout');
+      }
+      window.history.replaceState({}, '', url.toString());
+    }
+  });
+
+  // Derived active config and CSS
+  let activeThemeConfig = $derived(
+    (loadedThemeData && loadedThemeData.name === activeTheme)
+      ? loadedThemeData.config
+      : (data.initialThemeConfig || data.config)
+  );
+
+  let activeThemeCss = $derived(
+    (loadedThemeData && loadedThemeData.name === activeTheme)
+      ? loadedThemeData.css
+      : (data.initialThemeCss || '')
+  );
+
+  // Reactively calculate layout (customLayout takes precedence if set by viewer) and translations
+  let activeLayout = $derived(
+    customLayout || activeThemeConfig?.layout || data.config?.layout || { main: [], sidebar: [] }
+  );
+  let activeI18n = $derived({ ...activeThemeConfig?.i18n, ...data.config?.i18n });
+
+  // The Component Mapping Dictionary
+  let sectionRenderer = $derived({
+    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name' } },
+    education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'studyType', subtitleKey: 'institution', areaKey: 'area' } },
+    volunteer: { component: TimelineSection, props: { items: resume?.volunteer, titleKey: 'position', subtitleKey: 'organization' } },
+    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null } },
+    awards: { component: TimelineSection, props: { items: resume?.awards, titleKey: 'title', subtitleKey: 'awarder', dateKey: 'date', endDateKey: null } },
+    publications: { component: TimelineSection, props: { items: resume?.publications, titleKey: 'name', subtitleKey: 'publisher', dateKey: 'releaseDate', endDateKey: null } },
+    certificates: { component: TimelineSection, props: { items: resume?.certificates, titleKey: 'name', subtitleKey: 'issuer', dateKey: 'date', endDateKey: null } },
+    skills: { component: SkillsSection, props: { items: resume?.skills } },
+    interests: { component: SkillsSection, props: { items: resume?.interests } },
+    languages: { component: LanguageSection, props: { items: resume?.languages } },
+    references: { component: ReferenceSection, props: { items: resume?.references } }
+  });
 
   // Format Ajv errors nicely (e.g., "/work/0/startDate" -> "work[0].startDate")
   function formatPath(path) {
-    if (!path) return "root";
-    return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
+     if (!path) return "root";
+     return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
   }
 </script>
 
 <svelte:head>
-  <title>{error ? 'Error Loading Resume' : `Resume - ${resume.basics.name}`}</title>
+  {#if activeThemeCss}
+    {@html `<style id="theme-style">${activeThemeCss}</style>`}
+  {/if}
+
+  <!-- App Color Mode (System / Light / Dark) -->
+  {#if colorMode === 'dark'}
+    {@html `<style id="app-color-mode-style">
+      body, .app-container { background-color: #0b0f19 !important; }
+    </style>`}
+  {:else if colorMode === 'light'}
+    {@html `<style id="app-color-mode-style">
+      body, .app-container { background-color: #e2e8f0 !important; }
+    </style>`}
+  {:else}
+    {@html `<style id="app-color-mode-style">
+      @media (prefers-color-scheme: dark) {
+        body, .app-container { background-color: #0b0f19 !important; }
+      }
+    </style>`}
+  {/if}
+
+  <!-- Dynamic Accent Color Override for Screen and Print -->
+  {#if customAccent}
+    {@html `<style id="custom-accent-style">
+      .theme-${activeTheme},
+      .theme-${activeTheme} .cv-wrapper,
+      .theme-${activeTheme} .cv-header,
+      .theme-${activeTheme} .cv-section,
+      .theme-${activeTheme} .cv-sidebar,
+      .theme-${activeTheme} .cv-main {
+        --accent: ${customAccent} !important;
+        --accent-light: ${customAccent} !important;
+        --item-subtitle-separator-color: ${customAccent} !important;
+        --item-subtitle-color: ${customAccent} !important;
+        --item-date-color: ${customAccent} !important;
+        --section-title-color: ${customAccent} !important;
+        --section-icon-color: ${customAccent} !important;
+        --contact-icon-color: ${customAccent} !important;
+      }
+
+      @media print {
+        .theme-${activeTheme},
+        .theme-${activeTheme} .cv-wrapper,
+        .theme-${activeTheme} .cv-header,
+        .theme-${activeTheme} .cv-section,
+        .theme-${activeTheme} .cv-sidebar,
+        .theme-${activeTheme} .cv-main {
+          --accent: ${customAccent} !important;
+          --accent-light: ${customAccent} !important;
+          --item-subtitle-separator-color: ${customAccent} !important;
+          --item-subtitle-color: ${customAccent} !important;
+          --item-date-color: ${customAccent} !important;
+          --section-title-color: ${customAccent} !important;
+          --section-icon-color: ${customAccent} !important;
+          --contact-icon-color: ${customAccent} !important;
+        }
+
+        .theme-${activeTheme} .section-title,
+        .theme-${activeTheme} .section-title::before,
+        .theme-${activeTheme} .item-subtitle::before,
+        .theme-${activeTheme} .cv-contact .contact-item::before,
+        .theme-${activeTheme} .cv-main .item-card::before,
+        .theme-${activeTheme} .cv-sidebar .skill-tag {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    </style>`}
+  {/if}
 </svelte:head>
 
-{#if error}
+{#if data.error}
   <div class="schema-error-container">
     <div class="schema-error-box">
-      <h1>⚠️ Failed to Load Resume</h1>
-      <p class="error-desc">{message}</p>
-      
-      {#if details && details.length > 0}
+      <h1>⚠ Failed to Load Resume</h1>
+      <p class="error-desc">{data.message}</p>
+
+      {#if data.details && data.details.length > 0}
         <div class="error-terminal">
           <div class="terminal-header">Schema Validation Report</div>
           <ul>
-            {#each details as err}
+            {#each data.details as err}
               <li>
-                <span class="err-path">{formatPath(err.instancePath)}</span> 
+                <span class="err-path">{formatPath(err.instancePath)}</span>
                 <span class="err-msg">{err.message}</span>
               </li>
             {/each}
           </ul>
         </div>
       {/if}
-      <button class="retry-btn" on:click={() => window.location.href = '/'}>Return to Default Resume</button>
+      <button class="retry-btn" onclick={() => window.location.href = '/'}>Return to Default Resume</button>
     </div>
   </div>
 {:else}
-
-<div class="app-container {currentTheme}">
-  <ThemeSwitcher bind:currentTheme {themes} />
+  <div class="app-container theme-{activeTheme} mode-{colorMode}">
+  <ConfigDrawer 
+    themes={themesList} 
+    bind:activeTheme={selectedTheme} 
+    {activeThemeConfig}
+    bind:customAccent={customAccent}
+    bind:customLayout={customLayout}
+    bind:colorMode={colorMode}
+    onResetLayout={() => customLayout = null}
+    onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; }}
+  />
 
   <div class="cv-wrapper">
+    
     <header class="cv-header">
-      <h1 class="cv-name">{resume.basics.name}</h1>
-      <h2 class="cv-title">{resume.basics.label}</h2>
+      {#if resume?.basics?.image}
+        <img class="cv-image" src={resume.basics.image} alt="Profile" />
+      {/if}
+      <h1 class="cv-name">{resume?.basics?.name}</h1>
+      <h2 class="cv-title">{resume?.basics?.label || resume?.basics?.headline}</h2>
       
       <div class="cv-contact">
-        <span>{resume.basics.location.city}, {resume.basics.location.countryCode}</span>
-        <span>{resume.basics.phone}</span>
-        <span><a href="mailto:{resume.basics.email}">{resume.basics.email}</a></span>
-        {#if resume.basics.profiles}
+        {#if resume?.basics?.location}
+          {@const locText = [resume.basics.location.address, resume.basics.location.city, resume.basics.location.region, resume.basics.location.countryCode || resume.basics.location.postalCode].filter(Boolean).join(', ') || [resume.basics.location.city, resume.basics.location.countryCode].filter(Boolean).join(', ')}
+          {#if locText}
+            <span class="contact-item contact-location" data-type="location">{locText}</span>
+          {/if}
+        {/if}
+        {#if resume?.basics?.email}
+          <span class="contact-item contact-email" data-type="email">
+            <a href="mailto:{resume.basics.email}">{resume.basics.email}</a>
+          </span>
+        {/if}
+        {#if resume?.basics?.phone}
+          <span class="contact-item contact-phone" data-type="phone">
+            <a href="tel:{resume.basics.phone}">{resume.basics.phone}</a>
+          </span>
+        {/if}
+        {#if resume?.basics?.url}
+          <span class="contact-item contact-url" data-type="url">
+            <a href={resume.basics.url} target="_blank" rel="noreferrer">{resume.basics.url.replace(/^https?:\/\//, '')}</a>
+          </span>
+        {/if}
+        {#if resume?.basics?.profiles && resume.basics.profiles.length > 0}
           {#each resume.basics.profiles as profile}
-            <span><a href={profile.url} target="_blank">{profile.network}</a></span>
+            {@const networkSlug = (profile.network || '').toLowerCase().replace(/[^a-z0-9]/g, '-')}
+            <span class="contact-item contact-profile contact-profile-{networkSlug}" data-type="profile" data-network={networkSlug}>
+              <a href={profile.url} target="_blank" rel="noreferrer">{profile.network || profile.username}</a>
+            </span>
           {/each}
         {/if}
       </div>
-
-      <div class="cv-summary"><p>{resume.basics.summary}</p></div>
+      
+      {#if resume?.basics?.summary}
+        <div class="cv-summary">{@html resume.basics.summary}</div>
+      {/if}
     </header>
 
     <div class="cv-layout">
+      
       <main class="cv-main">
-        <section class="cv-section section-experience">
-          <h3 class="section-title">Experience</h3>
-          <div class="section-content">
-            {#each resume.work as job}
-              <article class="item-card">
-                <div class="item-header">
-                  <h4 class="item-title">{job.position}</h4>
-                  <div class="item-subtitle">{job.name}</div>
-                  <div class="item-date">{getYear(job.startDate)} — {getYear(job.endDate)}</div>
-                </div>
-                <div class="item-body">
-                  <p class="item-summary">{job.summary}</p>
-                  {#if job.highlights}
-                    <ul class="item-highlights">
-                      {#each job.highlights as highlight}
-                        <li>{highlight}</li>
-                      {/each}
-                    </ul>
-                  {/if}
-                </div>
-              </article>
-            {/each}
-          </div>
-        </section>
-
-        {#if resume.projects}
-          <section class="cv-section section-projects">
-            <h3 class="section-title">Selected Projects</h3>
-            <div class="section-content projects-grid">
-              {#each resume.projects as proj}
-                <article class="item-card project-card">
-                  <h4 class="item-title">{proj.name}</h4>
-                  <p class="item-summary">{proj.description}</p>
-                  {#if proj.highlights}
-                    <ul class="item-highlights">
-                      {#each proj.highlights as highlight}<li>{highlight}</li>{/each}
-                    </ul>
-                  {/if}
-                </article>
-              {/each}
-            </div>
-          </section>
-        {/if}
+        {#each activeLayout.main as sectionKey (sectionKey)}
+          {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
+            {@const Renderer = sectionRenderer[sectionKey].component}
+            <Renderer 
+              {...sectionRenderer[sectionKey].props}
+              sectionTitle={activeI18n[sectionKey] || sectionKey} 
+              sectionId={sectionKey} 
+            />
+          {/if}
+        {/each}
       </main>
 
       <aside class="cv-sidebar">
-        {#if resume.skills}
-          <section class="cv-section section-skills">
-            <h3 class="section-title">Skills</h3>
-            <div class="section-content">
-              {#each resume.skills as skillGroup}
-                <div class="skill-group">
-                  <strong class="skill-name">{skillGroup.name}</strong>
-                  <div class="skill-keywords">
-                    {#each skillGroup.keywords as kw}<span class="skill-tag">{kw}</span>{/each}
-                  </div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.languages}
-          <section class="cv-section section-languages">
-            <h3 class="section-title">Languages</h3>
-            <div class="section-content">
-              {#each resume.languages as lang}
-                <div class="side-item" style="margin-bottom: 0.75rem;">
-                  <div class="item-title">{lang.language}</div>
-                  <div class="item-subtitle">{lang.fluency}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.certificates}
-          <section class="cv-section section-certs">
-            <h3 class="section-title">Certifications</h3>
-            <div class="section-content">
-              {#each resume.certificates as cert}
-                <div class="side-item">
-                  <div class="item-title">{cert.name}</div>
-                  <div class="item-date">{getYear(cert.date)} // {cert.issuer}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.education}
-          <section class="cv-section section-education">
-            <h3 class="section-title">Education</h3>
-            <div class="section-content">
-              {#each resume.education as edu}
-                <div class="side-item">
-                  <div class="item-title">{edu.studyType} in {edu.area}</div>
-                  <div class="item-subtitle">{edu.institution}</div>
-                  <div class="item-date">{getYear(edu.startDate)} — {getYear(edu.endDate)}</div>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
-
-        {#if resume.volunteer}
-          <section class="cv-section section-volunteer">
-            <h3 class="section-title">Teaching</h3>
-            <div class="section-content">
-              {#each resume.volunteer as vol}
-                <div class="side-item">
-                  <div class="item-title">{vol.position}</div>
-                  <div class="item-subtitle">{vol.organization}</div>
-                  <div class="item-date">{getYear(vol.startDate)} — {getYear(vol.endDate)}</div>
-                  <p class="item-summary" style="font-weight:normal;">{vol.summary}</p>
-                </div>
-              {/each}
-            </div>
-          </section>
-        {/if}
+        {#each activeLayout.sidebar as sectionKey (sectionKey)}
+          {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
+            {@const Renderer = sectionRenderer[sectionKey].component}
+            <Renderer 
+              {...sectionRenderer[sectionKey].props}
+              sectionTitle={activeI18n[sectionKey] || sectionKey} 
+              sectionId={sectionKey} 
+            />
+          {/if}
+        {/each}
       </aside>
-    </div>
 
-<!--
-   <div class="print-footer no-screen">
-      <span>{resume.basics.name}</span>
-      <span class="footer-separator">•</span>
-      <span>Curriculum Vitae</span>
-      <span class="footer-separator">•</span>
-      <span>{resume.basics.email}</span>
     </div>
--->
   </div>
-</div>
-
+  </div>
 {/if}

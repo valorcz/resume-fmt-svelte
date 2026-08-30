@@ -1,91 +1,105 @@
 import Ajv from 'ajv-draft-04';
 import addFormats from 'ajv-formats';
-import { base } from '$app/paths';
 import yaml from 'js-yaml';
+import { base } from '$app/paths';
+import { loadTheme, fallbackConfig, availableThemes } from '$lib/themeRegistry';
+import resumeSchemaRaw from '$lib/schema/resume.schema.json';
+
+// Precompile schema validator locally
+const schema = { ...resumeSchemaRaw };
+delete schema.$schema;
+const ajv = new Ajv({ strict: false, allErrors: true });
+addFormats(ajv);
+const validateResume = ajv.compile(schema);
+
+function mergeConfigs(serverConfig, userConfig) {
+  if (!userConfig) return serverConfig;
+  return {
+    theme: userConfig.theme || serverConfig.theme,
+    i18n: { ...serverConfig.i18n, ...userConfig.i18n },
+    layout: userConfig.layout || serverConfig.layout
+  };
+}
+
+function decodeLayout(layoutStr) {
+  if (!layoutStr || !layoutStr.includes('|')) return null;
+  const [mainPart, sidePart] = layoutStr.split('|');
+  return {
+    main: mainPart ? mainPart.split(',').filter(Boolean) : [],
+    sidebar: sidePart ? sidePart.split(',').filter(Boolean) : []
+  };
+}
 
 export async function load({ fetch, url }) {
   const gistId = url.searchParams.get('gist');
+  const urlTheme = url.searchParams.get('theme');
+  const urlAccentRaw = url.searchParams.get('accent');
+  const urlAccent = urlAccentRaw ? (urlAccentRaw.startsWith('#') ? urlAccentRaw : `#${urlAccentRaw}`) : null;
+  const urlMode = url.searchParams.get('mode');
+  const urlLayoutRaw = url.searchParams.get('layout');
+  const urlLayout = urlLayoutRaw ? decodeLayout(urlLayoutRaw) : null;
+
   let resume = null;
-  let format = 'yaml'; // Default to YAML for local loads
+  let userConfig = null;
 
   try {
-    // --- 1. FETCH & PARSE DATA ---
     if (gistId) {
       const res = await fetch(`https://api.github.com/gists/${gistId}`);
-      if (!res.ok) throw new Error(`GitHub Gist not found (Status: ${res.status})`);
-      
+      if (!res.ok) throw new Error("Gist not found");
       const gistData = await res.json();
       
-      // Smart file discovery: Look for .yaml, .yml, or .json
-      const fileKey = Object.keys(gistData.files).find(k => k.match(/\.(ya?ml|json)$/i)) 
-                   || Object.keys(gistData.files)[0];
-      
-      if (!fileKey) throw new Error("No files found in this Gist.");
-      
-      const rawContent = gistData.files[fileKey].content;
-      
-      try {
-        // Detect format and parse accordingly
-        if (fileKey.toLowerCase().endsWith('.json')) {
-          format = 'json';
-          resume = JSON.parse(rawContent);
-        } else {
-          format = 'yaml';
-          resume = yaml.load(rawContent);
-        }
-      } catch (e) {
-        throw new Error(`Failed to parse ${fileKey}. Ensure it is valid ${format.toUpperCase()}.`);
+      // 1. Fetch Resume
+      const resumeFile = Object.keys(gistData.files).find(k => k.match(/resume\.(ya?ml|json)$/i)) || Object.keys(gistData.files)[0];
+      const rawResume = gistData.files[resumeFile].content;
+      resume = resumeFile.endsWith('.json') ? JSON.parse(rawResume) : yaml.load(rawResume);
+
+      // 2. Fetch Optional Standalone Config (For strict JSON Resume users)
+      const configFile = Object.keys(gistData.files).find(k => k.match(/config\.(ya?ml|json)$/i));
+      if (configFile) {
+        const rawConfig = gistData.files[configFile].content;
+        userConfig = configFile.endsWith('.json') ? JSON.parse(rawConfig) : yaml.load(rawConfig);
       }
     } else {
-      // Local Fetch: Assumes you are using resume.yaml locally
-      format = 'yaml';
+      // Local fallback
       const res = await fetch(`${base}/resume.yaml`); 
-      if (!res.ok) throw new Error(`Failed to load local resume.yaml (Status: ${res.status})`);
-      
-      const text = await res.text();
-      resume = yaml.load(text);      
+      resume = yaml.load(await res.text());
     }
 
-    // --- 2. FETCH THE CONTEXT-AWARE SCHEMA ---
-    const schemaUrl = format === 'json' 
-      ? 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json'
-      : 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json';
-/*
-      : 'https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json';
-      : 'https://yamlresume.dev/schemas/v0.11.0/schema.json';
-		*/
-
-    const schemaRes = await fetch(schemaUrl);
-    if (!schemaRes.ok) throw new Error(`Failed to fetch the validation schema from ${schemaUrl}`);
-    
-    const schema = await schemaRes.json();
-    
-    // Bypass strict versioning issues (works for both Draft-04 and newer YAML schemas)
-    delete schema.$schema; 
-
-    // --- 3. VALIDATE ---
-    const ajv = new Ajv({ strict: false, allErrors: true }); 
-    addFormats(ajv);
-    
-    const validate = ajv.compile(schema);
-    const isValid = validate(resume);
-
-    if (!isValid) {
-      const schemaName = format === 'json' ? 'JSON Resume' : 'YAML Resume';
-      return {
-        error: true,
-        message: `Your data does not match the official ${schemaName} schema.`,
-        details: validate.errors
-      };
+    // 3. Extract embedded _config (and strip it for validation)
+    if (resume._config) {
+      if (!userConfig) userConfig = resume._config;
+      delete resume._config; 
     }
 
-    return { resume, error: false };
+    // 4. Resolve Theme & Load dynamically (URL param takes precedence)
+    const validTheme = (urlTheme && availableThemes.includes(urlTheme)) ? urlTheme : null;
+    const requestedTheme = validTheme || userConfig?.theme || 'classic';
+    const initialThemeData = await loadTheme(requestedTheme);
+    const finalConfig = mergeConfigs(initialThemeData.config, userConfig);
+
+    // 5. Schema Validation using precompiled local validator
+    if (!validateResume(resume)) {
+      return { error: true, message: "Invalid JSON Resume schema.", details: validateResume.errors };
+    }
+
+    return { 
+      resume, 
+      config: finalConfig, 
+      initialTheme: initialThemeData.name,
+      initialThemeCss: initialThemeData.css,
+      initialThemeConfig: initialThemeData.config,
+      urlParams: {
+        theme: validTheme,
+        accent: urlAccent,
+        mode: ['system', 'light', 'dark'].includes(urlMode) ? urlMode : null,
+        layout: urlLayout
+      },
+      availableThemes,
+      error: false 
+    };
 
   } catch (err) {
-    return {
-      error: true,
-      message: err.message || "An unknown error occurred while loading the resume.",
-      details: []
-    };
+    return { error: true, message: err.message, details: [] };
   }
 }
+
