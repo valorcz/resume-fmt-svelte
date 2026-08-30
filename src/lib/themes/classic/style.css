@@ -49,10 +49,26 @@
 .theme-classic .cv-main, .theme-classic .cv-sidebar { width: 100%; }
 
 /* 2. Turn Sections into a 2-column grid */
-.theme-classic .cv-section { display: grid; grid-template-columns: 180px 1fr; gap: 2rem; margin-bottom: 1.5rem; }
+.theme-classic .cv-section { 
+  display: grid; 
+  grid-template-columns: 180px 1fr; 
+  gap: 2rem; 
+  align-items: start;
+  margin-bottom: 1.5rem; 
+}
 
 /* 3. Left Column: Titles */
-.theme-classic .section-title { text-align: right; font-size: 1.15rem; font-weight: 800; color: var(--accent); border: none; padding: 0; margin: 0; }
+.theme-classic .section-title { 
+  text-align: right; 
+  font-size: 1.15rem; 
+  font-weight: 800; 
+  color: var(--accent); 
+  border: none; 
+  padding: 0; 
+  margin: 0; 
+  align-self: start;
+  display: block;
+}
 .theme-classic .section-title::before { display: none; }
 
 /* 4. Right Column: Dotted border content */
@@ -66,27 +82,42 @@
 
 .theme-classic .item-header { 
   display: flex; 
-  flex-direction: column; /* Stacks Title, Subtitle, and Date vertically */
-  align-items: flex-start; 
-  margin-bottom: 0.8rem; 
+  justify-content: space-between;
+  align-items: baseline; 
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.4rem; 
 }
 
-.theme-classic .item-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin-bottom: 0.2rem; }
-/* .theme-classic .item-subtitle { font-size: 0.95rem; font-weight: 400; font-style: italic; color: var(--ink); margin-bottom: 0.2rem; } */
+.theme-classic .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
+}
+
+.theme-classic .item-title { font-size: 1.05rem; font-weight: 800; color: var(--ink); margin: 0; }
 .theme-classic .item-subtitle { 
-  font-family: var(--font-body); /* Forces it to use Fira Sans instead of Fira Code */
-  font-size: 1rem; 
+  font-family: var(--font-body);
+  font-size: 0.95rem; 
   font-weight: 400; 
   font-style: italic; 
   color: var(--ink); 
-  margin-bottom: 0.2rem; 
+  margin: 0;
 }
+.theme-classic .item-subtitle::before { content: "— "; font-style: normal; color: var(--accent); }
 
-.theme-classic .item-date { font-size: 0.85rem; color: var(--muted); font-weight: 600; margin: 0; }
+.theme-classic .item-date { font-size: 0.85rem; color: var(--muted); font-weight: 600; white-space: nowrap; margin-left: auto; margin: 0; }
 
 /* --- Skills Formatted as comma strings --- */
-.theme-classic .skill-group { display: grid; grid-template-columns: 110px 1fr; gap: 1rem; margin-bottom: 0.8rem; }
-.theme-classic .skill-name { text-align: left; font-size: 0.85rem; color: var(--muted); margin: 0; }
+.theme-classic .skill-group { 
+  display: grid; 
+  grid-template-columns: 110px 1fr; 
+  gap: 1rem; 
+  align-items: start;
+  margin-bottom: 0.8rem; 
+}
+.theme-classic .skill-name { text-align: left; font-size: 0.85rem; color: var(--muted); margin: 0; align-self: start; }
 .theme-classic .skill-tag { font-family: var(--font-body); background: none; border: none; padding: 0; font-size: 0.85rem; font-weight: 400; }
 .theme-classic .skill-tag::after { content: ", "; }
 .theme-classic .skill-tag:last-child::after { content: ""; }
@@ -103,8 +134,8 @@
   .theme-classic .cv-main, .theme-classic .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
   
   /* Keep the section grid for print */
-  .theme-classic .cv-section { display: grid !important; grid-template-columns: 160px 1fr !important; }
-  .theme-classic .section-title { display: block !important; font-size: 11pt !important; }
+  .theme-classic .cv-section { display: grid !important; grid-template-columns: 160px 1fr !important; align-items: start !important; }
+  .theme-classic .section-title { display: block !important; font-size: 11pt !important; align-self: start !important; }
   .theme-classic .section-content { display: block !important; }
   
   .theme-classic .item-title { font-size: 10pt !important; }

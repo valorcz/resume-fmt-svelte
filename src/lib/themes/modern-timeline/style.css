@@ -1,255 +1,400 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+/* ==========================================================================
+   THEME: MODERN TIMELINE (Nordic Deep Slate & Cobalt Blue)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;600&display=swap');
 
 .theme-modern-timeline {
-    /* --- Core Variables --- */
-    --accent: #2b2b36; 
-    --accent-text: #ffffff;
-    --bg: #ffffff;
-    --sidebar-bg: #e6e6e6;
-    --ink: #333333;
-    --line-color: #888888;
-    
-    --font-heading: 'Montserrat', sans-serif;
-    --font-body: 'Montserrat', sans-serif;
-    
-    background-color: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-body);
-    line-height: 1.5;
-    box-sizing: border-box; 
+  /* --- Core Palette & Tokens (Nordic Slate & Cobalt) --- */
+  --bg: #ffffff;
+  --sidebar-bg: #f8fafc;       /* Slate 50 - clean nordic sidebar */
+  --surface: #ffffff;
+  --ink: #0f172a;              /* Deep Slate 900 */
+  --muted: #64748b;            /* Slate 500 */
+  --accent: #0f172a;           /* Deep Slate Night Header */
+  --accent-light: #2563eb;     /* Cobalt Blue Accent */
+  --border: #e2e8f0;           /* Slate 200 */
+  --border-heavy: #cbd5e1;     /* Slate 300 */
+  --line-color: #cbd5e1;
+  
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --screen-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
 }
 
-.theme-modern-timeline *,
-.theme-modern-timeline *::before,
-.theme-modern-timeline *::after {
-    box-sizing: inherit;
-}
-
-/* --- Layout & Two-Tone Background --- */
+/* --- Two-Tone Wrapper --- */
 .theme-modern-timeline .cv-wrapper {
-    /* 33% gray on left, 67% white on right */
-    background: linear-gradient(to right, var(--sidebar-bg) 0%, var(--sidebar-bg) 33%, var(--bg) 33%, var(--bg) 100%);
-    min-height: 100vh;
+  background: linear-gradient(to right, var(--sidebar-bg) 0%, var(--sidebar-bg) 320px, var(--bg) 320px, var(--bg) 100%);
+  padding: 0;
+  border: 1px solid var(--border);
+  box-shadow: var(--screen-shadow);
+  max-width: 1050px;
+  margin: 0 auto;
 }
 
+/* --- Deep Slate Header Banner --- */
+.theme-modern-timeline .cv-header {
+  background-color: var(--accent);
+  color: #ffffff;
+  padding: 2.75rem 3rem;
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 2rem;
+  isolation: isolate;
+  border-bottom: 3px solid var(--accent-light);
+}
+
+.theme-modern-timeline .cv-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid var(--accent-light);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.theme-modern-timeline .cv-name {
+  font-family: var(--font-heading);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0 0 0.25rem 0;
+  width: 100%;
+}
+
+.theme-modern-timeline .cv-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #93c5fd;              /* Soft Sky Blue */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0 0 0.8rem 0;
+  width: 100%;
+}
+
+.theme-modern-timeline .cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #cbd5e1;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.theme-modern-timeline .cv-contact a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.theme-modern-timeline .cv-contact a:hover {
+  color: #60a5fa;
+}
+
+.theme-modern-timeline .cv-contact .contact-item::before {
+  color: #60a5fa;
+  font-size: 0.8rem;
+}
+
+.theme-modern-timeline .cv-contact .contact-profile-github::before   { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-modern-timeline .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-modern-timeline .cv-contact .contact-profile-twitter::before,
+.theme-modern-timeline .cv-contact .contact-profile-x::before        { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
+.theme-modern-timeline .cv-summary {
+  width: 100%;
+  margin-top: 0.8rem;
+  color: #e2e8f0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 0.8rem;
+}
+
+/* --- Main Layout: Two-Tone Split Columns --- */
 .theme-modern-timeline .cv-layout {
-    display: flex;
-    flex-direction: row !important; /* Force Side-by-Side */
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start; /* Prevent columns from stretching awkwardly */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
 }
 
-/* FIX: Ensure Sidebar is strictly on the left */
 .theme-modern-timeline .cv-sidebar {
-    width: 33%;
-    padding: 2rem 2.5rem;
-    order: 1 !important; 
+  order: 1;
+  flex: 0 0 320px;
+  max-width: 320px;
+  min-width: 320px;
+  padding: 2.5rem 2rem;
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
 }
 
 .theme-modern-timeline .cv-main {
-    width: 67%;
-    padding: 2rem 3rem;
-    order: 2 !important; 
+  order: 2;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 2.5rem 3rem;
+  background-color: var(--bg);
 }
 
-/* --- The Header Grid --- */
-.theme-modern-timeline .cv-header {
-    /* FIX: Isolation creates a new stacking context. 
-       This prevents the -1 z-index bar from falling behind the page background! */
-    isolation: isolate; 
-    position: relative;
-    display: grid;
-    grid-template-columns: 33% 1fr;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: center;
-    padding-top: 3rem; 
-    padding-bottom: 2rem;
-}
-
-/* The Spanning Dark Bar */
-.theme-modern-timeline .cv-header::before {
-    content: "";
-    position: absolute;
-    top: 2rem;       
-    bottom: 2rem;    
-    left: 0;         
-    right: 0;        
-    background-color: var(--accent);
-    z-index: -1; /* Safely trapped behind text by isolation: isolate */
-}
-
-.theme-modern-timeline .header-content {
-    grid-column: 2;
-    padding: 0 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Force header text to white */
-.theme-modern-timeline .header-content * {
-    color: var(--accent-text) !important;
-}
-
-.theme-modern-timeline .header-name {
-    font-family: var(--font-heading);
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 0.25rem;
-}
-
-.theme-modern-timeline .header-title {
-    font-size: 1.2rem;
-    font-weight: 400;
-    letter-spacing: 3px;
-    text-transform: lowercase;
-    opacity: 0.9;
-}
-
-.theme-modern-timeline .profile-image {
-    grid-column: 1;
-    grid-row: 1 / 10; 
-    justify-self: center;
-    width: 190px;
-    height: 190px;
-    aspect-ratio: 1 / 1; 
-    border-radius: 50%;
-    border: 8px solid var(--sidebar-bg); 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-    object-fit: cover;
-}
-
-/* --- Section Titles --- */
+/* --- Section Headings --- */
 .theme-modern-timeline .section-title {
-    font-family: var(--font-heading);
-    font-size: 1.25rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--ink);
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.5rem;
 }
 
-/* --- Main Content: The Timeline --- */
-/* FIX: Removed the aggressive > div resets that destroyed the Education section */
+.theme-modern-timeline .section-title::before {
+  color: var(--accent-light);
+}
+
+.theme-modern-timeline .cv-sidebar .section-title {
+  font-size: 1rem;
+  border-bottom: 2px solid var(--border-heavy);
+}
+
+/* --- Main Timeline Elements --- */
 .theme-modern-timeline .cv-main .item-card {
-    position: relative;
-    /* Reintroduced natural padding so it breathes */
-    padding: 0 0 2rem 2rem; 
-    border-left: 2px solid var(--ink); /* Thicker line is more robust */
+  position: relative;
+  padding: 0 0 1.8rem 1.8rem;
+  border-left: 2px solid var(--border);
+  margin-bottom: 0;
 }
 
 .theme-modern-timeline .cv-main .item-card:last-child {
-    border-left-color: transparent;
+  border-left-color: transparent;
+  padding-bottom: 0.5rem;
 }
 
 .theme-modern-timeline .cv-main .item-card::before {
-    content: "";
-    position: absolute;
-    left: -8px; /* Centers a 14px circle over a 2px border */
-    top: 0;
-    width: 14px;
-    height: 14px;
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    background-color: var(--bg);
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border: 2.5px solid var(--accent-light);
+  border-radius: 50%;
+  background-color: var(--bg);
 }
 
 .theme-modern-timeline .item-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.theme-modern-timeline .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
 }
 
 .theme-modern-timeline .item-title {
-    font-weight: 700;
-    font-size: 1.1rem;
-    color: var(--ink);
-}
-
-.theme-modern-timeline .item-date {
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--line-color);
-    text-align: right;
-    margin-left: auto; 
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
 }
 
 .theme-modern-timeline .item-subtitle {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.theme-modern-timeline .item-subtitle::before {
+  content: "— ";
+  color: var(--accent-light);
 }
 
-/* --- Sidebar Specifics --- */
-.theme-modern-timeline .cv-sidebar .section-title {
-    border-bottom: 1px solid var(--line-color);
+.theme-modern-timeline .item-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  white-space: nowrap;
+  margin-left: auto;
+}
+
+/* --- Sidebar Items & Skills --- */
+.theme-modern-timeline .cv-sidebar .item-card {
+  margin-bottom: 1.3rem;
+}
+
+.theme-modern-timeline .cv-sidebar .item-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.theme-modern-timeline .cv-sidebar .item-subtitle {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.theme-modern-timeline .cv-sidebar .item-date {
+  font-size: 0.75rem;
+  color: var(--accent-light);
+  font-weight: 600;
+}
+
+.theme-modern-timeline .cv-sidebar .skill-group {
+  margin-bottom: 1.3rem;
+}
+
+.theme-modern-timeline .cv-sidebar .skill-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
 }
 
 .theme-modern-timeline .cv-sidebar .skill-keywords {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem; 
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
 }
 
-.theme-modern-timeline .cv-sidebar .skill-keyword {
-    display: flex;
-    flex-direction: column;
-    font-weight: 600;
-    font-size: 0.9rem; 
+.theme-modern-timeline .cv-sidebar .skill-tag {
+  background-color: #ffffff;
+  color: var(--ink);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-light);
+  border-radius: 3px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
-.theme-modern-timeline .cv-sidebar .skill-keyword::after {
-    content: "";
-    display: block;
-    height: 3px; 
-    background-color: var(--ink);
-    width: 100%;
-    margin-top: 2px; 
-    border-radius: 2px;
-}
-
-/* --- A4 Print Optimization --- */
+/* ==========================================================================
+   A4 PRINT OPTIMIZATION
+   ========================================================================== */
 @media print {
-    .theme-modern-timeline {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
+  .theme-modern-timeline {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
-    .theme-modern-timeline .cv-wrapper { min-height: 0 !important; }
-    
-    .theme-modern-timeline .cv-layout {
-        display: block !important;
-    }
+  .theme-modern-timeline .cv-wrapper {
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    background: linear-gradient(to right, var(--sidebar-bg) 0%, var(--sidebar-bg) 240px, var(--bg) 240px, var(--bg) 100%) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
-    .theme-modern-timeline .cv-sidebar {
-        float: left !important;
-        width: 33% !important;
-    }
+  .theme-modern-timeline .cv-header {
+    background-color: var(--accent) !important;
+    color: #ffffff !important;
+    padding: 1.8rem 2rem !important;
+    border-bottom: 2pt solid var(--accent-light) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 
-    .theme-modern-timeline .cv-main {
-        float: left !important;
-        width: 67% !important;
-    }
+  .theme-modern-timeline .cv-name {
+    color: #ffffff !important;
+    font-size: 1.8rem !important;
+  }
 
-    .theme-modern-timeline .cv-layout::after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+  .theme-modern-timeline .cv-title {
+    color: #93c5fd !important;
+  }
 
-    .theme-modern-timeline .item-card {
-        page-break-inside: auto !important;
-        break-inside: auto !important;
-    }
+  .theme-modern-timeline .cv-contact a {
+    color: #ffffff !important;
+  }
+
+  .theme-modern-timeline .cv-contact .contact-item::before {
+    color: #60a5fa !important;
+  }
+
+  .theme-modern-timeline .cv-layout {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+  }
+
+  .theme-modern-timeline .cv-sidebar {
+    order: 1 !important;
+    flex: 0 0 240px !important;
+    max-width: 240px !important;
+    min-width: 240px !important;
+    background-color: var(--sidebar-bg) !important;
+    padding: 1.5rem 1.2rem !important;
+    border-right: 1px solid var(--border) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .theme-modern-timeline .cv-main {
+    order: 2 !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    background-color: var(--bg) !important;
+    padding: 1.5rem 2rem !important;
+  }
+
+  .theme-modern-timeline .cv-main .item-card {
+    border-left: 1.5pt solid var(--border) !important;
+    padding: 0 0 1.2rem 1.2rem !important;
+    break-inside: auto !important;
+  }
+
+  .theme-modern-timeline .cv-main .item-card:last-child {
+    border-left-color: transparent !important;
+  }
+
+  .theme-modern-timeline .cv-main .item-card::before {
+    border: 2pt solid var(--accent-light) !important;
+    background-color: var(--bg) !important;
+    left: -6px !important;
+    width: 10px !important;
+    height: 10px !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .theme-modern-timeline .item-date {
+    color: var(--accent-light) !important;
+  }
+
+  .theme-modern-timeline .cv-sidebar .skill-tag {
+    background-color: #ffffff !important;
+    border: 1px solid var(--border) !important;
+    border-left: 2.5pt solid var(--accent-light) !important;
+    color: var(--ink) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
 }

@@ -91,23 +91,42 @@
 }
 
 /* --- Item Styling (The Articles) --- */
+.theme-editorial .item-card,
 .theme-editorial .item-wrapper {
   margin-bottom: 1.8rem;
 }
 
+.theme-editorial .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.theme-editorial .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
+}
+
 .theme-editorial .item-title {
   font-family: var(--font-heading);
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 0.1rem;
+  margin: 0;
 }
 
 .theme-editorial .item-subtitle {
   font-family: var(--font-body);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-style: italic;
   color: var(--ink);
+  margin: 0;
 }
+.theme-editorial .item-subtitle::before { content: "— "; font-style: normal; color: var(--accent); }
 
 /* Dateline styling for dates */
 .theme-editorial .item-date {
@@ -117,8 +136,11 @@
   text-transform: uppercase;
   color: var(--accent);
   letter-spacing: 0.05em;
+  white-space: nowrap;
+  margin-left: auto;
 }
-.theme-editorial .item-date::before { 
+
+.theme-editorial .section-publications .item-date::before { 
   content: "— PUBLISHED: "; 
   color: var(--muted);
 }

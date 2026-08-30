@@ -1,8 +1,11 @@
 <script>
   import { onMount } from 'svelte';
 
-  export let themes = [];
-  export let activeTheme = '';
+  let {
+    themes = [],
+    activeTheme = $bindable(''),
+    currentTheme = 'classic'
+  } = $props();
 
   // Helper function to format 'elegant-split' into 'Elegant Split'
   function formatName(slug) {
@@ -11,34 +14,31 @@
   }
 
   // 1. Read from localStorage when the component mounts in the browser
-	onMount(() => {
-			const storedTheme = localStorage.getItem('resume-active-theme');
-			const defaultTheme = 'classic'; // Put your exact folder name here
-			
-			if (storedTheme && themes.includes(storedTheme)) {
-				activeTheme = storedTheme;
-			} else if (themes.includes(defaultTheme)) {
-				// Force 'classic' as the default for new visitors
-				activeTheme = defaultTheme;
-			} else if (themes.length > 0) {
-				// Absolute fallback just in case 'classic' is deleted
-				activeTheme = themes[0];
-			}
-		});
+  onMount(() => {
+    const storedTheme = localStorage.getItem('resume-active-theme');
+    if (storedTheme && themes.includes(storedTheme)) {
+      activeTheme = storedTheme;
+    }
+  });
 
-  // 2. Save to localStorage reactively whenever activeTheme changes
-  $: {
+  // 2. Save to localStorage whenever activeTheme changes
+  $effect(() => {
     if (typeof window !== 'undefined' && activeTheme) {
       localStorage.setItem('resume-active-theme', activeTheme);
     }
-  }
+  });
 </script>
 
 <div class="theme-switcher-wrapper">
   <div class="theme-switcher">
     <span class="switcher-label">STYLE</span>
     
-    <select class="switcher-select" bind:value={activeTheme} title="Select a resume theme">
+    <select 
+      class="switcher-select" 
+      value={activeTheme || currentTheme} 
+      onchange={(e) => activeTheme = e.currentTarget.value} 
+      title="Select a resume theme"
+    >
       {#each themes as theme}
         <option value={theme}>
           {formatName(theme)}

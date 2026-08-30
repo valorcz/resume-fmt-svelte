@@ -72,6 +72,7 @@
 }
 
 /* --- Item Wrappers (No Cards, Pure Text) --- */
+.theme-executive-baseline .item-card,
 .theme-executive-baseline .item-wrapper {
   background-color: transparent;
   border: none;
@@ -81,6 +82,7 @@
 }
 
 /* Layout Independence: Looks identical in sidebar or main */
+.theme-executive-baseline .cv-sidebar .item-card,
 .theme-executive-baseline .cv-sidebar .item-wrapper {
   margin-bottom: 0.85rem;
 }
@@ -88,10 +90,18 @@
 /* --- Item Headers & Metadata --- */
 .theme-executive-baseline .item-header {
   display: flex;
-  flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline; /* Critical for serif fonts */
+  gap: 0.5rem 1rem;
   margin-bottom: 0.15rem;
+}
+
+.theme-executive-baseline .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  flex: 1 1 auto;
 }
 
 .theme-executive-baseline .item-title {
@@ -105,8 +115,6 @@
   font-style: italic; /* Classic designation for roles/degrees */
   font-weight: 400;
   color: var(--ink);
-  flex-grow: 1;
-  margin-left: 0.5rem;
 }
 
 .theme-executive-baseline .item-subtitle::before {
@@ -183,9 +191,9 @@
     margin-bottom: 1rem;
   }
 
+  .theme-executive-baseline .item-card,
   .theme-executive-baseline .item-wrapper {
     margin-bottom: 1rem;
-    break-inside: avoid; /* Prevent orphaned dates/titles */
   }
 
   /* Ensure the strict black line prints clearly */

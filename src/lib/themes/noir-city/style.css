@@ -55,6 +55,39 @@
   margin-bottom: 0.5rem;
 }
 
+/* --- Contact Info & Icons --- */
+.theme-noir-city .cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.theme-noir-city .cv-contact .contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.theme-noir-city .cv-contact .contact-item::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.theme-noir-city .contact-location::before { content: "\f3c5"; } /* map pin */
+.theme-noir-city .contact-email::before    { content: "\f0e0"; } /* envelope */
+.theme-noir-city .contact-phone::before    { content: "\f095"; } /* phone */
+.theme-noir-city .contact-url::before      { content: "\f0c1"; } /* link */
+.theme-noir-city .contact-profile::before  { content: "\f0c1"; }
+.theme-noir-city .cv-contact .contact-profile-github::before   { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-noir-city .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-noir-city .cv-contact .contact-profile-twitter::before,
+.theme-noir-city .cv-contact .contact-profile-x::before        { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
 /* --- Sections & Headings --- */
 .theme-noir-city .section-title {
   font-size: 2.5rem;
@@ -69,9 +102,21 @@
 }
 
 /* Add FontAwesome Icons via pseudo-elements to Section Titles */
-.theme-noir-city .section-work .section-title::before { content: "\f0b1"; margin-right: 0.5rem; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); }
-.theme-noir-city .section-education .section-title::before { content: "\f19d"; margin-right: 0.5rem; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); }
-.theme-noir-city .section-skills .section-title::before { content: "\f121"; margin-right: 0.5rem; font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); }
+.theme-noir-city .section-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent);
+  margin-right: 0.5rem;
+}
+
+.theme-noir-city .section-work .section-title::before         { content: "\f0b1"; }
+.theme-noir-city .section-education .section-title::before    { content: "\f19d"; }
+.theme-noir-city .section-skills .section-title::before       { content: "\f121"; }
+.theme-noir-city .section-projects .section-title::before     { content: "\f5fc"; }
+.theme-noir-city .section-volunteer .section-title::before    { content: "\f4c4"; }
+.theme-noir-city .section-languages .section-title::before    { content: "\f0ac"; }
+.theme-noir-city .section-certificates .section-title::before { content: "\f0a3"; }
+.theme-noir-city .section-references .section-title::before   { content: "\f007"; }
 
 /* --- Item Cards (The Dossier Entries) --- */
 .theme-noir-city .item-wrapper {
@@ -91,10 +136,18 @@
 
 .theme-noir-city .item-header {
   display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-noir-city .item-header-primary {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem 1rem;
-  margin-bottom: 0.5rem;
+  gap: 0.4rem 0.8rem;
+  flex: 1 1 auto;
 }
 
 .theme-noir-city .item-title {
@@ -203,17 +256,22 @@
     font-size: 18pt !important;
   }
 
+  .theme-noir-city .item-card,
   .theme-noir-city .item-wrapper {
     border-left: 2pt solid var(--ink) !important;
     padding-left: 12pt !important;
-    break-inside: avoid;
+    margin-bottom: 12pt !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
   }
 
   /* Kill interactive hover states and backgrounds */
+  .theme-noir-city .item-card:hover,
   .theme-noir-city .item-wrapper:hover,
   .theme-noir-city .skill-tag:hover {
     transform: none !important;
     background-color: transparent !important;
+    box-shadow: none !important;
   }
 
   .theme-noir-city .item-date {
@@ -224,9 +282,13 @@
 
   .theme-noir-city .skill-tag {
     box-shadow: none !important;
-    border: 1pt solid var(--ink) !important;
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    border: 0.5pt solid #1f2937 !important;
+    background-color: #f3f4f6 !important;
+    color: #111827 !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 3px !important;
   }
 
   /* Remove artistic visual grid lines for paper */

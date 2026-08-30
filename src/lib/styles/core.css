@@ -19,58 +19,132 @@ body {
 }
 
 /* ==========================================================================
-   CORE STRUCTURAL CSS (Tightened 85% Layout)
+   CORE STRUCTURAL CSS (Token-Driven Architecture)
    ========================================================================== */
 .cv-wrapper {
-  background-color: var(--bg);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 0.85rem; 
-  line-height: 1.45; 
+  background-color: var(--bg, #ffffff);
+  color: var(--ink, #0f172a);
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: var(--body-font-size, 0.85rem); 
+  line-height: var(--body-line-height, 1.45); 
   max-width: 1050px;
   margin: 0 auto;
-  padding: 3rem 4rem; 
-  box-shadow: var(--screen-shadow);
-  border: 1px solid var(--border);
+  padding: var(--wrapper-padding, 3rem 4rem); 
+  box-shadow: var(--screen-shadow, none);
+  border: var(--wrapper-border, 1px solid var(--border, #e2e8f0));
+  border-radius: var(--wrapper-radius, 0);
   transition: all 0.3s ease;
 }
 
 /* --- Headers --- */
 .cv-header { 
-   margin-bottom: 2rem; 
-   isolation: isolate;
+  margin-bottom: var(--header-margin-bottom, 2rem); 
+  isolation: isolate;
 }
 
 .cv-name {
-  font-family: var(--font-heading);
-  font-size: 2.5rem; 
-  font-weight: 700;
-  color: var(--ink);
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: var(--name-font-size, 2.5rem); 
+  font-weight: var(--name-font-weight, 700);
+  color: var(--name-color, var(--ink, #0f172a));
+  letter-spacing: var(--name-letter-spacing, normal);
+  text-transform: var(--name-transform, none);
   margin: 0 0 0.3rem 0;
 }
 
 .cv-title {
-  font-family: var(--font-mono);
-  color: var(--accent);
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  color: var(--title-color, var(--accent, #2563eb));
+  font-size: var(--title-font-size, 1.05rem);
+  font-weight: var(--title-font-weight, 600);
+  text-transform: var(--title-transform, none);
+  letter-spacing: var(--title-letter-spacing, normal);
   margin: 0 0 0.8rem 0;
 }
 
 .cv-contact {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-  border-bottom: 1px solid var(--border-heavy);
-  padding-bottom: 1rem;
-  margin-bottom: 1.2rem;
+  gap: var(--contact-gap, 1.2rem);
+  font-family: var(--contact-font, var(--font-mono, 'JetBrains Mono', monospace));
+  font-size: var(--contact-font-size, 0.8rem);
+  color: var(--contact-color, var(--muted, #64748b));
+  border-bottom: var(--contact-border-bottom, 1px solid var(--border-heavy, #cbd5e1));
+  padding-bottom: var(--contact-padding-bottom, 1rem);
+  margin-bottom: var(--contact-margin-bottom, 1.2rem);
 }
 
-.cv-contact a { color: var(--ink); text-decoration: none; font-weight: 600; }
-.cv-contact a:hover { color: var(--accent); }
+.cv-contact a { 
+  color: var(--contact-link-color, var(--ink, #0f172a)); 
+  text-decoration: none; 
+  font-weight: 600; 
+}
+.cv-contact a:hover { color: var(--accent, #2563eb); }
+
+.contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.contact-item:not(:last-child)::after {
+  content: var(--contact-item-separator, "");
+  margin-left: var(--contact-item-separator-gap, 0.5rem);
+  color: var(--contact-item-separator-color, var(--accent, #2563eb));
+}
+
+/* Base Icon Styling */
+.contact-item::before {
+  font-family: var(--contact-icon-font, "Font Awesome 6 Free");
+  font-weight: 900;
+  color: var(--contact-icon-color, var(--accent, #2563eb));
+  font-size: var(--contact-icon-size, 0.8rem);
+  margin-right: 0.25rem;
+}
+
+.contact-location::before { content: "\f3c5"; } /* map pin */
+.contact-email::before    { content: "\f0e0"; } /* envelope */
+.contact-phone::before    { content: "\f095"; } /* phone */
+.contact-url::before      { content: "\f0c1"; } /* link */
+.contact-profile::before  { content: "\f0c1"; }
+
+/* Font Awesome Brand Icon Support */
+.contact-profile-github::before,
+[data-network="github"]::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f09b";
+}
+
+.contact-profile-linkedin::before,
+[data-network="linkedin"]::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f08c";
+}
+
+.contact-profile-twitter::before,
+.contact-profile-x::before,
+[data-network="twitter"]::before,
+[data-network="x"]::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f099";
+}
+
+.contact-profile-gitlab::before,
+[data-network="gitlab"]::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f296";
+}
+
+.contact-profile-stackoverflow::before,
+[data-network="stackoverflow"]::before {
+  font-family: "Font Awesome 6 Brands";
+  font-weight: 400;
+  content: "\f16c";
+}
 
 .cv-summary p { font-size: 0.95rem; text-align: justify; margin: 0; }
 
@@ -83,63 +157,123 @@ body {
 }
 
 /* --- Sections --- */
-.section-title {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--accent);
-  text-transform: uppercase;
-  border-bottom: 2px solid var(--border-heavy);
-  padding-bottom: 0.3rem;
-  margin-bottom: 1.2rem;
-  display: block;
+.cv-section {
+  margin-bottom: var(--section-margin-bottom, 1.8rem);
 }
 
+.section-title {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: var(--section-title-size, 1.05rem);
+  font-weight: var(--section-title-weight, 700);
+  color: var(--section-title-color, var(--accent, #2563eb));
+  text-transform: var(--section-title-transform, uppercase);
+  letter-spacing: var(--section-title-letter-spacing, normal);
+  border-bottom: var(--section-title-border, 2px solid var(--border-heavy, #cbd5e1));
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: var(--section-title-gap, 0.5rem);
+}
+
+.section-title::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--section-icon-color, var(--accent, #2563eb));
+  margin-right: 0.4rem;
+  display: inline-block;
+}
+
+.section-work .section-title::before,
+.section-experience .section-title::before { content: "\f0b1"; }
+.section-projects .section-title::before     { content: "\f5fc"; }
+.section-skills .section-title::before       { content: "\f121"; }
+.section-languages .section-title::before    { content: "\f0ac"; }
+.section-certificates .section-title::before,
+.section-certs .section-title::before        { content: "\f0a3"; }
+.section-education .section-title::before    { content: "\f19d"; }
+.section-volunteer .section-title::before    { content: "\f4c4"; }
+.section-references .section-title::before   { content: "\f007"; }
+
 /* --- Item Cards --- */
-.item-card { margin-bottom: 1.6rem; }
+.item-card { 
+  margin-bottom: var(--item-card-margin-bottom, 1.5rem); 
+  border: var(--item-card-border, none);
+  border-radius: var(--item-card-radius, 0);
+  background: var(--item-card-bg, transparent);
+  padding: var(--item-card-padding, 0);
+  box-shadow: var(--item-card-shadow, none);
+}
 
 .item-header {
   display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--item-header-gap, 0.5rem 1rem);
+  margin-bottom: var(--item-header-margin-bottom, 0.25rem);
+}
+
+.item-header-primary {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  margin-bottom: 0.2rem;
+  gap: var(--item-header-primary-gap, 0.35rem 0.6rem);
+  flex: 1 1 auto;
 }
 
 .item-title {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
+  font-family: var(--item-title-font, var(--font-heading, 'Inter', sans-serif));
+  font-size: var(--item-title-size, 1rem);
+  font-weight: var(--item-title-weight, 700);
+  color: var(--item-title-color, var(--ink, #0f172a));
+  letter-spacing: var(--item-title-letter-spacing, normal);
   margin: 0;
-  flex: 1 1 100%;
 }
 
 .item-subtitle {
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  color: var(--accent);
-  font-weight: 600;
-  margin-top: 0.1rem;
-  margin-right: auto;
+  font-family: var(--item-subtitle-font, var(--font-mono, 'JetBrains Mono', monospace));
+  font-size: var(--item-subtitle-size, 0.875rem);
+  font-weight: var(--item-subtitle-weight, 600);
+  color: var(--item-subtitle-color, var(--accent, #2563eb));
+}
+
+.item-subtitle::before {
+  content: var(--item-subtitle-separator, "— ");
+  color: var(--item-subtitle-separator-color, var(--accent, #2563eb));
+  font-style: normal;
 }
 
 .item-date {
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-top: 0.1rem;
+  font-family: var(--item-date-font, var(--font-mono, 'JetBrains Mono', monospace));
+  font-size: var(--item-date-size, 0.8rem);
+  font-weight: var(--item-date-weight, 500);
+  color: var(--item-date-color, var(--muted, #64748b));
+  background-color: var(--item-date-bg, transparent);
+  border: var(--item-date-border, none);
+  border-radius: var(--item-date-radius, 0);
+  padding: var(--item-date-padding, 0);
+  white-space: nowrap;
+  margin-left: auto;
+  text-align: right;
+  flex-shrink: 0;
 }
 
-.item-summary { font-size: 0.85rem; font-weight: 600; margin: 0.4rem 0; }
+.item-summary { 
+  font-size: 0.85rem; 
+  font-weight: 500; 
+  margin: 0.35rem 0; 
+  color: var(--item-summary-color, var(--ink, #0f172a));
+}
 .item-highlights { font-size: 0.85rem; padding-left: 1.2rem; margin-top: 0.3rem; }
 .item-highlights li { margin-bottom: 0.2rem; } 
 
 /* --- Sidebar Lists & Skills --- */
 .skill-group { margin-bottom: 1.2rem; }
 .skill-name {
-  font-family: var(--font-heading);
+  font-family: var(--font-heading, 'Inter', sans-serif);
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--ink);
+  color: var(--ink, #0f172a);
   text-transform: uppercase;
   display: block;
   margin-bottom: 0.4rem;
@@ -148,14 +282,16 @@ body {
 .skill-keywords { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
 .skill-tag {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  background-color: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  padding: 0.2rem 0.6rem;
-  border-radius: 4px; 
-  font-weight: 600;
+  font-family: var(--skill-tag-font, var(--font-mono, 'JetBrains Mono', monospace));
+  font-size: var(--skill-tag-size, 0.75rem);
+  background-color: var(--skill-tag-bg, var(--surface, #f8fafc));
+  color: var(--skill-tag-color, var(--ink, #0f172a));
+  border: var(--skill-tag-border, 1px solid var(--border, #e2e8f0));
+  border-radius: var(--skill-tag-radius, 4px); 
+  padding: var(--skill-tag-padding, 0.2rem 0.6rem);
+  box-shadow: var(--skill-tag-shadow, none);
+  text-transform: var(--skill-tag-transform, none);
+  font-weight: var(--skill-tag-weight, 600);
 }
 
 /* Not used anymore in the modernized themes with layouts */

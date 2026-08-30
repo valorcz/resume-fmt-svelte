@@ -86,7 +86,7 @@
 }
 
 /* 4. Terminal-style Contact Dividers */
-.theme-cyber-script .cv-contact span:not(:last-child)::after { 
+.theme-cyber-script .cv-contact .contact-item:not(:last-child)::after { 
   content: "//"; 
   margin-left: 1rem; 
   color: var(--accent); 
@@ -102,18 +102,23 @@
 }
 
 /* --- Terminal Icons --- */
-.theme-cyber-script .cv-contact span::before, 
+.theme-cyber-script .cv-contact .contact-item::before, 
 .theme-cyber-script .section-title::before { 
   font-family: "Font Awesome 6 Free"; 
   font-weight: 900; 
   color: var(--ink); 
   display: inline-block; 
 }
-.theme-cyber-script .cv-contact span::before { margin-right: 0.5rem; color: var(--accent); }
-.theme-cyber-script .cv-contact span:nth-child(1)::before { content: "\f3c5"; } /* map */
-.theme-cyber-script .cv-contact span:nth-child(2)::before { content: "\f095"; } /* list-alt */
-.theme-cyber-script .cv-contact span:nth-child(3)::before { content: "\f120"; } /* terminal */
-.theme-cyber-script .cv-contact span:nth-child(n+4)::before { content: "\f0c1"; } /* link */
+.theme-cyber-script .cv-contact .contact-item::before { margin-right: 0.5rem; color: var(--accent); }
+.theme-cyber-script .contact-location::before { content: "\f3c5"; } /* map */
+.theme-cyber-script .contact-phone::before { content: "\f095"; }    /* phone */
+.theme-cyber-script .contact-email::before { content: "\f0e0"; }    /* email */
+.theme-cyber-script .contact-url::before { content: "\f0c1"; }      /* link */
+.theme-cyber-script .contact-profile::before { content: "\f120"; }  /* terminal icon */
+.theme-cyber-script .cv-contact .contact-profile-github::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-cyber-script .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-cyber-script .cv-contact .contact-profile-twitter::before,
+.theme-cyber-script .cv-contact .contact-profile-x::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
 
 .theme-cyber-script .section-title::before { 
   margin-right: 0.75rem; 
@@ -127,7 +132,51 @@
 .theme-cyber-script .section-certificates .section-title::before { content: "\f023"; } /* lock */
 .theme-cyber-script .section-education .section-title::before { content: "\f19d"; } /* grad cap */
 .theme-cyber-script .section-volunteer .section-title::before { content: "\f51c"; } 
+.theme-cyber-script .section-references .section-title::before { content: "\f007"; }
 
+/* --- Item Headers & Terminal Subtitle Separator --- */
+.theme-cyber-script .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.theme-cyber-script .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.6rem;
+  flex: 1 1 auto;
+}
+
+.theme-cyber-script .item-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.theme-cyber-script .item-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.theme-cyber-script .item-subtitle::before {
+  content: "// ";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.theme-cyber-script .item-date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+  margin-left: auto;
+}
 
 /* List item custom cyber-bullet */
 .theme-cyber-script .item-highlights li { list-style-type: none; position: relative; padding-left: 1.2rem; }
@@ -149,7 +198,15 @@
 
 /* --- A4 Print Optimization --- */
 @media print {
-  /* Remove the shadow, animation, and barcode for clean, professional printing */
+  .theme-cyber-script {
+    --bg: #ffffff !important;
+    --ink: #000000 !important;
+    --accent: #ff0055 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Reset screen wrapper shadow and cursor animation */
   .theme-cyber-script .cv-wrapper { 
     box-shadow: none !important; 
     border: none !important;
@@ -157,16 +214,38 @@
     line-height: 1.35 !important; 
   }
   .theme-cyber-script .cv-wrapper::before { display: none !important; }
-  .theme-cyber-script .cv-name::after { display: none !important; } /* Kill the cursor */
+  .theme-cyber-script .cv-name::after { display: none !important; } /* Kill the blinking cursor animation */
   
-  .theme-cyber-script .skill-tag { box-shadow: none !important; border: 1pt solid var(--border-heavy) !important; padding: 1pt 5pt !important;}
+  /* Faithful Brutalist Data Shards on Paper (Sharp 0-radius, Hard Vector 2D Offset Shadow) */
+  .theme-cyber-script .skill-tag { 
+    box-shadow: 1.5pt 1.5pt 0px #ff0055 !important; 
+    border: 0.75pt solid #000000 !important; 
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: var(--font-mono) !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    text-transform: lowercase !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 0 !important;
+    margin-right: 2pt !important;
+    margin-bottom: 2pt !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   
   .theme-cyber-script .cv-name { font-size: 24pt !important; letter-spacing: -1px !important; }
   .theme-cyber-script .cv-title { font-size: 11pt !important; margin-bottom: 0.4rem !important; }
   .theme-cyber-script .cv-contact { font-size: 8pt !important; padding-bottom: 0.4rem !important; margin-bottom: 1.2rem !important; }
+  .theme-cyber-script .cv-contact .contact-item:not(:last-child)::after { color: #ff0055 !important; }
+  .theme-cyber-script .cv-contact .contact-item::before { color: #ff0055 !important; }
+  
+  .theme-cyber-script .section-title { font-size: 11pt !important; border-bottom: 1.5pt solid #000000 !important; }
+  .theme-cyber-script .section-title::before { color: #ff0055 !important; }
   
   .theme-cyber-script .item-title { font-size: 10.5pt !important; }
   .theme-cyber-script .item-subtitle { font-size: 9pt !important; }
   .theme-cyber-script .item-date { font-size: 8pt !important; }
+  .theme-cyber-script .item-highlights li::before { color: #ff0055 !important; }
   .theme-cyber-script .skill-name { font-size: 8.5pt !important; }
 }

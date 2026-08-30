@@ -76,6 +76,42 @@
   letter-spacing: -0.02em; /* Tighter, more modern tracking */
 }
 
+/* --- Contact Info & Icons --- */
+.theme-bio-vision .cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.theme-bio-vision .cv-contact .contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.theme-bio-vision .cv-contact .contact-item::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+.theme-bio-vision .contact-location::before { content: "\f3c5"; } /* map pin */
+.theme-bio-vision .contact-email::before    { content: "\f0e0"; } /* envelope */
+.theme-bio-vision .contact-phone::before    { content: "\f095"; } /* phone */
+.theme-bio-vision .contact-url::before      { content: "\f0c1"; } /* link */
+.theme-bio-vision .contact-profile::before  { content: "\f0c1"; }
+.theme-bio-vision .cv-contact .contact-profile-github::before   { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-bio-vision .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-bio-vision .cv-contact .contact-profile-twitter::before,
+.theme-bio-vision .cv-contact .contact-profile-x::before        { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
 /* --- Section Headers with AI/Botany Icons --- */
 .theme-bio-vision .section-title {
   color: var(--accent);
@@ -102,12 +138,15 @@
   font-size: 1rem;
 }
 
-/* Specific Section Icons mapping (AI Vision + Biology) */
-.theme-bio-vision .section-work .section-title::before { content: "\f06e"; } /* eye (Computer Vision) */
-.theme-bio-vision .section-education .section-title::before { content: "\f5db"; } /* brain (Machine Learning) */
-.theme-bio-vision .section-skills .section-title::before { content: "\f2db"; } /* microchip (Hardware/Tech) */
-.theme-bio-vision .section-projects .section-title::before { content: "\f06c"; } /* leaf (Botany/Stages) */
-.theme-bio-vision .section-volunteer .section-title::before { content: "\f1bb"; } /* tree (Environment) */
+/* Specific Section Icons mapping */
+.theme-bio-vision .section-work .section-title::before         { content: "\f0b1"; } /* briefcase */
+.theme-bio-vision .section-education .section-title::before    { content: "\f19d"; } /* graduation cap */
+.theme-bio-vision .section-skills .section-title::before       { content: "\f2db"; } /* microchip */
+.theme-bio-vision .section-projects .section-title::before     { content: "\f5fc"; } /* laptop code */
+.theme-bio-vision .section-volunteer .section-title::before    { content: "\f4c4"; } /* helping hands */
+.theme-bio-vision .section-languages .section-title::before    { content: "\f0ac"; } /* globe */
+.theme-bio-vision .section-certificates .section-title::before { content: "\f0a3"; } /* certificate ribbon */
+.theme-bio-vision .section-references .section-title::before   { content: "\f007"; } /* user */
 
 /* --- Item Wrappers (Light Glassmorphism & Soft Shadows) --- */
 .theme-bio-vision .item-wrapper {
@@ -151,10 +190,18 @@
 
 .theme-bio-vision .item-header {
   display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-bio-vision .item-header-primary {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
 }
 
 .theme-bio-vision .item-title {
@@ -277,7 +324,7 @@
     display: none !important;
   }
 
-  /* Strip hover states, shadows, and animations */
+  .theme-bio-vision .item-card,
   .theme-bio-vision .item-wrapper {
     background: transparent !important;
     border: none !important;
@@ -290,16 +337,21 @@
     -webkit-backdrop-filter: none !important;
   }
 
+  .theme-bio-vision .item-card::before,
   .theme-bio-vision .item-wrapper::before {
     display: none !important;
   }
 
   .theme-bio-vision .skill-tag {
     animation: none !important;
-    background: transparent !important;
-    border: 1px solid #999 !important;
-    color: #000 !important;
-    padding: 0.2rem 0.5rem !important;
+    background-color: #ecfdf5 !important;
+    border: 0.5pt solid #a7f3d0 !important;
+    color: #065f46 !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
   }
 
   .theme-bio-vision .item-date {

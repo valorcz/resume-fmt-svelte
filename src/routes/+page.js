@@ -2,7 +2,15 @@ import Ajv from 'ajv-draft-04';
 import addFormats from 'ajv-formats';
 import yaml from 'js-yaml';
 import { base } from '$app/paths';
-import { themeRegistry, fallbackConfig } from '$lib/themeRegistry';
+import { loadTheme, fallbackConfig, availableThemes } from '$lib/themeRegistry';
+import resumeSchemaRaw from '$lib/schema/resume.schema.json';
+
+// Precompile schema validator locally
+const schema = { ...resumeSchemaRaw };
+delete schema.$schema;
+const ajv = new Ajv({ strict: false, allErrors: true });
+addFormats(ajv);
+const validateResume = ajv.compile(schema);
 
 function mergeConfigs(serverConfig, userConfig) {
   if (!userConfig) return serverConfig;
@@ -13,8 +21,24 @@ function mergeConfigs(serverConfig, userConfig) {
   };
 }
 
+function decodeLayout(layoutStr) {
+  if (!layoutStr || !layoutStr.includes('|')) return null;
+  const [mainPart, sidePart] = layoutStr.split('|');
+  return {
+    main: mainPart ? mainPart.split(',').filter(Boolean) : [],
+    sidebar: sidePart ? sidePart.split(',').filter(Boolean) : []
+  };
+}
+
 export async function load({ fetch, url }) {
   const gistId = url.searchParams.get('gist');
+  const urlTheme = url.searchParams.get('theme');
+  const urlAccentRaw = url.searchParams.get('accent');
+  const urlAccent = urlAccentRaw ? (urlAccentRaw.startsWith('#') ? urlAccentRaw : `#${urlAccentRaw}`) : null;
+  const urlMode = url.searchParams.get('mode');
+  const urlLayoutRaw = url.searchParams.get('layout');
+  const urlLayout = urlLayoutRaw ? decodeLayout(urlLayoutRaw) : null;
+
   let resume = null;
   let userConfig = null;
 
@@ -47,26 +71,35 @@ export async function load({ fetch, url }) {
       delete resume._config; 
     }
 
-    // 4. Resolve Theme Config
-    const requestedTheme = userConfig?.theme || 'classic';
-    const serverConfig = themeRegistry[requestedTheme] || fallbackConfig;
-    const finalConfig = mergeConfigs(serverConfig, userConfig);
+    // 4. Resolve Theme & Load dynamically (URL param takes precedence)
+    const validTheme = (urlTheme && availableThemes.includes(urlTheme)) ? urlTheme : null;
+    const requestedTheme = validTheme || userConfig?.theme || 'classic';
+    const initialThemeData = await loadTheme(requestedTheme);
+    const finalConfig = mergeConfigs(initialThemeData.config, userConfig);
 
-    // 5. Schema Validation
-    const schemaRes = await fetch('https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json');
-    const schema = await schemaRes.json();
-    delete schema.$schema; 
-
-    const ajv = new Ajv({ strict: false, allErrors: true }); 
-    addFormats(ajv);
-    
-    if (!ajv.validate(schema, resume)) {
-      return { error: true, message: "Invalid JSON Resume schema.", details: ajv.errors };
+    // 5. Schema Validation using precompiled local validator
+    if (!validateResume(resume)) {
+      return { error: true, message: "Invalid JSON Resume schema.", details: validateResume.errors };
     }
 
-    return { resume, config: finalConfig, error: false };
+    return { 
+      resume, 
+      config: finalConfig, 
+      initialTheme: initialThemeData.name,
+      initialThemeCss: initialThemeData.css,
+      initialThemeConfig: initialThemeData.config,
+      urlParams: {
+        theme: validTheme,
+        accent: urlAccent,
+        mode: ['system', 'light', 'dark'].includes(urlMode) ? urlMode : null,
+        layout: urlLayout
+      },
+      availableThemes,
+      error: false 
+    };
 
   } catch (err) {
     return { error: true, message: err.message, details: [] };
   }
 }
+

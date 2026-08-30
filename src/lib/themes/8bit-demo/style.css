@@ -51,24 +51,38 @@
 
 .theme-8bit-demo .item-header {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.theme-8bit-demo .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
 }
 
 .theme-8bit-demo .item-title {
   font-family: var(--font-heading);
   font-size: 0.9rem;
   color: var(--ink);
-  margin-bottom: 0.25rem;
+  margin: 0;
 }
 
 .theme-8bit-demo .item-subtitle {
   color: var(--accent);
   font-weight: bold;
 }
+.theme-8bit-demo .item-subtitle::before { content: "// "; color: var(--ink-muted); }
 
 .theme-8bit-demo .item-date {
   color: var(--ink-muted);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  margin-left: auto;
 }
 
 .theme-8bit-demo .item-summary {
@@ -144,8 +158,12 @@
 
   .theme-8bit-demo .skill-tag {
     font-size: 7.5pt !important;
-    border: 1pt solid #000 !important;
-    box-shadow: none !important; /* Strip heavy shadows for printing */
+    background-color: #f1f5f9 !important;
+    border: 1pt solid #000000 !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 0 !important;
   }
   
   .theme-8bit-demo .cv-sidebar {

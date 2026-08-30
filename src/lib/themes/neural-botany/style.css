@@ -70,6 +70,42 @@
   letter-spacing: 0.05em;
 }
 
+/* --- Contact Info & Icons --- */
+.theme-neural-botany .cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  border-bottom: 1px dashed var(--border-subtle);
+  padding-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.theme-neural-botany .cv-contact .contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.theme-neural-botany .cv-contact .contact-item::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: var(--accent-glow);
+  font-size: 0.875rem;
+}
+
+.theme-neural-botany .contact-location::before { content: "\f3c5"; } /* map pin */
+.theme-neural-botany .contact-email::before    { content: "\f0e0"; } /* envelope */
+.theme-neural-botany .contact-phone::before    { content: "\f095"; } /* phone */
+.theme-neural-botany .contact-url::before      { content: "\f0c1"; } /* link */
+.theme-neural-botany .contact-profile::before  { content: "\f0c1"; }
+.theme-neural-botany .cv-contact .contact-profile-github::before   { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-neural-botany .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-neural-botany .cv-contact .contact-profile-twitter::before,
+.theme-neural-botany .cv-contact .contact-profile-x::before        { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
+
 /* --- Section Headers with AI & Botany Icons --- */
 .theme-neural-botany .section-title {
   color: var(--accent-glow);
@@ -93,11 +129,14 @@
 }
 
 /* Specific Section Icons mapping */
-.theme-neural-botany .section-work .section-title::before { content: "\f6ff"; } /* network-wired (AI) */
-.theme-neural-botany .section-education .section-title::before { content: "\f4d8"; } /* seedling (Growth) */
-.theme-neural-botany .section-skills .section-title::before { content: "\f2db"; } /* microchip (Tech) */
-.theme-neural-botany .section-projects .section-title::before { content: "\f06c"; } /* leaf (Biology) */
-.theme-neural-botany .section-volunteer .section-title::before { content: "\f1bb"; } /* tree (Ecosystem) */
+.theme-neural-botany .section-work .section-title::before         { content: "\f6ff"; } /* network-wired (AI) */
+.theme-neural-botany .section-education .section-title::before    { content: "\f19d"; } /* graduation cap */
+.theme-neural-botany .section-skills .section-title::before       { content: "\f2db"; } /* microchip (Tech) */
+.theme-neural-botany .section-projects .section-title::before     { content: "\f5fc"; } /* laptop code */
+.theme-neural-botany .section-volunteer .section-title::before    { content: "\f4c4"; } /* helping hands */
+.theme-neural-botany .section-languages .section-title::before    { content: "\f0ac"; } /* globe */
+.theme-neural-botany .section-certificates .section-title::before { content: "\f0a3"; } /* certificate ribbon */
+.theme-neural-botany .section-references .section-title::before   { content: "\f007"; } /* user */
 
 /* --- Item Wrappers (Glassmorphism & Tech Borders) --- */
 .theme-neural-botany .item-wrapper {
@@ -120,10 +159,18 @@
 
 .theme-neural-botany .item-header {
   display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-neural-botany .item-header-primary {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  gap: 0.35rem 0.6rem;
+  flex: 1 1 auto;
 }
 
 .theme-neural-botany .item-title {
@@ -237,6 +284,7 @@
   }
 
   /* Remove animations, glowing borders, and glass backgrounds */
+  .theme-neural-botany .item-card,
   .theme-neural-botany .item-wrapper {
     background: transparent !important;
     border-left: 2px solid #000 !important;
@@ -249,8 +297,14 @@
 
   .theme-neural-botany .skill-tag {
     animation: none !important;
-    border: 1px solid #000 !important;
-    color: #000 !important;
+    background-color: #f0fdfa !important;
+    border: 0.5pt solid #99f6e4 !important;
+    color: #115e59 !important;
+    font-size: 7.5pt !important;
+    font-weight: 600 !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
   }
 
   .theme-neural-botany .item-date {

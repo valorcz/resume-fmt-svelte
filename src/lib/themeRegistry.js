@@ -1,25 +1,72 @@
 import yaml from 'js-yaml';
 
-// 1. THIS IS THE MAGIC FIX: Tell Vite to find and bundle every style.css file!
-// Using eager: true forces Vite to inject the CSS globally into your app.
-import.meta.glob('/src/lib/themes/*/style.css', { eager: true });
-
-// 2. Fetch the YAML configs
-const rawConfigs = import.meta.glob('/src/lib/themes/*/config.yaml', { 
+// Dynamic lazy glob loaders for configs and styles
+const configLoaders = import.meta.glob('/src/lib/themes/*/config.yaml', { 
   query: '?raw', 
-  import: 'default', 
-  eager: true 
+  import: 'default'
 });
 
-export const themeRegistry = {};
+const styleLoaders = import.meta.glob('/src/lib/themes/*/style.css', { 
+  query: '?raw', 
+  import: 'default'
+});
 
-for (const path in rawConfigs) {
-  const themeName = path.split('/')[4]; 
-  themeRegistry[themeName] = yaml.load(rawConfigs[path]);
-}
+// Statically extract list of available theme names from discovered folders
+export const availableThemes = Object.keys(configLoaders)
+  .map(path => path.split('/')[4])
+  .sort();
 
 export const fallbackConfig = {
-  theme: 'elegant-split',
+  theme: 'classic',
   i18n: { work: "Experience", education: "Education", volunteer: "Volunteering", skills: "Skills" },
-  layout: { main: ["work", "education", "volunteer"], sidebar: ["skills"] }
+  layout: { 
+    main: ["work", "education", "volunteer", "projects", "publications", "skills", "languages", "certificates", "awards", "interests", "references"], 
+    sidebar: [] 
+  }
 };
+
+// In-memory cache for loaded themes so switching back is instant and zero-network
+const themeCache = new Map();
+
+/**
+ * Dynamically loads a theme's config and CSS on demand.
+ * Returns cached theme if already fetched.
+ * 
+ * @param {string} themeName 
+ * @returns {Promise<{ name: string, config: object, css: string }>}
+ */
+export async function loadTheme(themeName) {
+  const targetTheme = (themeName && availableThemes.includes(themeName)) 
+    ? themeName 
+    : (availableThemes.includes('classic') ? 'classic' : availableThemes[0] || 'classic');
+
+  if (themeCache.has(targetTheme)) {
+    return themeCache.get(targetTheme);
+  }
+
+  const configPath = `/src/lib/themes/${targetTheme}/config.yaml`;
+  const stylePath = `/src/lib/themes/${targetTheme}/style.css`;
+
+  const [rawConfig, rawCss] = await Promise.all([
+    configLoaders[configPath] ? configLoaders[configPath]() : Promise.resolve(null),
+    styleLoaders[stylePath] ? styleLoaders[stylePath]() : Promise.resolve('')
+  ]);
+
+  let config = fallbackConfig;
+  if (rawConfig) {
+    try {
+      config = yaml.load(rawConfig) || fallbackConfig;
+    } catch (err) {
+      console.error(`Failed to parse config for theme "${targetTheme}":`, err);
+    }
+  }
+
+  const themeData = {
+    name: targetTheme,
+    config: { ...config, theme: targetTheme },
+    css: rawCss || ''
+  };
+
+  themeCache.set(targetTheme, themeData);
+  return themeData;
+}

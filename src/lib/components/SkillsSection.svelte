@@ -1,7 +1,9 @@
 <script>
-  export let items = [];
-  export let sectionTitle = "Skills";
-  export let sectionId = "skills"; // 👈 Add the prop
+  let {
+    items = [],
+    sectionTitle = "Skills",
+    sectionId = "skills"
+  } = $props();
 </script>
 
 {#if items && items.length > 0}

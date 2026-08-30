@@ -1,15 +1,21 @@
 <script>
-  export let items = []; 
-  export let sectionTitle = "Section"; 
-  export let sectionId = "default"; 
-  
-  export let titleKey = "position"; 
-  export let subtitleKey = "name"; 
-  export let dateKey = "startDate"; 
-  export let endDateKey = "endDate"; 
-  export let summaryKey = "summary"; 
+  let {
+    items = [],
+    sectionTitle = "Section",
+    sectionId = "default",
+    titleKey = "position",
+    subtitleKey = "name",
+    dateKey = "startDate",
+    endDateKey = "endDate",
+    summaryKey = "summary",
+    areaKey = null
+  } = $props();
 
-  export let areaKey = null;
+  function formatYear(val) {
+    if (!val) return '';
+    const str = String(val).trim();
+    return str.length >= 4 ? str.substring(0, 4) : str;
+  }
 </script>
 
 {#if items && items.length > 0}
@@ -20,22 +26,22 @@
       {#each items as item}
         <div class="item-card">
           <div class="item-header">
-            {#if item[subtitleKey]}<span class="item-subtitle">{item[subtitleKey]}</span>{/if}
+            <div class="item-header-primary">
+              {#if item[titleKey] || (areaKey && item[areaKey])}
+                <span class="item-title">
+                  {item[titleKey] || ''}{#if item[titleKey] && areaKey && item[areaKey]} · {item[areaKey]}{/if}
+                </span>
+              {/if}
+              {#if item[subtitleKey]}
+                <span class="item-subtitle">{item[subtitleKey]}</span>
+              {/if}
+            </div>
             
-            {#if item[titleKey] || (areaKey && item[areaKey])}
-              <span class="item-title">
-                {item[titleKey] || ''}{#if item[titleKey] && areaKey && item[areaKey]} | {/if} {areaKey && item[areaKey] ? item[areaKey] : ''}
+            {#if item[dateKey]}
+              <span class="item-date">
+                {formatYear(item[dateKey])}{#if item[endDateKey]} — {formatYear(item[endDateKey])}{:else if dateKey === 'startDate'} — Present{/if}
               </span>
             {/if}
-            
-            <span class="item-date">
-              {#if item[dateKey]}
-                {item[dateKey].substring(0, 4)} 
-                {#if item[endDateKey]} — {item[endDateKey].substring(0, 4)}
-                {:else if dateKey === 'startDate'} — Present
-                {/if}
-              {/if}
-            </span>
           </div>
           
           {#if item[summaryKey]}
