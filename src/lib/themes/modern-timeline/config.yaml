@@ -1,0 +1,23 @@
+theme: modern-timeline
+i18n:
+  work: "Experience"
+  education: "Education"
+  volunteer: "Volunteering"
+  skills: "Skills"
+  languages: "Languages"
+  certificates: "Certifications"
+  projects: "Selected Projects"
+layout:
+  main:
+    - work
+    - volunteer
+    - projects
+    - publications
+  sidebar:
+    - skills
+    - languages
+    - education
+    - certificates
+    - awards
+    - interests
+    - references

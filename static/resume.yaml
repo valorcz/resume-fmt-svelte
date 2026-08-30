@@ -2,6 +2,7 @@ basics:
   name: Václav Lorenc
   label: Principal Information Security Engineer
   email: vaclav.lorenc@gmail.com
+  # image: https://avatars.githubusercontent.com/valorcz
   phone: +420 608 143 418
   location:
     city: Brno
@@ -15,46 +16,53 @@ basics:
     - network: LinkedIn
       username: valor
       url: https://www.linkedin.com/in/valor/
+
 work:
   - name: HERE Czech Republic
     position: Principal Information Security Engineer
     location: Brno
     startDate: '2021-01-01'
-    summary: Directed the architectural design and execution of enterprise-wide vulnerability management frameworks.
+    summary: Leading vulnerability management, automation, and internal security tooling improvements.
     highlights:
-      - Engineered automated systems for threat escalation, queue management, and remediation planning, significantly enhancing risk visibility.
-      - Maintained, scaled, and documented proprietary security infrastructure to ensure continuous operational compliance.
-      - Drove continuous process improvements focusing on automation and rigorous documentation standards.
+      - Manage vulnerability scanning, escalation workflows, and security control updates.
+      - Improve documentation and operational processes across security teams.
+      - Maintain and refresh multiple internally developed security projects.
+      - Develop automated queue management for vulnerability findings and escalations.
+
   - name: Konica Minolta
     position: Security Architect
     location: Brno
     startDate: '2020-01-01'
     endDate: '2021-01-01'
-    summary: Architected and integrated robust security controls into the Workplace Hub product, successfully embedding security practices into agile development lifecycles.
+    summary: Designed and improved security architecture for a new workplace product designed for small/home office customers.
     highlights:
-      - Spearheaded the enterprise-wide implementation of Secure SDLC methodologies.
-      - Designed and delivered structured security architecture training programs to establish a standardized engineering culture.
-      - Led foundational security-focused data analytics training for monitoring teams.
+      - Integrated security into agile development processes.
+      - Implemented Secure SDLC practices and delivered internal training programs.
+      - Introduced security-focused monitoring and data analytics concepts for operational teams.
+
   - name: Oracle + NetSuite
     position: Senior Security Analyst / SOC Tier1 Manager
     location: Brno
     startDate: '2016-01-01'
     endDate: '2020-01-01'
-    summary: Architected and managed enterprise SIEM solutions, establishing scalable log management, data onboarding strategies, and tool integrations.
+    summary: Focused on SIEM architecture, security monitoring, and SOC process improvements.
     highlights:
-      - Overhauled internal SOC processes, communication protocols, and documentation to ensure rigorous, auditable security monitoring.
-      - Designed adaptable log monitoring architectures capable of mitigating system inconsistencies across highly complex environments.
-      - Ensured the effective handling of log data and integration with related tools under varying levels of uncertainty.
+      - Designed log monitoring strategies across complex environments with inconsistent data sources.
+      - Led improvements in internal communication, documentation, and security processes.
+      - Contributed to SIEM architecture including onboarding, integration, and operational planning.
+      - Participated on PCI-DSS and SOC audits, with semi-automated evidence preparation.
+
   - name: Honeywell, s.r.o.
     position: IT Security Analyst / Team Lead
     location: Brno
     startDate: '2011-01-01'
     endDate: '2016-01-01'
-    summary: Led the Incident Response and Threat Analysis team, establishing foundational processes for advanced forensics and security scanning.
+    summary: Incident response and threat analysis specialist with focus on forensics and automation.
     highlights:
-      - Engineered automated host triage solutions and routine security tasks, drastically reducing manual investigation times.
-      - Developed and standardized comprehensive training curriculums to systematically elevate the capabilities of junior personnel.
-      - Conducted independent malware reverse engineering and advanced forensics to support threat analysis and incident response.
+      - Performed advanced forensic investigations and threat analysis.
+      - Conducted security scans and developed automation for repetitive security workflows.
+      - Provided training and mentorship for junior analysts.
+
   - name: Institute of Computer Science
     position: Senior Network Administrator / Network Administrator
     location: Brno
@@ -63,27 +71,29 @@ work:
     summary: Administered complex network infrastructures and implemented scalable, auditable network security solutions.
     highlights:
       - Designed and implemented decentralized, auditable firewall deployments for various faculties using open-source solutions.
-      - Established a combination of technical measures, wiki-based documentation, and structured trainings to ensure reliable network operations.
+      - Established a combination of technical measures, wiki-based documentation, and structured training sessions to ensure reliable network operations.
       - Configured and maintained enterprise networking equipment, including Cisco, 3Com, and Juniper technologies.
+
 volunteer:
   - organization: Masaryk University
-    position: Invited Lecture - Introduction to Threat Modelling
+    position: 'Invited Lecturer: Introduction to Threat Modelling'
     startDate: '2023-01-01'
-    summary: Taught risk-based thinking, structured threat modeling, and security reasoning for systems and applications.
+    summary: Provided insights into risk-based thinking, structured threat modeling, and security reasoning for modern systems and applications.
     highlights:
       - Delivered a brief introduction and working sessions focused on the need for risk-based thinking in security disciplines.
   - organization: Masaryk University
-    position: Invited Lecture - Small Peek into Big Data Analytics
+    position: 'Invited Lecturer: Small Peek into Big Data Analytics'
     startDate: '2018-01-01'
-    summary: Delivered motivational lectures on data analysis in security, using real-world scenarios and past assignments.
+    summary: Motivational lectures on data analysis in security, using real-world scenarios and past assignments.
     highlights:
       - Focused on common mistakes, visualization approaches, and practical lessons learned from enterprise security assignments.
   - organization: Masaryk University
-    position: Invited Lecture - In-Memory Malware Analysis
+    position: 'Invited Lecturer: In-Memory Malware Analysis'
     startDate: '2013-01-01'
-    summary: Conducted workshops providing hands-on experience with memory forensics and real malware analysis.
+    summary: Workshops providing hands-on experience with memory forensics and real malware analysis.
     highlights:
       - Introduced practical applications of memory forensics through interactive, hands-on workshops with live malware samples.
+
 education:
   - institution: Faculty of Informatics, Masaryk University, Brno
     area: Computer Security
@@ -95,6 +105,7 @@ education:
     studyType: Mgr. (MSc. equivalent)
     startDate: '1999-01-01'
     endDate: '2005-01-01'
+
 certificates:
   - name: SANS Hacker Tools, Techniques, Exploits, and Incident Handling (SEC504)
     date: '2017-10-01'
@@ -104,6 +115,7 @@ certificates:
     date: '2013-10-01'
   - name: SANS Computer Forensic Investigations (FOR408)
     date: '2012-10-01'
+
 skills:
   - name: Computer Security
     keywords:
@@ -135,19 +147,50 @@ skills:
       - Cisco/3Com/Juniper
       - VPN & 802.1x
       - Firewalling & IDS/IPS
+
 languages:
   - language: Czech
     fluency: Native or Bilingual Proficiency
   - language: English
     fluency: Full Professional Proficiency
+
 projects:
-  - name: Centralized Audited IDS Managed
+  - name: Decentralized & Audited Managed IDS Solution
     description: Designed a decentralized, open-source manageable IDS solution resolving configuration inconsistencies.
     highlights:
       - Implemented a purely open-source solution using git, GitLab, and bash/Python to provide peer-reviewed, auditable, and reversible configurations.
-      - Maintained the system flawlessly in production for 3 years, complete with proactive sensor health-check scripts.
+      - Operated the system reliably in production for 3+ years, including proactive sensor health-check automation.
+      - Despite the decentralized deployments and operations, the configuration could be done from a single point.
+
+  - name: Secure SDLC Implementation & Trainings
+    description: Designed and implemented a Secure SDLC process for the project development teams.
+    highlights:
+      - Ad-hoc 'coffee-and-learn' focused sessions.
+      - More formal trainings and presentations covering the most problematic topics (OAuth, OIDC, TLS, encryption principles).
+
   - name: University Firewalls Project
     description: Deployed decentralized firewalls for various faculties to ensure auditable and error-free administration.
     highlights:
       - Utilized open-source solutions to establish a highly manageable architecture for local administrators.
-      - Combined technical measures with wiki-based documentation and training to ensure structural integrity.
+      - Combined technical measures with wiki-based documentation and training to ensure secure and reliable operations.
+
+  - name: Host Triage Automation
+    description: Designed and implemented orchestration for an internal host triage and forensic investigation system.
+    highlights:
+      - Reduced initial host triage time significantly through automation and background evidence collection.
+      - Recognized internally with an innovation award as part of a Six Sigma improvement initiative.
+
+
+  - name: Secure Authentication Token
+    description: Project focused on a novel implementation of a smartcards "firewall"
+    highlights:
+      - Applied finite-state automata theory to the design of a domain-specific language (DSL).
+      - Enabled formal verification of firewall rule correctness.
+      - Implemented the solution in assembly on custom hardware.
+
+  - name: Training Courses for Junior Analysts
+    description: Led multiple initiatives to design a structured onboarding process for my team of junior analysts.
+    highlights:
+      - Drafted step-by-step tutorials with increasing complexity of scenarios.
+      - Built a workshop tooling and images for a close-to-real hands-on experience.
+      - Started a series of internal seminars focused on various information security topics.

@@ -1,0 +1,16 @@
+theme: classic
+layout:
+  main:
+    - work
+    - education
+    - volunteer
+    - projects
+    - publications
+    - skills
+    - languages
+    - certificates
+    - awards
+    - interests
+    - references
+  sidebar:
+    []

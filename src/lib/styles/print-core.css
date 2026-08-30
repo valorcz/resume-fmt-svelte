@@ -7,10 +7,15 @@
     margin: 1.5cm; 
   }
 
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
   body {
     background: none !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
   }
 
   .app-container { padding: 0; background: none !important; }
@@ -51,40 +56,84 @@
     break-inside: auto !important;
   }
 
-  /* 2. Table-Header Repeating Trick for Section Titles */
+  /* Section Break Mechanics */
   .cv-section {
-    display: table;
-    width: 100%;
+    break-inside: auto;
     page-break-inside: auto;
+    margin-bottom: 1.2rem;
   }
 
   .section-title {
-    display: table-header-group;
+    break-after: avoid-page !important;
     page-break-after: avoid !important;
-    break-after: avoid !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  .section-content { display: table-row-group; }
-
-  /* 3. Anti-Orphan / Block Preservation */
-  .item-card, .skill-group, .side-item {
-    page-break-inside: avoid;
-    break-inside: avoid;
+  /* Anti-Orphan & Clean Item Pagination (Prevents huge blank gaps) */
+  .item-card, .side-item {
+    break-inside: auto;
+    page-break-inside: auto;
     margin-bottom: 1rem !important; 
   }
 
-  .cv-sidebar .cv-section {
-    page-break-inside: avoid;
-    break-inside: avoid;
+  .item-header {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    break-after: avoid-page !important;
+    page-break-after: avoid !important;
   }
 
-  /* 4. Force Print Icons & Top-left blocks */
+  .item-summary,
+  .item-highlights {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .item-highlights li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.2rem;
+  }
+
+  .skill-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Universal Print Cleanup: Strip all glowing shadows, neon effects, and animations */
+  *, *::before, *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+    filter: none !important;
+  }
+
+  /* Universal Crisp Skill Tag Print Styling */
+  .skill-keywords {
+    gap: 0.35rem !important;
+  }
+
+  .skill-tag {
+    background-color: #f8fafc;
+    border: 0.5pt solid var(--border, #cbd5e1);
+    color: var(--ink, #0f172a);
+    border-radius: 3px;
+    padding: 1pt 5pt;
+    font-size: 7.5pt;
+    font-weight: 500;
+  }
+
+  /* Force Print Colors, Backgrounds, Icons & Dividers */
   .cv-contact span::before, 
   .section-title::before, 
   .item-highlights li::before,
-  .cv-wrapper::before {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  .cv-wrapper::before,
+  .skill-tag {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 }
 

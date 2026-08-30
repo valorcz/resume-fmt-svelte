@@ -1,0 +1,15 @@
+theme: noir-city
+layout:
+  main:
+    - work
+    - projects
+    - volunteer
+    - publications
+  sidebar:
+    - skills
+    - languages
+    - education
+    - certificates
+    - awards
+    - interests
+    - references

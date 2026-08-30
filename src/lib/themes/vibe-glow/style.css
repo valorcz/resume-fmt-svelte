@@ -1,0 +1,310 @@
+/* --- Typography Imports --- */
+/* Space Grotesk for tech-forward, geometric headings; Outfit for clean, modern readability */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Space+Grotesk:wght@500;700&display=swap');
+
+/* --- Root Variables & Scope --- */
+.theme-vibe-glow {
+  /* Core Colors */
+  --bg: #090a0f;
+  --ink: #e2e8f0;
+  --accent: #00f0ff; /* Neon Cyan */
+  --secondary: #bd00ff; /* Neon Magenta */
+  --accent-glow: rgba(0, 240, 255, 0.4);
+  
+  /* Typography */
+  --font-heading: 'Space Grotesk', sans-serif;
+  --font-body: 'Outfit', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  /* Thematic Flourishes */
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --radius-lg: 16px;
+  --radius-sm: 8px;
+
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  
+  /* Subtle animated background mesh effect */
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(189, 0, 255, 0.08), transparent 25%),
+    radial-gradient(circle at 85% 30%, rgba(0, 240, 255, 0.08), transparent 25%);
+  background-attachment: fixed;
+}
+
+/* --- Global Animations --- */
+@keyframes textShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes subtleFloat {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+
+/* --- Headers & Typography --- */
+.theme-vibe-glow h1, 
+.theme-vibe-glow h2, 
+.theme-vibe-glow h3 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.theme-vibe-glow .cv-header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 2rem;
+}
+
+/* Make the main name/title look like a modern glowing gradient */
+.theme-vibe-glow .cv-header h1 {
+  font-size: 3rem;
+  background: linear-gradient(90deg, var(--accent), var(--secondary), var(--accent));
+  background-size: 200% auto;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: textShimmer 6s linear infinite;
+  margin-bottom: 0.5rem;
+}
+
+.theme-vibe-glow .section-title {
+  font-size: 1.5rem;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* A glowing line next to section titles */
+.theme-vibe-glow .section-title::after {
+  content: '';
+  height: 2px;
+  flex-grow: 1;
+  background: linear-gradient(90deg, var(--accent-glow), transparent);
+  border-radius: 2px;
+}
+
+/* --- Glassmorphism Item Cards --- */
+.theme-vibe-glow .item-card,
+.theme-vibe-glow .item-wrapper {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Hover effect: lift and glow */
+.theme-vibe-glow .item-card:hover,
+.theme-vibe-glow .item-wrapper:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 240, 255, 0.1);
+}
+
+.theme-vibe-glow .item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.theme-vibe-glow .item-header-primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  flex: 1 1 auto;
+}
+
+.theme-vibe-glow .item-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.theme-vibe-glow .item-subtitle {
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.theme-vibe-glow .item-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: rgba(226, 232, 240, 0.6);
+  margin-left: auto; /* Pushes date to the right */
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+}
+
+.theme-vibe-glow .item-summary {
+  color: rgba(226, 232, 240, 0.85);
+}
+
+/* --- Skills & Tags --- */
+.theme-vibe-glow .skill-keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.theme-vibe-glow .skill-tag {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent-glow);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+/* Hover fill for tags */
+.theme-vibe-glow .skill-tag:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+/* --- Layout Independence (Sidebar specific styling) --- */
+.theme-vibe-glow .cv-sidebar .item-wrapper {
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.theme-vibe-glow .cv-sidebar .item-title {
+  font-size: 1.1rem;
+}
+
+/* --- A4 Print Optimization --- */
+@media print {
+  .theme-vibe-glow {
+    /* Strip dark mode and force high-contrast print colors */
+    --bg: #ffffff !important;
+    --ink: #111827 !important;
+    --accent: #0284c7 !important; /* Switch neon cyan to a professional print blue */
+    --secondary: #4f46e5 !important;
+    --glass-bg: transparent !important;
+    --glass-border: #e2e8f0 !important;
+    
+    background-image: none !important;
+    background-color: var(--bg) !important;
+  }
+
+  /* Kill all animations, hover states, and glowing shadows to save ink/CPU */
+  .theme-vibe-glow * {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Reset header text gradient to solid ink */
+  .theme-vibe-glow .cv-header h1 {
+    background: none !important;
+    color: var(--ink) !important;
+    -webkit-background-clip: border-box !important;
+  }
+
+  /* Remove heavy borders and backgrounds for items */
+  .theme-vibe-glow .item-card,
+  .theme-vibe-glow .item-wrapper,
+  .theme-vibe-glow .cv-sidebar .item-card,
+  .theme-vibe-glow .cv-sidebar .item-wrapper {
+    background: transparent !important;
+    border: none !important;
+    border-left: 2px solid var(--glass-border) !important;
+    border-radius: 0 !important;
+    padding: 0 0 0 1rem !important;
+    margin-bottom: 15pt !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+  }
+
+  .theme-vibe-glow .item-date {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #64748b !important;
+  }
+
+  /* Map font sizes to physical points (pt) */
+  .theme-vibe-glow { font-size: 9.5pt !important; }
+  .theme-vibe-glow h1 { font-size: 24pt !important; }
+  .theme-vibe-glow .section-title { font-size: 12pt !important; margin-bottom: 10pt !important; }
+  .theme-vibe-glow .skill-tag { 
+    font-size: 7.5pt !important; 
+    border: 0.5pt solid var(--accent) !important; 
+    color: var(--accent) !important; 
+    background-color: #ffffff !important;
+    font-weight: 600 !important;
+    padding: 1.5pt 5.5pt !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Ensure the section titles still have a divider, but a solid one instead of a glow */
+  .theme-vibe-glow .section-title::after {
+    background: var(--glass-border) !important;
+  }
+}
+
+/* --- Global Icon Settings --- */
+/* This ensures all injected icons use the Font Awesome font family */
+.theme-vibe-glow .cv-section .section-title::before,
+.theme-vibe-glow .cv-contact .contact-item::before,
+.theme-vibe-glow .item-email::before,
+.theme-vibe-glow .item-phone::before,
+.theme-vibe-glow .item-location::before,
+.theme-vibe-glow .item-url::before {
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  display: inline-block;
+  width: 1.25rem;
+  text-align: center;
+  margin-right: 0.4rem;
+  color: var(--accent);
+}
+
+/* --- Section Header Icons --- */
+.theme-vibe-glow .section-work .section-title::before { content: "\f0b1"; } /* Briefcase */
+.theme-vibe-glow .section-education .section-title::before { content: "\f19d"; } /* Graduation Cap */
+.theme-vibe-glow .section-skills .section-title::before { content: "\f121"; } /* Code Brackets */
+.theme-vibe-glow .section-projects .section-title::before { content: "\f085"; } /* Cogs */
+.theme-vibe-glow .section-volunteer .section-title::before { content: "\f4c4"; } /* Hands Helping */
+.theme-vibe-glow .section-languages .section-title::before { content: "\f0ac"; } /* Globe */
+.theme-vibe-glow .section-certificates .section-title::before { content: "\f0a3"; } /* Certificate Ribbon */
+
+/* --- Contact Data Icons --- */
+.theme-vibe-glow .contact-location::before,
+.theme-vibe-glow .item-location::before { content: "\f3c5"; } /* Map Marker */
+.theme-vibe-glow .contact-email::before,
+.theme-vibe-glow .item-email::before { content: "\f0e0"; }    /* Envelope */
+.theme-vibe-glow .contact-phone::before,
+.theme-vibe-glow .item-phone::before { content: "\f095"; }    /* Phone */
+.theme-vibe-glow .contact-url::before,
+.theme-vibe-glow .item-url::before { content: "\f0c1"; }      /* Link Chain */
+.theme-vibe-glow .contact-profile-github::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-vibe-glow .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-vibe-glow .contact-profile-twitter::before,
+.theme-vibe-glow .contact-profile-x::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }

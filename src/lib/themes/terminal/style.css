@@ -21,18 +21,23 @@
 .theme-terminal .skill-tag { border-radius: 6px; }
 
 /* --- Font Awesome Icons --- */
-.theme-terminal .cv-contact span::before, .theme-terminal .section-title::before { font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); display: inline-block; }
-.theme-terminal .cv-contact span::before { margin-right: 0.4rem; font-size: 0.8rem; }
-.theme-terminal .cv-contact span:nth-child(1)::before { content: "\f3c5"; }
-.theme-terminal .cv-contact span:nth-child(2)::before { content: "\f095"; }
-.theme-terminal .cv-contact span:nth-child(3)::before { content: "\f0e0"; }
-.theme-terminal .cv-contact span:nth-child(n+4)::before { content: "\f0c1"; }
+.theme-terminal .cv-contact .contact-item::before, .theme-terminal .section-title::before { font-family: "Font Awesome 6 Free"; font-weight: 900; color: var(--accent); display: inline-block; }
+.theme-terminal .cv-contact .contact-item::before { margin-right: 0.4rem; font-size: 0.8rem; }
+.theme-terminal .contact-location::before { content: "\f3c5"; }
+.theme-terminal .contact-phone::before { content: "\f095"; }
+.theme-terminal .contact-email::before { content: "\f0e0"; }
+.theme-terminal .contact-url::before { content: "\f0c1"; }
+.theme-terminal .contact-profile::before { content: "\f120"; }
+.theme-terminal .cv-contact .contact-profile-github::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f09b"; }
+.theme-terminal .cv-contact .contact-profile-linkedin::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f08c"; }
+.theme-terminal .cv-contact .contact-profile-twitter::before,
+.theme-terminal .cv-contact .contact-profile-x::before { font-family: "Font Awesome 6 Brands"; font-weight: 400; content: "\f099"; }
 .theme-terminal .section-title::before { margin-right: 0.5rem; width: 1.1rem; text-align: center; }
-.theme-terminal .section-experience .section-title::before { content: "\f0b1"; }
+.theme-terminal .section-work .section-title::before { content: "\f120"; }
 .theme-terminal .section-projects .section-title::before { content: "\f5fc"; }
 .theme-terminal .section-skills .section-title::before { content: "\f085"; }
 .theme-terminal .section-languages .section-title::before { content: "\f0ac"; }
-.theme-terminal .section-certs .section-title::before { content: "\f0a3"; }
+.theme-terminal .section-certificates .section-title::before { content: "\f0a3"; }
 .theme-terminal .section-education .section-title::before { content: "\f19d"; }
 .theme-terminal .section-volunteer .section-title::before { content: "\f51c"; }
 
@@ -45,6 +50,12 @@
   .theme-terminal .item-title { font-size: 10.5pt !important; }
   .theme-terminal .item-subtitle { font-size: 9pt !important; }
   .theme-terminal .item-date { font-size: 8.5pt !important; }
-  .theme-terminal .skill-name { font-size: 8.5pt !important; }
-  .theme-terminal .skill-tag { font-size: 8pt !important; border: 0.5pt solid var(--border-heavy) !important; padding: 1pt 5pt !important; }
+  .theme-terminal .skill-tag { 
+    font-size: 7.5pt !important; 
+    background-color: #f1f5f9 !important; 
+    border: 0.5pt solid #64748b !important; 
+    color: #0f172a !important; 
+    padding: 1.5pt 5.5pt !important; 
+    border-radius: 4px !important; 
+  }
 }
