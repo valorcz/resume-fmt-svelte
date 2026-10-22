@@ -10,15 +10,19 @@ A clean, printable resume viewer and customization studio built with Svelte 5 an
 
 ## Features
 
-- **JSON Resume Standard**: Validated against JSON Resume Schema v1.0.0 using precompiled Ajv validators.
+- **100% Privacy-First & Zero-Backend**: No tracking cookies, no analytics, no user profiling, and no backend databases. All YAML parsing, theme compilation, and ATS quality checks run strictly client-side inside your browser. Your confidential career history and contact details never leave your machine.
+- **Open JSON Resume Standard (v1.0.0)**: Zero vendor lock-in. Validated against JSON Resume Schema v1.0.0 using precompiled Ajv validators.
 - **Native YAML Support**: Write your resume in `resume.yaml` with comments and clean multiline strings without syntax escaping.
-- **18 Themes**: Switch between minimal academic styles, split-column layouts, timelines, corporate formats, and retro computing themes.
-- **Customization Studio**:
-  - Live theme switcher.
+- **18 Responsive Themes**: Switch between minimal academic styles, split-column layouts, timelines, corporate formats, and retro computing themes.
+- **Customization Studio (v1.2.0)**:
+  - **Zero-Scroll 5-Tab Architecture**: Focused ergonomic panels (`Style`, `Layout`, `Format`, `Gist`, `Check`).
+  - Live theme switcher with category filters (*All*, *Executive*, *Modern*, *Split*, *Tech/Retro*).
   - Accent color picker with pre-tested palettes or custom HEX values.
   - HTML5 drag-and-drop column layout manager (reorder sections, move between main/sidebar, hide/restore sections).
   - Theme mode toggling (System / Light / Dark).
-  - Live Source manager: Load resumes dynamically from any public GitHub Gist or switch back to the local demo.
+  - **Paper Format & Margins Engine**: Full support for **A4** (margins in cm: 1.0cm, 1.5cm, 2.0cm) and **US Letter** (margins in inches: 0.5in, 0.75in, 1.0in) with dynamic `@page` injection.
+  - **Page Break & Boundary Guides**: Non-printing cutline indicators (toggle with <kbd>B</kbd>) that simulate browser print breaks and detect when an entry will jump to Page 2.
+  - Live Gist manager: Load resumes dynamically from any public GitHub Gist or switch back to the local demo.
   - Real-time `_config` and `config.yaml` / `config.json` snippet generator to permanently preserve chosen styling in your Gist.
   - **Resume Quality & ATS Audit**: Automated completeness score (0–100%), contact reachability checks, measurable action-verb analysis, single-column ATS layout recommendations, and a linear "What the Robot Sees" plain-text extractor for job portals.
 - **Recruiter Clean View**: One-click recruiter mode (`?view=recruiter`) that hides all floating toolbars and studio controls for distraction-free job applications.

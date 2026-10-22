@@ -22,6 +22,7 @@ body {
    CORE STRUCTURAL CSS (Token-Driven Architecture)
    ========================================================================== */
 .cv-wrapper {
+  position: relative;
   background-color: var(--bg, #ffffff);
   color: var(--ink, #0f172a);
   font-family: var(--font-body, 'Inter', sans-serif);
@@ -33,7 +34,26 @@ body {
   box-shadow: var(--screen-shadow, none);
   border: var(--wrapper-border, 1px solid var(--border, #e2e8f0));
   border-radius: var(--wrapper-radius, 0);
-  transition: all 0.3s ease;
+  transform: translateX(var(--push-offset, 0px)) scale(var(--screen-zoom, 1));
+  transform-origin: top center;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+}
+
+/* Push Canvas Mode on Desktop (moves resume aside so drawer does not obscure it) */
+@media (min-width: 1200px) {
+  .app-container.drawer-open .cv-wrapper {
+    --push-offset: -210px;
+  }
+}
+
+@media print {
+  .cv-wrapper {
+    transform: none !important;
+  }
+  .app-container.drawer-open .cv-wrapper {
+    --push-offset: 0px !important;
+    transform: none !important;
+  }
 }
 
 /* --- Headers --- */

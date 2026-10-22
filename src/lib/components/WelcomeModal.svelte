@@ -48,7 +48,11 @@
     <!-- Modal Header -->
     <div class="modal-header">
       <div class="modal-header-text">
-        <span class="modal-eyebrow">Quick Guide</span>
+        <div class="modal-eyebrow-row">
+          <span class="modal-eyebrow">Quick Guide</span>
+          <span class="modal-version-badge">v1.2.0</span>
+          <span class="modal-privacy-badge">🔒 Privacy First</span>
+        </div>
         <h2 id="welcome-modal-title" class="modal-title">Welcome to Resume Studio</h2>
       </div>
       <button class="modal-close-btn" onclick={() => handleDismiss(false)} aria-label="Close guide" title="Close (Esc)">
@@ -59,8 +63,27 @@
     <!-- Modal Body -->
     <div class="modal-body">
       <p class="modal-lead">
-        A clean, printable CV viewer conforming to the <strong>JSON Resume standard</strong>. Render, customize themes, and share clean recruiter links effortlessly.
+        A private, printable CV builder and viewer conforming to the <strong>JSON Resume standard</strong>. Render themes, audit ATS quality, and share clean recruiter links effortlessly.
       </p>
+
+      <!-- Privacy-First & Zero-Backend Architecture Callout -->
+      <div class="privacy-callout">
+        <div class="privacy-callout-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <div class="privacy-callout-body">
+          <div class="privacy-callout-header">
+            <span class="privacy-callout-title">100% Client-Side & Privacy-First Architecture</span>
+            <span class="privacy-callout-pill">Zero Tracking</span>
+          </div>
+          <p class="privacy-callout-text">
+            Your data belongs to you alone. There are <strong>no server databases</strong>, <strong>no tracking cookies</strong>, <strong>no telemetry</strong>, and <strong>no intermediary servers</strong> collecting your personal contact details or employment history. Everything is parsed, styled, and audited directly in your browser. When loading a public GitHub Gist, requests connect directly between your browser and GitHub's API.
+          </p>
+        </div>
+      </div>
 
       <!-- 5-Step Structured Flow -->
       <div class="guide-steps">
@@ -68,9 +91,9 @@
         <div class="step-card">
           <div class="step-num">01</div>
           <div class="step-content">
-            <h3 class="step-title">Resume Data & GitHub Gist</h3>
+            <h3 class="step-title">Open Standards & GitHub Gist Hosting</h3>
             <p class="step-text">
-              Write your resume using standard JSON Resume in <code>resume.yaml</code> or <code>resume.json</code>. You can preview bundled local sample data, or load your own public GitHub Gist via the <strong>Source</strong> tab or by appending <code>?gist=YOUR_GIST_ID</code> to the URL.
+              Write your resume using the open JSON Resume v1.0.0 schema in <code>resume.yaml</code> or <code>resume.json</code>. You own your raw text forever with zero proprietary lock-in. Preview bundled local data or load your public GitHub Gist via the <strong>Gist</strong> tab or by appending <code>?gist=YOUR_GIST_ID</code> to the URL.
             </p>
           </div>
         </div>
@@ -79,9 +102,9 @@
         <div class="step-card">
           <div class="step-num">02</div>
           <div class="step-content">
-            <h3 class="step-title">Themes & Column Customizer</h3>
+            <h3 class="step-title">18 Themes & Ergonomic Studio</h3>
             <p class="step-text">
-              Switch across 18 responsive themes, pick custom accent colors, toggle dark or light modes, and reorder layout sections between main and sidebar columns using drag-and-drop.
+              Switch across 18 responsive themes, pick custom accent colors, toggle dark or light modes, and reorder layout sections between main and sidebar columns using drag-and-drop. Opening the customizer automatically shifts the document into an unobstructed split view on desktop.
             </p>
           </div>
         </div>
@@ -90,31 +113,31 @@
         <div class="step-card">
           <div class="step-num">03</div>
           <div class="step-content">
-            <h3 class="step-title">Quality Audit & ATS Checker</h3>
+            <h3 class="step-title">Quality Audit & ATS Readiness Checker</h3>
             <p class="step-text">
               Open the <strong>Check</strong> tab in Studio to get a real-time 0–100% quality score. It checks contact reachability, flags passive bullet points lacking strong action verbs, verifies keyword density, and generates a linear <em>"What the Robot Sees"</em> plain-text version to copy into job application portals.
             </p>
           </div>
         </div>
 
-        <!-- Step 4: Style Preservation in Gist -->
+        <!-- Step 4: Paper Format, Boundary Guides & Print Scale -->
         <div class="step-card">
           <div class="step-num">04</div>
           <div class="step-content">
-            <h3 class="step-title">Preserve Your Styling in Gist</h3>
+            <h3 class="step-title">Paper Format, Boundary Guides & Print Squeeze</h3>
             <p class="step-text">
-              Lock in your theme, accent color, and layout directly in your Gist. Embed a <code>_config:</code> block in your resume or add a standalone <code>config.yaml</code>. Studio generates copy-paste ready YAML and JSON snippets in the <strong>Config</strong> tab.
+              In the <strong>Format</strong> tab, switch between <strong>A4</strong> and <strong>US Letter</strong> paper standards with unit-aware margins (cm/in). Turn on non-printing Page Break Guides (<kbd>B</kbd>) to preview where physical pages break, and use the <strong>Print Scale Squeeze</strong> (75%–100%) to compress trailing lines onto a single page.
             </p>
           </div>
         </div>
 
-        <!-- Step 5: Clean Recruiter Sharing -->
+        <!-- Step 5: Clean Recruiter Sharing & Gist Sync -->
         <div class="step-card">
           <div class="step-num">05</div>
           <div class="step-content">
-            <h3 class="step-title">Distraction-Free Recruiter View</h3>
+            <h3 class="step-title">Distraction-Free Recruiter View & Style Sync</h3>
             <p class="step-text">
-              When applying for jobs, share clean links using <code>?view=recruiter</code> (or click <strong>Recruiter Link</strong> in Studio). All floating toolbars and editor controls are hidden, providing a polished document view.
+              Share clean, distraction-free links using <code>?view=recruiter</code> (or click <strong>Recruiter Link</strong> in Studio) which hides all floating toolbars. To permanently lock your chosen theme, accent, and layout into your Gist, copy the ready-to-use <code>_config</code> snippet from the <strong>Gist</strong> tab.
             </p>
           </div>
         </div>
@@ -124,12 +147,17 @@
       <div class="shortcuts-banner">
         <div class="shortcut-item">
           <kbd class="keycap">?</kbd>
-          <span>Press anytime to reopen this guide</span>
+          <span>Open guide</span>
+        </div>
+        <div class="shortcut-divider"></div>
+        <div class="shortcut-item">
+          <kbd class="keycap">B</kbd>
+          <span>Page guides</span>
         </div>
         <div class="shortcut-divider"></div>
         <div class="shortcut-item">
           <kbd class="keycap">Cmd</kbd> + <kbd class="keycap">P</kbd>
-          <span>Print or save to PDF with tailored page-break styles</span>
+          <span>Print / Save PDF</span>
         </div>
       </div>
     </div>
@@ -214,6 +242,12 @@
     gap: 0.3rem;
   }
 
+  .modal-eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .modal-eyebrow {
     font-size: 0.72rem;
     font-weight: 700;
@@ -224,6 +258,39 @@
   .mode-dark .modal-eyebrow,
   :global(body.app-dark) .modal-eyebrow {
     color: #60a5fa;
+  }
+
+  .modal-version-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    background: #eff6ff;
+    color: #2563eb;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .mode-dark .modal-version-badge,
+  :global(body.app-dark) .modal-version-badge {
+    background: rgba(37, 99, 235, 0.2);
+    color: #93c5fd;
+  }
+
+  .modal-privacy-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    background: #ecfdf5;
+    color: #059669;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .mode-dark .modal-privacy-badge,
+  :global(body.app-dark) .modal-privacy-badge {
+    background: rgba(5, 150, 105, 0.15);
+    color: #34d399;
   }
 
   .modal-title {
@@ -266,7 +333,7 @@
   }
 
   .modal-lead {
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1rem 0;
     font-size: 0.95rem;
     line-height: 1.55;
     color: #52525b;
@@ -274,6 +341,84 @@
   .mode-dark .modal-lead,
   :global(body.app-dark) .modal-lead {
     color: #a1a1aa;
+  }
+
+  /* Privacy Callout */
+  .privacy-callout {
+    display: flex;
+    gap: 0.85rem;
+    padding: 0.85rem 1rem;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    margin-bottom: 1.25rem;
+    align-items: flex-start;
+  }
+  .mode-dark .privacy-callout,
+  :global(body.app-dark) .privacy-callout {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: rgba(5, 150, 105, 0.25);
+  }
+
+  .privacy-callout-icon {
+    color: #059669;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .mode-dark .privacy-callout-icon,
+  :global(body.app-dark) .privacy-callout-icon {
+    color: #34d399;
+  }
+
+  .privacy-callout-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .privacy-callout-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .privacy-callout-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #065f46;
+    letter-spacing: -0.01em;
+  }
+  .mode-dark .privacy-callout-title,
+  :global(body.app-dark) .privacy-callout-title {
+    color: #6ee7b7;
+  }
+
+  .privacy-callout-pill {
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    background: #059669;
+    color: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    letter-spacing: 0.03em;
+    line-height: 1;
+  }
+
+  .privacy-callout-text {
+    margin: 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    color: #14532d;
+  }
+  .mode-dark .privacy-callout-text,
+  :global(body.app-dark) .privacy-callout-text {
+    color: #a7f3d0;
+  }
+  .privacy-callout-text strong {
+    color: inherit;
+    font-weight: 700;
   }
 
   /* 4-Step Structured Flow */

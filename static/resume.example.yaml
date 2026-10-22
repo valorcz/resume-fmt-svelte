@@ -1,30 +1,66 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
 
-# Optional embedded theme configuration
+# ==============================================================================
+# RESUME CONFIGURATION (Optional resume-fmt-svelte metadata & styling block)
+# You can customize these settings directly or via the on-screen Resume Studio.
+# ==============================================================================
 _config:
+  # Base typographic & layout archetype
+  # Options: classic, modern-timeline, editorial, europass, executive-slate, 
+  #          executive-baseline, noir-city, bio-vision, elegant-split, vibe-glow,
+  #          tailwind-blueprint, the-verge, terminal, cyber-script, 8bit-demo, etc.
   theme: modern-timeline
+
+  # Accent color override (HEX). Omit or set null for theme default.
+  accent: '#2563eb'
+
+  # Color display mode: 'system' | 'light' | 'dark'
+  mode: system
+
+  # Print paper format: 'a4' (210×297mm) | 'letter' (8.5×11in)
+  paperFormat: a4
+
+  # Print margins: '1.0cm', '1.5cm', '2.0cm' (A4) or '0.5in', '0.75in', '1.0in' (Letter)
+  printMargin: '1.5cm'
+
+  # Print scale squeeze percentage: 100, 95, 90, 85, 80, 75
+  printScale: 100
+
+  # Column layout ordering for themes supporting multi-column layouts
   layout:
     main:
       - work
       - projects
       - volunteer
+      - publications
     sidebar:
       - skills
       - education
       - certificates
+      - awards
       - languages
+      - interests
+      - references
 
+# ==============================================================================
+# BASICS / CONTACT INFORMATION
+# ==============================================================================
 basics:
   name: Jane Doe
-  label: Senior Systems Architect
-  image: https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80
+  label: Senior Staff Systems Architect & Engineering Lead
+  image: https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80
   email: jane.doe@example.com
   phone: +1 (555) 234-5678
   url: https://janedoe.dev
   summary: >
-    Systems architect with experience building distributed applications 
-    and microservices in TypeScript, Go, and Rust.
+    Visionary systems architect and distributed engineering leader with 10+ years
+    of experience designing fault-tolerant cloud platforms, microservices, and secure
+    infrastructure. Proven track record leading high-performing cross-functional teams,
+    reducing operational latency by 45%, and architecting mission-critical platforms
+    handling millions of requests daily.
   location:
+    address: 123 Tech Parkway, Suite 400
+    postalCode: '94107'
     city: San Francisco
     region: California
     countryCode: US
@@ -35,30 +71,263 @@ basics:
     - network: LinkedIn
       username: janedoe
       url: https://linkedin.com/in/janedoe
+    - network: X
+      username: janedoe_dev
+      url: https://x.com/janedoe_dev
 
+# ==============================================================================
+# WORK EXPERIENCE
+# ==============================================================================
 work:
-  - name: Acme Cloud Systems
-    position: Lead Systems Architect
+  - name: CloudScale Global
+    position: Senior Staff Systems Architect & Tech Lead
+    url: https://cloudscale.example.com
     location: San Francisco, CA
     startDate: '2021-03-01'
-    summary: Architected and scaled cloud infrastructure pipelines.
+    summary: >
+      Direct the architecture, scalability, and technical strategy for high-throughput
+      distributed storage and streaming services across multiple global regions.
     highlights:
-      - Reduced infrastructure costs by 35% through autoscaling policies.
-      - Mentored an engineering team of 14 across distributed timezones.
+      - Architected and spearheaded the migration to a multi-region Kubernetes mesh, improving availability to 99.995% and reducing p99 latency by 42%.
+      - Engineered an automated real-time telemetry pipeline processing 4.5 billion events daily, reducing MTTD by 60%.
+      - Mentored and guided 18 senior and staff engineers across 3 distributed engineering pods.
+      - Implemented infrastructure autoscaling policies that reduced annualized AWS cloud expenditures by $620,000.
 
-education:
-  - institution: UC Berkeley
-    area: Computer Science
-    studyType: Bachelor of Science
-    startDate: '2013-09-01'
-    endDate: '2017-05-30'
+  - name: FinTech Innovations
+    position: Lead Backend Systems Engineer
+    url: https://fintechinnovations.example.com
+    location: San Francisco, CA
+    startDate: '2018-06-01'
+    endDate: '2021-02-28'
+    summary: >
+      Led core transaction processing engine development and API infrastructure for 
+      high-frequency institutional payments and settlement systems.
+    highlights:
+      - Designed and built a transactional ledger engine in Go and PostgreSQL supporting 12,000 transactions per second with strict ACID guarantees.
+      - Reduced database lock contention by 75% by re-architecting payment batching and idempotency keys.
+      - Established engineering best practices, CI/CD automated canary testing, and comprehensive threat modeling protocols.
 
-skills:
-  - name: Core Technologies
+  - name: Nexus Data Labs
+    position: Systems Software Engineer
+    url: https://nexusdatalabs.example.com
+    location: Seattle, WA
+    startDate: '2015-08-01'
+    endDate: '2018-05-31'
+    summary: >
+      Developed distributed data connectors, caching layers, and real-time streaming integrations.
+    highlights:
+      - Built high-throughput gRPC and Kafka ingestion microservices handling real-time analytical workloads.
+      - Developed automated load testing suites in Python and Rust simulating over 50,000 concurrent client sessions.
+      - Improved cache hit ratios by 35% through custom LRU eviction algorithms and memory-mapped local storage.
+
+# ==============================================================================
+# PROJECTS
+# ==============================================================================
+projects:
+  - name: EventPulse
+    description: High-performance distributed event streaming engine written in Go and ClickHouse.
+    url: https://github.com/janedoe/eventpulse
     keywords:
-      - TypeScript
       - Go
+      - Kafka
+      - ClickHouse
+      - Docker
+      - Open Source
+    highlights:
+      - Reached 1,200+ GitHub stars with active community adoption across enterprise staging clusters.
+      - Optimized zero-copy memory pipelines to achieve sub-millisecond serialization overhead.
+
+  - name: VaultGuard CLI
+    description: Lightweight, zero-knowledge developer secrets manager and cryptographic key vault.
+    url: https://github.com/janedoe/vaultguard
+    keywords:
       - Rust
-      - SvelteKit
-      - Kubernetes
+      - Cryptography
+      - WebAssembly
+      - SQLite
+    highlights:
+      - Implemented AES-256-GCM and Argon2id key derivation with biometric enclave integration on macOS and Linux.
+      - Designed a pluggable storage driver interface supporting both cloud buckets and local encrypted volume caches.
+
+# ==============================================================================
+# VOLUNTEER & COMMUNITY INVOLVEMENT
+# ==============================================================================
+volunteer:
+  - organization: Women in Distributed Systems
+    position: Chapter Lead & Technical Mentor
+    url: https://wids-community.example.org
+    startDate: '2020-01-01'
+    summary: >
+      Organize technical deep-dives, paper review circles, and 1-on-1 career mentorship
+      for underrepresented software engineers entering systems and infrastructure roles.
+    highlights:
+      - Facilitated 24+ technical workshops on consensus protocols, distributed consensus, and Linux kernel fundamentals.
+      - Directly mentored 15 engineers through successful transitions into senior infrastructure roles.
+
+  - organization: Regional STEM Outreach
+    position: Guest Workshop Instructor
+    startDate: '2017-09-01'
+    endDate: '2019-12-31'
+    summary: >
+      Taught introductory programming and web technologies to public high school students.
+    highlights:
+      - Designed hands-on robotics and Python game development curriculums for over 120 participating students.
+
+# ==============================================================================
+# EDUCATION
+# ==============================================================================
+education:
+  - institution: University of California, Berkeley
+    url: https://berkeley.edu
+    area: Computer Science
+    studyType: Master of Science (M.S.)
+    startDate: '2015-09-01'
+    endDate: '2017-05-30'
+    score: '3.92 GPA'
+    courses:
+      - Advanced Distributed Systems
+      - Database Internals
+      - Operating Systems Design
+      - Applied Cryptography
+
+  - institution: University of Washington
+    url: https://washington.edu
+    area: Computer Engineering & Applied Mathematics
+    studyType: Bachelor of Science (B.S.)
+    startDate: '2011-09-01'
+    endDate: '2015-06-15'
+    score: 'Magna Cum Laude'
+    courses:
+      - Data Structures & Algorithms
+      - Computer Architecture
+      - Linear Optimization
+      - Network Protocols
+
+# ==============================================================================
+# SKILLS
+# ==============================================================================
+skills:
+  - name: Systems Architecture
+    level: Master
+    keywords:
+      - Distributed Systems
+      - Microservices Architecture
+      - High Availability (99.999%)
+      - Fault Tolerance
+      - Threat Modeling & Security
+      - Capacity Planning
+
+  - name: Programming & Languages
+    level: Expert
+    keywords:
+      - Go (Golang)
+      - Rust
+      - TypeScript / JavaScript
+      - Python
+      - SQL
+      - Bash / POSIX Shell
+
+  - name: Cloud, Orchestration & DevOps
+    level: Expert
+    keywords:
+      - Kubernetes (EKS / GKE)
+      - Terraform / OpenTofu
+      - Docker / Containerd
+      - AWS Cloud Infrastructure
+      - CI/CD Pipelines (GitHub Actions)
+      - Helm
+
+  - name: Data & Observability
+    level: Advanced
+    keywords:
       - PostgreSQL
+      - ClickHouse
+      - Apache Kafka
+      - Redis
+      - Prometheus & Grafana
+      - OpenTelemetry
+
+# ==============================================================================
+# CERTIFICATES
+# ==============================================================================
+certificates:
+  - name: AWS Certified Solutions Architect - Professional
+    date: '2023-04-15'
+    issuer: Amazon Web Services
+    url: https://aws.amazon.com/verification
+  - name: Certified Kubernetes Administrator (CKA)
+    date: '2022-09-20'
+    issuer: Cloud Native Computing Foundation (CNCF)
+    url: https://www.cncf.io/certification/cka/
+  - name: 'HashiCorp Certified: Terraform Associate'
+    date: '2021-11-10'
+    issuer: HashiCorp
+    url: https://www.credly.com
+
+# ==============================================================================
+# AWARDS & RECOGNITION
+# ==============================================================================
+awards:
+  - title: Global Cloud Architecture Innovation Award
+    date: '2023-11-15'
+    awarder: Cloud Infrastructure Summit
+    summary: Recognized for pioneering zero-downtime multi-region Kubernetes database failover architecture.
+  - title: Engineering Excellence & Leadership Award
+    date: '2020-12-10'
+    awarder: FinTech Innovations
+    summary: Awarded for architecting the fault-tolerant ledger system that powered the platform's 10x transaction surge.
+
+# ==============================================================================
+# PUBLICATIONS
+# ==============================================================================
+publications:
+  - name: Designing Resilient Event-Driven Microservices for Global Scale
+    publisher: ACM Queue & Communications of the ACM
+    releaseDate: '2022-06-18'
+    url: https://queue.acm.org
+    summary: Practical architectural patterns for dealing with distributed network partitions, out-of-order events, and eventual consistency.
+  - name: Practical Zero-Trust Security in High-Throughput Kubernetes Clusters
+    publisher: IEEE Cloud Computing Conference Proceedings
+    releaseDate: '2020-10-05'
+    url: https://ieee.org
+    summary: Case study on implementing transparent mutual TLS and identity-based access control without throughput degradation.
+
+# ==============================================================================
+# LANGUAGES
+# ==============================================================================
+languages:
+  - language: English
+    fluency: Native or Bilingual Proficiency
+  - language: French
+    fluency: Full Professional Working Proficiency
+  - language: German
+    fluency: Elementary / Conversational
+
+# ==============================================================================
+# INTERESTS & PASSIONS
+# ==============================================================================
+interests:
+  - name: Distributed Computing Research
+    keywords:
+      - Consensus Protocols (Raft / Paxos)
+      - Formal Verification (TLA+)
+      - Memory Safety & Compilers
+  - name: Outdoor Endurance
+    keywords:
+      - Alpine Mountaineering
+      - Trail Ultra-running
+      - Orienteering
+  - name: Creative Technology
+    keywords:
+      - Modular Synthesizers
+      - Generative Audio Programming
+      - Mechanical Keyboards
+
+# ==============================================================================
+# REFERENCES
+# ==============================================================================
+references:
+  - name: Available Upon Request
+    reference: >
+      Professional and executive references from former engineering directors, 
+      principal architects, and team mentees available upon request.
