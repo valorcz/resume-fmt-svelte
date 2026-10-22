@@ -18,10 +18,14 @@ A clean, printable resume viewer and customization studio built with Svelte 5 an
   - Accent color picker with pre-tested palettes or custom HEX values.
   - HTML5 drag-and-drop column layout manager (reorder sections, move between main/sidebar, hide/restore sections).
   - Theme mode toggling (System / Light / Dark).
-  - Real-time `config.yaml` generator.
+  - Live Source manager: Load resumes dynamically from any public GitHub Gist or switch back to the local demo.
+  - Real-time `_config` and `config.yaml` / `config.json` snippet generator to permanently preserve chosen styling in your Gist.
+  - **Resume Quality & ATS Audit**: Automated completeness score (0–100%), contact reachability checks, measurable action-verb analysis, single-column ATS layout recommendations, and a linear "What the Robot Sees" plain-text extractor for job portals.
+- **Recruiter Clean View**: One-click recruiter mode (`?view=recruiter`) that hides all floating toolbars and studio controls for distraction-free job applications.
+- **First-Time User Onboarding**: Built-in Getting Started Guide modal introducing the JSON Resume concept, Gist hosting, and styling customization.
 - **URL Parameter Synchronization**: Theme, accent, color mode, and custom layout selections are automatically synchronized to URL query parameters for one-click sharing.
 - **Print & PDF Export**: Dedicated `@media print` stylesheets with A4 page-break controls and background color preservation.
-- **GitHub Gist Loading**: Load resumes dynamically from any public GitHub Gist via `?gist=<GIST_ID>`.
+- **GitHub Gist Loading**: Load resumes dynamically from any public GitHub Gist via in-app Studio input or `?gist=<GIST_ID>`.
 - **Theme Linter**: CLI tool (`npm run lint:themes`) that verifies design tokens, CSS scoping, brand font usage, and print rules across all themes.
 
 ---
@@ -158,13 +162,19 @@ The application continuously syncs custom configurations to the browser URL usin
 | `mode` | `&mode=dark` | UI appearance mode (`system`, `light`, `dark`) |
 | `layout` | `&layout=work,projects\|skills,education` | Custom column layout (`main_sections\|sidebar_sections`) |
 | `gist` | `?gist=8f9a2b4c6d...` | Public GitHub Gist ID containing `resume.yaml` or `resume.json` |
+| `view` | `&view=recruiter` | Clean recruiter mode (hides floating toolbar & studio controls) |
 
-#### Example Shareable URL:
-```text
-https://your-domain.com/?theme=modern-timeline&accent=0d9488&mode=dark&layout=work,projects|skills,education
-```
+#### Example Shareable URLs:
+- **Interactive Studio View**:
+  ```text
+  https://your-domain.com/?gist=8f9a2b4c6d&theme=modern-timeline&accent=0d9488&mode=dark
+  ```
+- **Clean Recruiter View**:
+  ```text
+  https://your-domain.com/?gist=8f9a2b4c6d&theme=modern-timeline&view=recruiter
+  ```
 
-You can copy this link at any time using the **Share URL** button in the Studio drawer header.
+You can copy either link with one click using the **Share** or **Recruiter Link** buttons in the Studio header.
 
 ---
 

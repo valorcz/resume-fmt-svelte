@@ -1,15 +1,19 @@
 <script>
+  import { onMount } from 'svelte';
   import TimelineSection from '$lib/components/TimelineSection.svelte';
   import SkillsSection from '$lib/components/SkillsSection.svelte';
   import LanguageSection from '$lib/components/LanguageSection.svelte';
   import ReferenceSection from '$lib/components/ReferenceSection.svelte';
   import ConfigDrawer from '$lib/components/ConfigDrawer.svelte';
+  import WelcomeModal from '$lib/components/WelcomeModal.svelte';
   import { loadTheme, availableThemes } from '$lib/themeRegistry';
   
   let { data } = $props();
   
   let resume = $derived(data.resume);
   let themesList = $derived(data.availableThemes || availableThemes);
+  let isRecruiterView = $derived(data.isRecruiterView || false);
+  let gistId = $derived(data.gistId || null);
 
   // User-selected active theme state
   let selectedTheme = $state(null);
@@ -19,6 +23,45 @@
   let customAccent = $state(null);
   let customLayout = $state(null);
   let colorMode = $state('system');
+
+  // Welcome modal and Drawer controls
+  let showWelcomeModal = $state(false);
+  let isDrawerOpen = $state(false);
+  let drawerActiveTab = $state('theme');
+
+  onMount(() => {
+    if (typeof window !== 'undefined' && !isRecruiterView) {
+      const hasSeen = localStorage.getItem('resume-has-seen-welcome');
+      if (!hasSeen) {
+        showWelcomeModal = true;
+      }
+
+      function handleGlobalKeydown(e) {
+        // Ignore shortcut when typing in inputs, textareas, selects, or editable fields
+        const target = e.target;
+        const isInput = target && (
+          target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable
+        );
+
+        if (isInput) return;
+
+        if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+          e.preventDefault();
+          showWelcomeModal = !showWelcomeModal;
+        } else if (e.key === 'Escape' && showWelcomeModal) {
+          showWelcomeModal = false;
+        }
+      }
+
+      window.addEventListener('keydown', handleGlobalKeydown);
+      return () => {
+        window.removeEventListener('keydown', handleGlobalKeydown);
+      };
+    }
+  });
 
   // Reactively synchronize state when incoming data / urlParams update
   $effect(() => {
@@ -60,9 +103,9 @@
     }
   });
 
-  // Keep browser URL search parameters synchronized with active settings
+  // Keep browser URL search parameters synchronized with active settings (disabled in clean recruiter view)
   $effect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isRecruiterView) {
       const url = new URL(window.location.href);
       if (activeTheme) {
         url.searchParams.set('theme', activeTheme);
@@ -223,17 +266,37 @@
     </div>
   </div>
 {:else}
-  <div class="app-container theme-{activeTheme} mode-{colorMode}">
-  <ConfigDrawer 
-    themes={themesList} 
-    bind:activeTheme={selectedTheme} 
-    {activeThemeConfig}
-    bind:customAccent={customAccent}
-    bind:customLayout={customLayout}
-    bind:colorMode={colorMode}
-    onResetLayout={() => customLayout = null}
-    onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; }}
+  <!-- Welcome & README Onboarding Modal -->
+  <WelcomeModal 
+    isOpen={showWelcomeModal} 
+    {colorMode} 
+    onClose={() => showWelcomeModal = false}
+    onOpenGistTab={() => {
+      showWelcomeModal = false;
+      drawerActiveTab = 'source';
+      isDrawerOpen = true;
+    }}
   />
+
+  <div class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterView ? 'recruiter-view' : ''}">
+  {#if !isRecruiterView}
+    <ConfigDrawer 
+      themes={themesList} 
+      bind:activeTheme={selectedTheme} 
+      {activeThemeConfig}
+      bind:customAccent={customAccent}
+      bind:customLayout={customLayout}
+      bind:colorMode={colorMode}
+      {gistId}
+      {resume}
+      {activeI18n}
+      bind:isOpen={isDrawerOpen}
+      bind:activeTab={drawerActiveTab}
+      onResetLayout={() => customLayout = null}
+      onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; }}
+      onOpenGuide={() => showWelcomeModal = true}
+    />
+  {/if}
 
   <div class="cv-wrapper">
     
