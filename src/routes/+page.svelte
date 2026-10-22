@@ -1,24 +1,100 @@
 <script>
+  import { onMount } from 'svelte';
   import TimelineSection from '$lib/components/TimelineSection.svelte';
   import SkillsSection from '$lib/components/SkillsSection.svelte';
   import LanguageSection from '$lib/components/LanguageSection.svelte';
   import ReferenceSection from '$lib/components/ReferenceSection.svelte';
   import ConfigDrawer from '$lib/components/ConfigDrawer.svelte';
+  import WelcomeModal from '$lib/components/WelcomeModal.svelte';
+  import PageBreakGuide from '$lib/components/studio/PageBreakGuide.svelte';
+  import ZoomControls from '$lib/components/studio/ZoomControls.svelte';
   import { loadTheme, availableThemes } from '$lib/themeRegistry';
   
   let { data } = $props();
   
   let resume = $derived(data.resume);
   let themesList = $derived(data.availableThemes || availableThemes);
+  let isRecruiterView = $derived(data.isRecruiterView || false);
+  let gistId = $derived(data.gistId || null);
 
   // User-selected active theme state
   let selectedTheme = $state(null);
   let loadedThemeData = $state(null);
 
-  // Custom accent & layout & mode state
+  // Custom accent & layout & mode & paper format state
   let customAccent = $state(null);
   let customLayout = $state(null);
   let colorMode = $state('system');
+  let paperFormat = $state('a4');
+  let printMargin = $state('1.5cm');
+  let printScale = $state(100);
+  let screenZoom = $state(1.0);
+  let showPageGuides = $state(false);
+
+  // Welcome modal and Drawer controls
+  let showWelcomeModal = $state(false);
+  let isDrawerOpen = $state(false);
+  let drawerActiveTab = $state('style');
+  let isSystemDark = $state(false);
+
+  let isDarkActive = $derived(
+    colorMode === 'dark' || (colorMode === 'system' && isSystemDark)
+  );
+
+  onMount(() => {
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      isSystemDark = mediaQuery.matches;
+      const themeHandler = (e) => { isSystemDark = e.matches; };
+      mediaQuery.addEventListener('change', themeHandler);
+
+      if (!isRecruiterView) {
+        const hasSeen = localStorage.getItem('resume-has-seen-welcome');
+        if (!hasSeen) {
+          showWelcomeModal = true;
+        }
+
+        function handleGlobalKeydown(e) {
+          // Ignore shortcut when typing in inputs, textareas, selects, or editable fields
+          const target = e.target;
+          const isInput = target && (
+            target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            target.tagName === 'SELECT' ||
+            target.isContentEditable
+          );
+
+          if (isInput) return;
+
+          if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+            e.preventDefault();
+            showWelcomeModal = !showWelcomeModal;
+          } else if (e.key === 'b' || e.key === 'B') {
+            e.preventDefault();
+            showPageGuides = !showPageGuides;
+          } else if (e.key === 'Escape' && showWelcomeModal) {
+            showWelcomeModal = false;
+          }
+        }
+
+        window.addEventListener('keydown', handleGlobalKeydown);
+        return () => {
+          mediaQuery.removeEventListener('change', themeHandler);
+          window.removeEventListener('keydown', handleGlobalKeydown);
+        };
+      } else {
+        return () => {
+          mediaQuery.removeEventListener('change', themeHandler);
+        };
+      }
+    }
+  });
+
+  $effect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.classList.toggle('app-dark', isDarkActive);
+    }
+  });
 
   // Reactively synchronize state when incoming data / urlParams update
   $effect(() => {
@@ -60,9 +136,9 @@
     }
   });
 
-  // Keep browser URL search parameters synchronized with active settings
+  // Keep browser URL search parameters synchronized with active settings (disabled in clean recruiter view)
   $effect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== 'undefined' && !isRecruiterView) {
       const url = new URL(window.location.href);
       if (activeTheme) {
         url.searchParams.set('theme', activeTheme);
@@ -198,6 +274,21 @@
       }
     </style>`}
   {/if}
+
+  <!-- Dynamic Paper Size & Margin Rules -->
+  {@html `<style id="print-paper-format-style">
+    @media print {
+      @page {
+        size: ${paperFormat === 'letter' ? 'letter' : 'A4'};
+        margin: ${printMargin};
+      }
+      .cv-wrapper {
+        zoom: ${printScale / 100} !important;
+        -moz-transform: scale(${printScale / 100}) !important;
+        -moz-transform-origin: top center !important;
+      }
+    }
+  </style>`}
 </svelte:head>
 
 {#if data.error}
@@ -223,19 +314,61 @@
     </div>
   </div>
 {:else}
-  <div class="app-container theme-{activeTheme} mode-{colorMode}">
-  <ConfigDrawer 
-    themes={themesList} 
-    bind:activeTheme={selectedTheme} 
-    {activeThemeConfig}
-    bind:customAccent={customAccent}
-    bind:customLayout={customLayout}
-    bind:colorMode={colorMode}
-    onResetLayout={() => customLayout = null}
-    onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; }}
+  <!-- Welcome & README Onboarding Modal -->
+  <WelcomeModal 
+    isOpen={showWelcomeModal} 
+    {colorMode} 
+    onClose={() => showWelcomeModal = false}
+    onOpenGistTab={() => {
+      showWelcomeModal = false;
+      drawerActiveTab = 'gist';
+      isDrawerOpen = true;
+    }}
   />
 
+  <div 
+    class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterView ? 'recruiter-view' : ''}"
+    class:is-dark={isDarkActive}
+    class:mode-dark={isDarkActive}
+    class:drawer-open={isDrawerOpen && !isRecruiterView}
+    style="--screen-zoom: {screenZoom};"
+  >
+  {#if !isRecruiterView}
+    <ConfigDrawer 
+      themes={themesList} 
+      bind:activeTheme={selectedTheme} 
+      {activeThemeConfig}
+      bind:customAccent={customAccent}
+      bind:customLayout={customLayout}
+      bind:colorMode={colorMode}
+      bind:paperFormat={paperFormat}
+      bind:printMargin={printMargin}
+      bind:printScale={printScale}
+      bind:showPageGuides={showPageGuides}
+      {gistId}
+      {resume}
+      {activeI18n}
+      bind:isOpen={isDrawerOpen}
+      bind:activeTab={drawerActiveTab}
+      onResetLayout={() => customLayout = null}
+      onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; paperFormat = 'a4'; printMargin = '1.5cm'; printScale = 100; }}
+      onOpenGuide={() => showWelcomeModal = true}
+    />
+
+    <!-- Canvas Zoom Controls -->
+    <ZoomControls bind:zoom={screenZoom} />
+  {/if}
+
   <div class="cv-wrapper">
+    <!-- Non-printing Page Boundary & Straddle Guides -->
+    {#if !isRecruiterView}
+      <PageBreakGuide 
+        {paperFormat} 
+        {printMargin} 
+        {printScale}
+        showGuides={showPageGuides} 
+      />
+    {/if}
     
     <header class="cv-header">
       {#if resume?.basics?.image}

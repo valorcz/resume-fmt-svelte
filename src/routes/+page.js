@@ -16,6 +16,8 @@ function mergeConfigs(serverConfig, userConfig) {
   if (!userConfig) return serverConfig;
   return {
     theme: userConfig.theme || serverConfig.theme,
+    accent: userConfig.accent || serverConfig.accent,
+    mode: userConfig.mode || userConfig.colorMode || serverConfig.mode,
     i18n: { ...serverConfig.i18n, ...userConfig.i18n },
     layout: userConfig.layout || serverConfig.layout
   };
@@ -38,6 +40,8 @@ export async function load({ fetch, url }) {
   const urlMode = url.searchParams.get('mode');
   const urlLayoutRaw = url.searchParams.get('layout');
   const urlLayout = urlLayoutRaw ? decodeLayout(urlLayoutRaw) : null;
+  const urlView = url.searchParams.get('view') || url.searchParams.get('mode_view');
+  const isRecruiterView = urlView === 'recruiter' || urlView === 'clean' || url.searchParams.has('clean');
 
   let resume = null;
   let userConfig = null;
@@ -77,9 +81,28 @@ export async function load({ fetch, url }) {
     const initialThemeData = await loadTheme(requestedTheme);
     const finalConfig = mergeConfigs(initialThemeData.config, userConfig);
 
+    // Resolve accent (URL overrides Gist userConfig)
+    const rawUserAccent = userConfig?.accent || null;
+    const userAccent = rawUserAccent ? (rawUserAccent.startsWith('#') ? rawUserAccent : `#${rawUserAccent}`) : null;
+    const resolvedAccent = urlAccent || userAccent || null;
+
+    // Resolve color mode (URL overrides Gist userConfig)
+    const rawUserMode = userConfig?.mode || userConfig?.colorMode || null;
+    const validUserMode = ['system', 'light', 'dark'].includes(rawUserMode) ? rawUserMode : null;
+    const resolvedMode = ['system', 'light', 'dark'].includes(urlMode) ? urlMode : validUserMode;
+
+    // Resolve layout (URL overrides Gist userConfig)
+    const resolvedLayout = urlLayout || userConfig?.layout || null;
+
     // 5. Schema Validation using precompiled local validator
     if (!validateResume(resume)) {
-      return { error: true, message: "Invalid JSON Resume schema.", details: validateResume.errors };
+      return { 
+        error: true, 
+        message: "Invalid JSON Resume schema.", 
+        details: validateResume.errors,
+        gistId: gistId || null,
+        isRecruiterView
+      };
     }
 
     return { 
@@ -88,18 +111,26 @@ export async function load({ fetch, url }) {
       initialTheme: initialThemeData.name,
       initialThemeCss: initialThemeData.css,
       initialThemeConfig: initialThemeData.config,
+      gistId: gistId || null,
+      isRecruiterView,
       urlParams: {
         theme: validTheme,
-        accent: urlAccent,
-        mode: ['system', 'light', 'dark'].includes(urlMode) ? urlMode : null,
-        layout: urlLayout
+        accent: resolvedAccent,
+        mode: resolvedMode,
+        layout: resolvedLayout
       },
       availableThemes,
       error: false 
     };
 
   } catch (err) {
-    return { error: true, message: err.message, details: [] };
+    return { 
+      error: true, 
+      message: err.message, 
+      details: [],
+      gistId: gistId || null,
+      isRecruiterView
+    };
   }
 }
 
