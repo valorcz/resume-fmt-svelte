@@ -58,6 +58,39 @@ STRICT CONVERSION RULES:
 
 TARGET SCHEMA SKELETON:
 ```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
+
+meta:
+  version: "v1.0.0"
+  studio:
+    theme: "modern-timeline"
+    accent: "#2563eb"
+    paperFormat: "a4"
+  executiveSummary:
+    headline: "<1-2 sentence elevator positioning statement, 40-180 characters>"
+    experienceYears: <Total years calculated from work history>
+    availability: "<e.g. Immediately / 2 weeks notice / Exploring Senior roles>"
+    targetRoles:
+      - "<Target Role Title 1>"
+      - "<Target Role Title 2>"
+    keyMetrics:
+      - label: "Experience"
+        value: "<e.g. 10+ Years>"
+      - label: "<Impact Area 1>"
+        value: "<e.g. 15M+ DAU or $300k Saved>"
+      - label: "<Impact Area 2>"
+        value: "<e.g. 99.99% Uptime or 12 Engineers>"
+    coreCompetencies:
+      - "<Core Domain 1>"
+      - "<Core Domain 2>"
+      - "<Core Domain 3>"
+      - "<Core Domain 4>"
+      - "<Core Domain 5>"
+    topHighlights:
+      - "<Single biggest career proof point / achievement>"
+      - "<Second biggest career proof point / achievement>"
+      - "<Third biggest career proof point / achievement>"
+
 basics:
   name: "<Full Name>"
   label: "<Target Professional Title>"
@@ -76,31 +109,6 @@ basics:
     - network: "GitHub"
       username: "<Handle>"
       url: "<GitHub Profile URL>"
-
-executiveSummary:
-  headline: "<1-2 sentence elevator positioning statement, 40-180 characters>"
-  experienceYears: <Total years calculated from work history>
-  availability: "<e.g. Immediately / 2 weeks notice / Exploring Senior roles>"
-  targetRoles:
-    - "<Target Role Title 1>"
-    - "<Target Role Title 2>"
-  keyMetrics:
-    - label: "Experience"
-      value: "<e.g. 10+ Years>"
-    - label: "<Impact Area 1>"
-      value: "<e.g. 15M+ DAU or $300k Saved>"
-    - label: "<Impact Area 2>"
-      value: "<e.g. 99.99% Uptime or 12 Engineers>"
-  coreCompetencies:
-    - "<Core Domain 1>"
-    - "<Core Domain 2>"
-    - "<Core Domain 3>"
-    - "<Core Domain 4>"
-    - "<Core Domain 5>"
-  topHighlights:
-    - "<Single biggest career proof point / achievement>"
-    - "<Second biggest career proof point / achievement>"
-    - "<Third biggest career proof point / achievement>"
 
 work:
   - name: "<Company Name>"

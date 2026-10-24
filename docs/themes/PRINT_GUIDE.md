@@ -50,14 +50,36 @@ Allow cards to break naturally across pages, but protect the header:
 
 ---
 
-### Cause B: Multi-Column Flexbox / Grid Bugs in Print Engines
-Chromium (Blink) and WebKit have historical bugs when calculating heights of flex and grid containers across page boundaries.
-- When `.cv-layout` has 2 columns (Main + Sidebar) and content exceeds 1 page, flex containers often force equal heights across the page break or push elements into unintended positions.
+### Cause B: CSS Grid Monolithic Containers in Chromium Blink
+In Chromium's Blink print engine (`@media print`), a CSS Grid container (`display: grid`) is treated as a monolithic layout context. When `.cv-section` is defined as a grid with two items (`.section-title` on the left and `.section-content` on the right containing multiple jobs), Blink cannot fragment the grid row cleanly across pages.
+- When the section content doesn't fit on Page 1, Blink either pushes the **entire** section to Page 2 (leaving 30–50% empty void at the bottom of Page 1) or clips it.
 
 **Fix:**
-For multi-page content, ensure:
-1. `.cv-sidebar` content is kept concise or allowed to break gracefully.
-2. If designing for lengthy CVs (3+ pages), prefer a single-column layout or ensure sidebars have `break-inside: auto`.
+For 2-column section layouts (like `classic` and `europass`), replace CSS Grid with **Fragmentable Block Flow** in `@media print`:
+```css
+@media print {
+  .theme-classic .cv-section {
+    display: block !important;
+    margin-bottom: 1.1rem !important;
+  }
+  .theme-classic .cv-section::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .theme-classic .section-title {
+    float: left !important;
+    width: 140px !important;
+    break-after: avoid-page !important;
+    break-inside: avoid !important;
+  }
+  .theme-classic .section-content {
+    margin-left: 155px !important;
+    display: block !important;
+  }
+}
+```
+This preserves the visual 2-column aesthetic while allowing individual `.item-card` elements to fragment naturally across page boundaries.
 
 ---
 
@@ -82,6 +104,27 @@ Reset wrapper geometry in `@media print`:
 
 ---
 
+### Cause D: Widowed Headings (Headings Detached from Content)
+A section title or job header (`### Lead Systems Architect`) appears at the very bottom of Page 1, but its bullet points or summary appear at the top of Page 2.
+
+**Fix:**
+Bind headings directly to their subsequent content blocks in `print-core.css`:
+```css
+/* Keep title and company together */
+.item-header {
+  break-inside: avoid !important;
+  break-after: avoid-page !important;
+}
+
+/* Bind item header to the immediate first content child */
+.item-header + .item-summary,
+.item-header + .item-highlights {
+  break-before: avoid-page !important;
+}
+```
+
+---
+
 ## 3. Print Typography & Scale
 
 Screen displays use pixels (`px`) or root-relative units (`rem`). Print engines work best with points (`pt`) or well-proportioned relative scales:
@@ -98,7 +141,22 @@ Screen displays use pixels (`px`) or root-relative units (`rem`). Print engines 
 
 ## 4. Testing Print Layouts
 
-1. Start the dev server: `npm run dev`
+### Automated Headless Print & ATS Test Suite
+We provide an automated test harness that prints all 18 themes in headless Chromium and validates page counts and text linearity:
+
+```bash
+make test-print
+# or
+pnpm run test:print
+```
+
+This verifies:
+1. Standard senior profile fits within **<= 2 pages** on both **A4** and **US Letter**.
+2. No widowed section headings appear at the ends of pages.
+3. Extracted PDF plain text preserves linear reading order for Applicant Tracking Systems.
+
+### Manual Print Verification
+1. Start the dev server: `pnpm run dev`
 2. Open Chrome, Edge, or Firefox and press `Ctrl + P` (or `Cmd + P`).
 3. Set **Destination** to "Save as PDF".
 4. Set **Margins** to "Default" (the `@page` CSS rule controls margins).

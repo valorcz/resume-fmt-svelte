@@ -6,25 +6,29 @@ This specification defines an optional, structured `executiveSummary` block for 
 
 ## 1. Schema Placement
 
-The `executiveSummary` object can be placed at the **root level** or under `meta.executiveSummary`:
+To maintain 100% compliance with the official JSON Resume specification (which restricts top-level properties but allows arbitrary tooling extensions inside `meta`), the `executiveSummary` is housed inside `meta.executiveSummary`:
 
 ```yaml
 # resume.yaml
+meta:
+  version: "v1.0.0"
+  executiveSummary:
+    headline: "Staff Cloud Architect with 12+ years scaling resilient multi-region Kubernetes..."
+    experienceYears: 12
+    keyMetrics: [...]
+    coreCompetencies: [...]
+    topHighlights: [...]
+    targetRoles: [...]
+    availability: "..."
+    workAuthorization: "..."
+
 basics:
   name: "Jane Doe"
   label: "Principal Distributed Systems Engineer"
   ...
-
-executiveSummary:
-  headline: "..."
-  experienceYears: 12
-  keyMetrics: [...]
-  coreCompetencies: [...]
-  topHighlights: [...]
-  targetRoles: [...]
-  availability: "..."
-  workAuthorization: "..."
 ```
+
+*(Note: For backwards compatibility, Resume Studio will also read a root-level `executiveSummary` if present, but placing it under `meta:` ensures zero schema validation errors in strict IDE validators).*
 
 ---
 

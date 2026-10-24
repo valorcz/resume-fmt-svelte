@@ -1,6 +1,6 @@
-# Svelte JSON & YAML Resume
+# Svelte JSON & YAML Resume Studio
 
-A clean, printable resume viewer and customization studio built with Svelte 5 and SvelteKit. It renders resumes conforming to the standard [JSON Resume schema](https://jsonresume.org/schema/), with native YAML support, theme customization, drag-and-drop column layout editing, and print-ready stylesheets.
+A privacy-first, zero-backend resume studio and print engine built on the open [JSON Resume standard](https://jsonresume.org/schema/). Author in clean YAML, switch between 18 responsive themes, customize typography and layouts, and generate pixel-perfect, ATS-verified PDFs.
 
 <p align="center">
   <img src="static/assets/preview.jpg" alt="Resume Studio & Theme Customizer Preview" width="100%" />
@@ -8,246 +8,216 @@ A clean, printable resume viewer and customization studio built with Svelte 5 an
 
 ---
 
-## Features
+## Why Resume Studio?
 
-- **100% Privacy-First & Zero-Backend**: No tracking cookies, no analytics, no user profiling, and no backend databases. All YAML parsing, theme compilation, and ATS quality checks run strictly client-side inside your browser. Your confidential career history and contact details never leave your machine.
-- **Open JSON Resume Standard (v1.0.0)**: Zero vendor lock-in. Validated against JSON Resume Schema v1.0.0 using precompiled Ajv validators.
-- **Native YAML Support**: Write your resume in `resume.yaml` with comments and clean multiline strings without syntax escaping.
-- **18 Responsive Themes**: Switch between minimal academic styles, split-column layouts, timelines, corporate formats, and retro computing themes.
-- **Customization Studio (v1.2.0)**:
-  - **Zero-Scroll 5-Tab Architecture**: Focused ergonomic panels (`Style`, `Layout`, `Format`, `Gist`, `Check`).
-  - Live theme switcher with category filters (*All*, *Executive*, *Modern*, *Split*, *Tech/Retro*).
-  - Accent color picker with pre-tested palettes or custom HEX values.
-  - HTML5 drag-and-drop column layout manager (reorder sections, move between main/sidebar, hide/restore sections).
-  - Theme mode toggling (System / Light / Dark).
-  - **Paper Format & Margins Engine**: Full support for **A4** (margins in cm: 1.0cm, 1.5cm, 2.0cm) and **US Letter** (margins in inches: 0.5in, 0.75in, 1.0in) with dynamic `@page` injection.
-  - **Page Break & Boundary Guides**: Non-printing cutline indicators (toggle with <kbd>B</kbd>) that simulate browser print breaks and detect when an entry will jump to Page 2.
-  - Live Gist manager: Load resumes dynamically from any public GitHub Gist or switch back to the local demo.
-  - Real-time `_config` and `config.yaml` / `config.json` snippet generator to permanently preserve chosen styling in your Gist.
-  - **Resume Quality & ATS Audit**: Automated completeness score (0–100%), contact reachability checks, measurable action-verb analysis, single-column ATS layout recommendations, and a linear "What the Robot Sees" plain-text extractor for job portals.
-- **Recruiter Clean View**: One-click recruiter mode (`?view=recruiter`) that hides all floating toolbars and studio controls for distraction-free job applications.
-- **First-Time User Onboarding**: Built-in Getting Started Guide modal introducing the JSON Resume concept, Gist hosting, and styling customization.
-- **URL Parameter Synchronization**: Theme, accent, color mode, and custom layout selections are automatically synchronized to URL query parameters for one-click sharing.
-- **Print & PDF Export**: Dedicated `@media print` stylesheets with A4 page-break controls and background color preservation.
-- **GitHub Gist Loading**: Load resumes dynamically from any public GitHub Gist via in-app Studio input or `?gist=<GIST_ID>`.
-- **Theme Linter**: CLI tool (`npm run lint:themes`) that verifies design tokens, CSS scoping, brand font usage, and print rules across all themes.
+Most online resume builders trap your career data in proprietary silos, charge subscriptions for PDF downloads, or transmit your private contact details to external databases.
+
+**Resume Studio is designed differently:**
+
+- **100% Client-Side Privacy**: No tracking cookies, no telemetry, no analytics, and zero backend databases. All YAML parsing, theme compilation, and ATS diagnostics run exclusively in your browser memory.
+- **Open Standard (JSON Resume v1.0.0)**: Never get locked into a single tool. Your resume is stored in standard JSON Resume format, fully compatible with IDE schema validators, linters, and the global JSON Resume ecosystem.
+- **Native YAML with Comments**: Write your career history in readable `resume.yaml` with multiline strings, markdown formatting, and comments without escaping quotes.
+- **ATS-Optimized & Robot-Verified**: Applicant Tracking Systems (ATS) strip visual styling and parse text linearly. Our automated test harness verifies that PDF text extraction is 100% ungarbled across every theme.
+- **Pixel-Perfect A4 & US Letter Printing**: Dedicated `@media print` mechanics with intelligent **2-page core budgeting**, live cutline indicators (<kbd>B</kbd>), anti-widow header protection, and 1-click Auto-Fit.
+- **Recruiter Executive Summary**: 6–10 second recruiter briefing card highlighting years of experience, core competencies, and quantifiable achievements.
+- **Standalone Offline Export**: Export a self-contained, single-file `.html` bundle with inlined CSS, interactive briefing modal, and embedded compliant YAML source that works completely offline.
 
 ---
 
-## Quick Start
+## Quick Start: 3 Ways to Use
 
-### 1. Installation
+### 1. Web App (GitHub Gist or Local File)
+1. Write your resume in `resume.yaml`.
+2. Host it publicly or unlisted on [GitHub Gists](https://gist.github.com) (or open it locally in the studio).
+3. Open Resume Studio and enter your Gist ID:
+   ```text
+   https://valorcz.github.io/resume-fmt-svelte/?gist=<YOUR_GIST_ID>
+   ```
 
-```bash
-git clone https://github.com/your-username/resume-json-svelte.git
-cd resume-json-svelte
-npm install
-```
+### 2. Standalone Offline HTML Export
+Inside Resume Studio, open the **Download** menu and select **Export Standalone HTML Bundle**. You get a single, portable `.html` file containing your resume, styles, recruiter briefing, and full YAML source code that can be sent directly to hiring managers or opened offline in any browser.
 
-### 2. Add Your Resume Data
-
-Copy the provided starter template to `static/resume.yaml`:
-
-```bash
-cp static/resume.example.yaml static/resume.yaml
-```
-
-### 3. Start the Development Server
+### 3. Run Locally or Self-Host
+For local development, custom deployments, or running the automated test suite, check out our **[Developer & Contributor Guide](docs/DEVELOPMENT.md)**.
 
 ```bash
-npm run dev
+git clone https://github.com/valorcz/resume-fmt-svelte.git
+cd resume-fmt-svelte
+pnpm install
+pnpm run dev
 ```
-
-Open [http://localhost:5173](http://localhost:5173) in your browser.
-
-### 4. Build Static Site
-
-```bash
-npm run build
-```
-
-The output in `build/` can be deployed to any static hosting provider (Cloudflare Pages, GitHub Pages, Vercel, Netlify, or AWS S3).
 
 ---
 
-## Writing Your Resume
+## Writing Your Resume in YAML
 
-You can supply your resume as either `static/resume.yaml` or `static/resume.json`.
+Resume Studio uses the standard **JSON Resume v1.0.0** specification. Tooling settings and the optional recruiter briefing live neatly inside the standard `meta:` block, guaranteeing **zero schema validation errors** in IDEs like VS Code and Cursor.
 
-### Schema Validation & IDE Autocomplete
-
-To enable auto-completion, field validation, and documentation tooltips in VS Code, Cursor, and other editors, add this line at the top of your `resume.yaml`:
-
-```yaml
-# yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
-```
-
-### Example `resume.yaml`
+Add this schema header at the top of your `resume.yaml` for instant autocomplete and tooltip validation:
 
 ```yaml
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
 
-# Optional embedded theme configuration
-_config:
-  theme: modern-timeline
-  layout:
-    main:
-      - work
-      - projects
-      - volunteer
-    sidebar:
-      - skills
-      - education
-      - certificates
-      - languages
+meta:
+  version: "v1.0.0"
+  
+  # Studio Theme & Print Settings
+  studio:
+    theme: modern-timeline
+    accent: '#2563eb'
+    mode: system             # 'system' | 'light' | 'dark'
+    paperFormat: a4          # 'a4' | 'letter'
+    printMargin: '1.5cm'     # '1.0cm' | '1.5cm' | '2.0cm' (A4) or '0.5in' | '0.75in' | '1.0in' (Letter)
+    printScale: 100          # 100 | 95 | 90 | 85 (%)
+    annexBreak: false        # Set true to break extended sections cleanly onto Page 3+
+    layout:
+      main:
+        - work
+        - projects
+        - volunteer
+      sidebar:
+        - skills
+        - education
+        - certificates
+        - languages
+
+  # Recruiter Executive Summary (6–10 Second Briefing)
+  executiveSummary:
+    headline: "Senior Cloud & Distributed Systems Engineer with 8+ years scaling high-throughput architectures."
+    experienceYears: 8
+    availability: "Available for Senior / Staff Platform roles (2 weeks notice)"
+    targetRoles:
+      - "Staff Infrastructure Engineer"
+      - "Lead Platform Architect"
+    keyMetrics:
+      - label: "Experience"
+        value: "8+ Years"
+      - label: "Throughput"
+        value: "500k RPS"
+      - label: "Scale"
+        value: "20M+ DAU"
+    coreCompetencies:
+      - "Distributed Systems (Go, Rust)"
+      - "Kubernetes & Cloud Infrastructure"
+      - "High-Reliability Observability"
 
 basics:
-  name: Jane Doe
-  label: Senior Systems Architect
-  image: https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80
-  email: jane.doe@example.com
-  phone: +1 (555) 234-5678
-  url: https://janedoe.dev
-  summary: >
-    Systems architect with experience building distributed applications 
-    and microservices in TypeScript, Go, and Rust.
+  name: "Jane Doe"
+  label: "Senior Cloud & Distributed Systems Engineer"
+  email: "jane.doe@example.com"
+  phone: "+1 (555) 234-5678"
+  url: "https://janedoe.dev"
   location:
-    city: San Francisco
-    region: California
-    countryCode: US
+    city: "San Francisco"
+    region: "California"
+    countryCode: "US"
   profiles:
-    - network: GitHub
-      username: janedoe
-      url: https://github.com/janedoe
-    - network: LinkedIn
-      username: janedoe
-      url: https://linkedin.com/in/janedoe
+    - network: "GitHub"
+      username: "janedoe"
+      url: "https://github.com/janedoe"
+    - network: "LinkedIn"
+      username: "janedoe"
+      url: "https://linkedin.com/in/janedoe"
 
 work:
-  - name: Acme Cloud Systems
-    position: Lead Systems Architect
-    location: San Francisco, CA
-    startDate: '2021-03-01'
-    summary: Architected and scaled cloud infrastructure pipelines.
+  - name: "Acme Cloud Systems"
+    position: "Lead Systems Architect"
+    location: "San Francisco, CA"
+    startDate: "2021-03-01"
+    summary: "Architected and scaled cloud infrastructure pipelines across 4 global regions."
     highlights:
-      - Reduced infrastructure costs by 35% through autoscaling policies.
-      - Mentored an engineering team of 14 across distributed timezones.
+      - "Reduced cloud infrastructure expenditures by 35% through automated autoscaling policies."
+      - "Scaled API gateway to sustain 500k RPS at 99.999% availability during peak events."
+      - "Mentored an engineering group of 14 across distributed time zones."
 
 education:
-  - institution: UC Berkeley
-    area: Computer Science
-    studyType: Bachelor of Science
-    startDate: '2013-09-01'
-    endDate: '2017-05-30'
+  - institution: "UC Berkeley"
+    area: "Computer Science"
+    studyType: "Bachelor of Science"
+    startDate: "2013-09-01"
+    endDate: "2017-05-30"
 
 skills:
-  - name: Core Technologies
+  - name: "Core Technologies"
     keywords:
-      - TypeScript
-      - Go
-      - Rust
-      - SvelteKit
-      - Kubernetes
-      - PostgreSQL
+      - "Go"
+      - "Rust"
+      - "Kubernetes"
+      - "TypeScript"
+      - "PostgreSQL"
 ```
 
-A complete starter template is available in [`static/resume.example.yaml`](static/resume.example.yaml).
+A complete reference starter template is available in [`static/resume.example.yaml`](static/resume.example.yaml).
 
 ---
 
-## URL Parameters & Sharing
+## Keyboard Shortcuts
 
-The application continuously syncs custom configurations to the browser URL using `history.replaceState`. Anyone opening the link will see the exact theme and layout on initial render:
+| Shortcut | Action | Description |
+| :--- | :--- | :--- |
+| <kbd>?</kbd> | **Open Handbook** | Open the built-in authoring, ATS scoring, and AI migration handbook. |
+| <kbd>/</kbd> | **View Source** | Open the YAML source viewer modal with 1-click copy and download. |
+| <kbd>Ctrl</kbd> + <kbd>P</kbd> / <kbd>Cmd</kbd> + <kbd>P</kbd> | **Print / PDF** | Open the browser print dialog with print-ready stylesheets applied. |
+| <kbd>Ctrl</kbd> + <kbd>S</kbd> / <kbd>Cmd</kbd> + <kbd>S</kbd> | **Download YAML** | Download active resume as an enriched, compliant `.yaml` file. |
+| <kbd>B</kbd> | **Cutline Guides** | Toggle live A4 / Letter page break cutlines and auto-fit advisor. |
+| <kbd>Esc</kbd> | **Dismiss** | Close active modals, drawers, or popovers. |
+
+---
+
+## URL Parameters & Instant Sharing
+
+Every styling change is continuously synchronized to the URL query string:
 
 | Parameter | Example | Description |
 | :--- | :--- | :--- |
 | `theme` | `?theme=modern-timeline` | Theme name to load |
 | `accent` | `&accent=2563eb` | Custom accent HEX color override |
 | `mode` | `&mode=dark` | UI appearance mode (`system`, `light`, `dark`) |
-| `layout` | `&layout=work,projects\|skills,education` | Custom column layout (`main_sections\|sidebar_sections`) |
-| `gist` | `?gist=8f9a2b4c6d...` | Public GitHub Gist ID containing `resume.yaml` or `resume.json` |
-| `view` | `&view=recruiter` | Clean recruiter mode (hides floating toolbar & studio controls) |
-
-#### Example Shareable URLs:
-- **Interactive Studio View**:
-  ```text
-  https://your-domain.com/?gist=8f9a2b4c6d&theme=modern-timeline&accent=0d9488&mode=dark
-  ```
-- **Clean Recruiter View**:
-  ```text
-  https://your-domain.com/?gist=8f9a2b4c6d&theme=modern-timeline&view=recruiter
-  ```
-
-You can copy either link with one click using the **Share** or **Recruiter Link** buttons in the Studio header.
+| `format` | `&format=a4` | Paper format (`a4`, `letter`) |
+| `margin` | `&margin=1.5cm` | Page margin preset |
+| `scale` | `&scale=95` | Print scaling percentage (75–100) |
+| `annex` | `&annex=true` | Enable Page 3+ Supplemental Annex break |
+| `layout` | `&layout=work,projects\|skills,education` | Custom column section distribution |
+| `gist` | `?gist=8f9a2b4c6d...` | Public/secret GitHub Gist ID |
+| `view` | `&view=recruiter` | Clean recruiter mode (hides studio bars for clean sharing) |
 
 ---
 
-## Available Themes
+## Curated Themes (18 Included)
 
-Themes are located in `src/lib/themes/` and include dedicated print rules:
-
-| Theme Slug | Description | Default Accent |
-| :--- | :--- | :--- |
-| `classic` | Traditional black & white single-column resume | `#111827` |
-| `modern-timeline` | Two-tone header with vertical timeline dots | `#2563eb` |
-| `executive-slate` | Corporate split sidebar with navy navigation | `#1e293b` |
-| `elegant-split` | Dual-pane layout with soft borders | `#2f5233` |
-| `europass` | Standardized European Commission tabular CV | `#0e4194` |
-| `gov` | Formal federal serif format with top accent bar | `#3b82f6` |
-| `editorial` | Newsprint-style serif layout | `#b45309` |
-| `noir-city` | High-contrast monochrome layout | `#18181b` |
-| `tailwind-blueprint` | Technical layout with monospace grid accents | `#0284c7` |
-| `vibe-glow` | Dark neon glow with glassmorphism | `#00f0ff` |
-| `cyber-script` | Terminal layout with offset shadows | `#ff0055` |
-| `terminal` | CRT phosphor green console layout | `#22c55e` |
-| `bio-vision` | Teal and mint palette for technical/scientific CVs | `#0d9488` |
-| `neural-botany` | Emerald and foliage tones | `#15803d` |
-| `16bit-amiga` | Amiga Workbench 1.3 retro computing style | `#ff8800` |
-| `8bit-demo` | Demoscene 8-bit aesthetic | `#55ffff` |
-| `the-verge` | Tech magazine editorial styling | `#ff005d` |
-| `executive-baseline` | Strict Harvard black & white corporate layout | `#000000` |
+| Theme | Archetype | Default Accent | Best For |
+| :--- | :--- | :--- | :--- |
+| `classic` | Floated Left Rail | `#111827` | Traditional technical, academic, and executive CVs |
+| `modern-timeline` | Two-Tone Timeline | `#2563eb` | Senior software engineers and cloud architects |
+| `executive-slate` | Split Navy Column | `#1e293b` | Engineering managers, Directors, and CTOs |
+| `editorial` | Newsprint Serif | `#b45309` | Technical writers, researchers, and journalists |
+| `europass` | Tabular European CV | `#0e4194` | European Union institutions and international roles |
+| `gov` | Formal Federal Serif | `#3b82f6` | Public sector, defense, and federal positions |
+| `executive-baseline` | Harvard Strict B&W | `#000000` | Finance, consulting, and conservative industries |
+| `elegant-split` | Soft Dual-Pane | `#2f5233` | Full-stack developers and product designers |
+| `noir-city` | High-Contrast Dark | `#18181b` | Designers and frontend specialists |
+| `tailwind-blueprint` | Monospace Grid | `#0284c7` | DevOps, SRE, and systems engineers |
+| `bio-vision` | Teal / Scientific | `#0d9488` | Data scientists, biotech, and research engineers |
+| `neural-botany` | Foliage / Emerald | `#15803d` | Machine learning and AI practitioners |
+| `the-verge` | Magazine Editorial | `#ff005d` | Creative technologists and tech leads |
+| `vibe-glow` | Dark Cyber Neon | `#00f0ff` | Game developers and web3 engineers |
+| `terminal` | CRT Green Console | `#22c55e` | Security researchers and Linux sysadmins |
+| `cyber-script` | Bold Cyberpunk | `#ff0055` | Creative coders and indie hackers |
+| `8bit-demo` | Demoscene Retro | `#55ffff` | Retro gaming enthusiasts and demo creators |
+| `16bit-amiga` | Workbench 1.3 | `#ff8800` | Vintage computing nostalgia |
 
 ---
 
-## Theme Authoring & Validation
+## Documentation & Developer Resources
 
-To add a new theme:
-
-1. Create a directory in `src/lib/themes/<theme-name>/`.
-2. Add `config.yaml` specifying default layout (`main` and `sidebar` arrays) and section titles (`i18n`).
-3. Add `style.css` scoped under `.theme-<theme-name>`.
-4. Validate theme conformance:
-   ```bash
-   npm run lint:themes
-   ```
-
-The linter validates:
-- Presence of required design tokens (`--bg`, `--ink`, `--accent`, `--border`, `--font-body`, `--font-heading`).
-- Print stylesheet rules and `-webkit-print-color-adjust` declarations.
-- Dangerous `break-inside: avoid` page-break declarations on top-level cards.
-- Proper Font Awesome 6 Brands scoping for social icons.
-- Valid JSON Resume section names in `config.yaml`.
-
----
-
-## Development Commands
-
-```bash
-# Start local development server
-npm run dev
-
-# Run theme linting suite
-npm run lint:themes
-
-# Build static production bundle
-npm run build
-
-# Preview static build locally
-npm run preview
-```
+- **[Developer & Contributor Guide](docs/DEVELOPMENT.md)**: Setup, architecture, Svelte 5 runes, theme linters, and headless print testing.
+- **[Theme Developer Blueprint](docs/themes/THEME_BLUEPRINT.md)**: Architecture, design tokens, scoping rules, and checklist for adding custom themes.
+- **[Print & Pagination Guide](docs/themes/PRINT_GUIDE.md)**: Deep dive into browser print engines, fragmentation, and avoiding blank pages.
+- **[Resume Authoring & Migration Handbook](docs/resume-authoring-handbook.md)**: AI prompts for converting Word/PDF resumes, Google XYZ formulas, and ATS scoring.
+- **[Recruiter Briefing Specification](docs/recruiter-summary-spec.md)**: Specification for structured `executiveSummary` briefing cards.
 
 ---
 
 ## License
 
-MIT License.
+MIT License. Open source and free for personal and commercial use.

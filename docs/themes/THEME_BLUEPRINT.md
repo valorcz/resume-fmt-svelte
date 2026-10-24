@@ -174,18 +174,23 @@ Your theme can style the following semantic components:
 
 ## 5. Print Optimization Rules (Preventing Blank Pages)
 
-Print engines (Chromium Blink, WebKit, Gecko) handle pagination differently from web browsers. To ensure that printed PDFs have no blank or half-empty pages:
+Print engines (Chromium Blink, WebKit, Gecko) handle pagination differently from web browsers. To ensure that printed PDFs have no blank or half-empty pages and pass automated ATS extraction:
 
 1. **Avoid `break-inside: avoid` on large containers:**
    - Never place `break-inside: avoid` or `page-break-inside: avoid` on `.item-card`, `.cv-section`, or `.cv-main`.
    - Long jobs with multiple bullets must be allowed to break cleanly between bullet points.
 2. **Prevent orphaned headers:**
    - Attach `break-after: avoid-page !important` and `break-inside: avoid !important` to `.section-title` and `.item-header`.
-3. **Set Widows and Orphans:**
-   - Ensure `.item-summary` and `.item-highlights` have `orphans: 3; widows: 3;`.
-4. **Use Print-Friendly Units:**
+3. **Bind Headings to Content:**
+   - Keep job titles bound to their descriptions via `.item-header + .item-summary, .item-header + .item-highlights { break-before: avoid-page !important; }`.
+4. **Set Widows and Orphans:**
+   - Ensure `.item-summary` and `.item-highlights` have `orphans: 3 !important; widows: 3 !important;`.
+5. **Prefer Fragmentable Flow over CSS Grid in `@media print`:**
+   - In Chromium Blink, CSS Grid containers (`display: grid`) are monolithic layout contexts. If a multi-item section cannot fit on Page 1, Blink will push the *entire* section to Page 2, creating massive blank voids.
+   - For 2-column section layouts (like `classic` and `europass`), use fragmentable block flow with a floated left rail (`float: left; width: 140px;`) and indented content (`margin-left: 155px;`) instead of CSS Grid in print.
+6. **Use Print-Friendly Units:**
    - Use `pt` or `rem` for print typography (`9.5pt` body, `11pt` titles, `14pt`–`18pt` name).
-5. **Neutralize Screen-Only Overheads:**
+7. **Neutralize Screen-Only Overheads:**
    - In `@media print`, reset `.cv-wrapper` shadows, borders, and paddings (`padding: 0 !important; border: none !important; box-shadow: none !important;`).
 
 ---
@@ -198,5 +203,7 @@ Before committing a new theme, verify:
 - [ ] Contains both `config.yaml` and `style.css`.
 - [ ] Every CSS selector is scoped to `.theme-<theme-name>`.
 - [ ] Tested with 1-page resume content (fits compactly without forcing a blank 2nd page).
-- [ ] Tested with 3-page resume content (breaks cleanly without clipping or massive gaps).
+- [ ] Tested with standard senior candidate (fits within 2 pages on both A4 and US Letter).
 - [ ] Tested in browser Print Preview (A4 and Letter paper sizes).
+- [ ] Passes theme linter: `pnpm run lint:themes`.
+- [ ] Passes automated headless print and ATS verification test: `make test-print`.
