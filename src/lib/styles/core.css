@@ -2,7 +2,7 @@
    GLOBAL IMPORTS & BASE SETUP
    ========================================================================== */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@300;400;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Public+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css');
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -399,3 +399,359 @@ body {
 }
 
 .retry-btn:hover { background: #cbd5e1; }
+
+/* ==========================================================================
+   MOBILE & RECRUITER RESPONSIVE ADAPTATIONS (Screen Only)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .app-container {
+    padding: 0 0 3rem 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  /* When recruiter sticky island bar is mounted at the top, grant proper breathing room */
+  .app-container.recruiter-view {
+    padding-top: 4.25rem !important;
+  }
+
+  /* Universal single-column canvas wrapper */
+  .cv-wrapper {
+    padding: 1.75rem 1.25rem !important;
+    margin: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    transform: none !important;
+    overflow-wrap: break-word !important;
+    word-break: break-word !important;
+  }
+
+  /* Universal 1-column layout reflow */
+  .cv-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    gap: 2rem !important;
+  }
+
+  /* Stacking order: Main content (experience, projects) comes first; sidebar (skills, edu) follows */
+  .cv-main {
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .cv-sidebar {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: none !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Candidate Header Typography & Flow */
+  .cv-header {
+    margin-bottom: 1.75rem !important;
+  }
+
+  .cv-name {
+    font-size: clamp(1.85rem, 6.5vw, 2.35rem) !important;
+    line-height: 1.15 !important;
+    word-break: break-word !important;
+  }
+
+  .cv-title {
+    font-size: clamp(0.95rem, 3.5vw, 1.15rem) !important;
+    line-height: 1.3 !important;
+    word-break: break-word !important;
+  }
+
+  .cv-contact {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.5rem 0.85rem !important;
+    word-break: break-word !important;
+  }
+
+  .cv-contact .contact-item {
+    font-size: 0.8rem !important;
+    word-break: break-word !important;
+  }
+
+  /* Item Header: Stack role title & timeline dates to prevent cramped text */
+  .item-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.25rem !important;
+    margin-bottom: 0.35rem !important;
+  }
+
+  .item-header-primary {
+    width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: baseline !important;
+    gap: 0.25rem 0.5rem !important;
+  }
+
+  .item-date {
+    margin-left: 0 !important;
+    text-align: left !important;
+    font-size: 0.78rem !important;
+    opacity: 0.85 !important;
+  }
+
+  .item-summary,
+  .item-highlights {
+    font-size: 0.85rem !important;
+    line-height: 1.45 !important;
+  }
+
+  .item-highlights {
+    padding-left: 1.1rem !important;
+  }
+
+  /* Skills keyword tags reflow */
+  .skill-keywords {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 0.4rem !important;
+  }
+
+  /* ------------------------------------------------------------------------
+     THEME-SPECIFIC RESPONSIVE OVERRIDES (Defeating desktop multi-column grids)
+     ------------------------------------------------------------------------ */
+
+  /* 1. Classic Theme (stacks tabular 180px 1fr section grids) */
+  .theme-classic .cv-wrapper::before {
+    width: 48px !important;
+    height: 1.5rem !important;
+  }
+  .theme-classic .cv-header {
+    align-items: flex-start !important;
+    text-align: left !important;
+    margin-bottom: 1.75rem !important;
+  }
+  .theme-classic .cv-contact {
+    align-items: flex-start !important;
+  }
+  .theme-classic .cv-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .theme-classic .section-title {
+    text-align: left !important;
+    border-bottom: 2px solid var(--accent) !important;
+    padding-bottom: 0.25rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .theme-classic .section-content {
+    border-left: none !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+  }
+  .theme-classic .skill-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.35rem !important;
+  }
+  .theme-classic .skill-name {
+    margin-bottom: 0.2rem !important;
+  }
+
+  /* 2. Europass Theme (stacks 180px 1fr personal info & section grids) */
+  .theme-europass .cv-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .theme-europass .cv-header::before {
+    text-align: left !important;
+    margin: 0 !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 1px !important;
+  }
+  .theme-europass .cv-name,
+  .theme-europass .cv-title,
+  .theme-europass .cv-summary,
+  .theme-europass .cv-contact {
+    grid-column: auto !important;
+    width: 100% !important;
+  }
+  .theme-europass .cv-contact .contact-item::before {
+    width: 65px !important;
+  }
+  .theme-europass .cv-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .theme-europass .section-title {
+    text-align: left !important;
+    border-bottom: 2px solid var(--accent) !important;
+    padding-bottom: 0.25rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .theme-europass .section-content {
+    border-left: none !important;
+    padding-left: 0 !important;
+    width: 100% !important;
+  }
+  .theme-europass .skill-name {
+    flex: none !important;
+    width: 100% !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* 3. Elegant Split Theme (stacks 1fr 240px header grid & sidebar) */
+  .theme-elegant-split .cv-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    padding-bottom: 1.5rem !important;
+    margin-bottom: 1.75rem !important;
+  }
+  .theme-elegant-split .cv-summary,
+  .theme-elegant-split .cv-image {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+  }
+  .theme-elegant-split .cv-sidebar {
+    border-top: 1px solid var(--border) !important;
+    padding-top: 1.5rem !important;
+  }
+
+  /* 4. Executive Slate Theme (collapses two-tone split into vertical flow) */
+  .theme-executive-slate .cv-wrapper {
+    background-image: none !important;
+    background-color: var(--bg) !important;
+    padding: 0 !important;
+  }
+  .theme-executive-slate .cv-header {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 1.75rem 1.25rem !important;
+    background-color: var(--slate) !important;
+    color: #ffffff !important;
+    margin-bottom: 1.5rem !important;
+  }
+  .theme-executive-slate .cv-name {
+    padding: 0 !important;
+    font-size: clamp(1.85rem, 6.5vw, 2.35rem) !important;
+  }
+  .theme-executive-slate .cv-title {
+    padding: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+  .theme-executive-slate .cv-contact {
+    padding: 1rem 0 0 0 !important;
+    margin: 0 !important;
+    border-bottom: none !important;
+  }
+  .theme-executive-slate .cv-summary {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    padding: 1rem 0 0 0 !important;
+    color: #e2e8f0 !important;
+  }
+  .theme-executive-slate .cv-main {
+    padding: 0 1.25rem 1.5rem 1.25rem !important;
+  }
+  .theme-executive-slate .cv-sidebar {
+    padding: 1.5rem 1.25rem !important;
+    background-color: var(--slate) !important;
+    color: var(--slate-text) !important;
+    border-radius: 8px !important;
+    margin: 0 1.25rem 2rem 1.25rem !important;
+    width: calc(100% - 2.5rem) !important;
+  }
+
+  /* 5. Modern Timeline Theme (resets 320px fixed sidebar and timeline paddings) */
+  .theme-modern-timeline .cv-header {
+    padding: 1.75rem 1.25rem !important;
+    gap: 1.25rem !important;
+  }
+  .theme-modern-timeline .cv-main {
+    padding: 1.5rem 1.25rem !important;
+  }
+  .theme-modern-timeline .cv-sidebar {
+    padding: 1.5rem 1.25rem !important;
+    border-right: none !important;
+    border-top: 1px solid var(--border) !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+  .theme-modern-timeline .cv-main .item-card {
+    padding: 0 0 1.5rem 1.25rem !important;
+  }
+
+  /* 6. Editorial Theme (replaces vertical rule with horizontal divider) */
+  .theme-editorial .cv-sidebar {
+    border-left: none !important;
+    border-top: 1px solid var(--border) !important;
+    padding-left: 0 !important;
+    padding-top: 1.5rem !important;
+  }
+
+  /* 7. 8-Bit Demo Theme */
+  .theme-8bit-demo .cv-sidebar {
+    border-left: none !important;
+    border-top: var(--border-thickness, 2px) dashed var(--accent) !important;
+    padding-left: 0 !important;
+    padding-top: 1.5rem !important;
+  }
+
+  /* 8. Bio-Vision & Neural-Botany Themes */
+  .theme-bio-vision .cv-sidebar,
+  .theme-neural-botany .cv-sidebar {
+    border-top: 1px solid var(--border-subtle, var(--border)) !important;
+    padding-top: 1.5rem !important;
+  }
+
+  /* 9. Hero Heading Typography Clamps */
+  .theme-noir-city .cv-header h1 {
+    font-size: clamp(2.1rem, 7.5vw, 2.85rem) !important;
+    text-shadow: 2px 2px 0px var(--accent) !important;
+  }
+  .theme-cyber-script .cv-name {
+    font-size: clamp(1.8rem, 7vw, 2.4rem) !important;
+    letter-spacing: -1px !important;
+  }
+  .theme-cyber-script .cv-wrapper::before {
+    top: 1.5rem !important;
+    right: 1.25rem !important;
+  }
+  .theme-the-verge .cv-name {
+    font-size: clamp(1.85rem, 7vw, 2.5rem) !important;
+  }
+  .theme-vibe-glow .cv-header h1 {
+    font-size: clamp(1.85rem, 7vw, 2.5rem) !important;
+  }
+}
+

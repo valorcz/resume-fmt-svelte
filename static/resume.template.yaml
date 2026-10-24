@@ -1,0 +1,173 @@
+# =============================================================================
+# JSON RESUME CANONICAL TEMPLATE (YAML)
+# Standard: JSON Resume Schema v1.0.0
+# Tooling settings and recruiter briefing live under meta: (100% compliant)
+# =============================================================================
+
+# --- Metadata, Studio Settings & Recruiter Briefing ---
+meta:
+  version: "v1.0.0"
+  studio:
+    theme: "classic"
+    accent: "#2563eb"
+    mode: "system"
+  executiveSummary:
+    headline: "Senior Systems Engineer with 8+ years architecting high-throughput distributed pipelines and scaling cloud platforms to 20M+ DAU."
+    experienceYears: 8
+    availability: "Available for Senior / Staff Platform & Distributed Systems roles"
+    targetRoles:
+      - "Senior Distributed Systems Engineer"
+      - "Staff Platform / Infrastructure Engineer"
+      - "Cloud Architect"
+    keyMetrics:
+      - label: "Experience"
+        value: "8+ Years"
+      - label: "Scale"
+        value: "20M+ Daily DAU"
+      - label: "Uptime"
+        value: "99.99%"
+      - label: "Latency (p99)"
+        value: "-45% Reduction"
+    coreCompetencies:
+      - "Distributed Systems"
+      - "Kubernetes & Cloud Native"
+      - "High-Throughput Streaming"
+      - "Go & Rust"
+      - "Site Reliability & Observability"
+      - "Infrastructure as Code"
+    topHighlights:
+      - "Architected real-time event streaming pipeline processing 120,000 events/sec with sub-50ms p99 latency across 3 AWS regions."
+      - "Migrated monolith to Kubernetes microservices, cutting cloud infrastructure costs by $320k/year and improving build reliability."
+      - "Mentored 10+ junior and mid-level engineers, establishing company-wide distributed systems design review standards."
+
+# --- Core Candidate Basics ---
+basics:
+  name: "Jane Doe"
+  label: "Senior Cloud & Distributed Systems Engineer"
+  email: "jane.doe@example.com"
+  phone: "+1 (555) 019-2834"
+  url: "https://janedoe.dev"
+  # image: "https://example.com/avatar.jpg"
+  summary: >-
+    Systems engineer with 8+ years designing fault-tolerant distributed platforms,
+    multi-region cloud architectures, and high-throughput streaming pipelines. Passionate
+    about platform reliability, infrastructure automation, and engineering mentorship.
+  location:
+    address: "123 Tech Way"
+    postalCode: "94105"
+    city: "San Francisco"
+    region: "California"
+    countryCode: "US"
+  profiles:
+    - network: "GitHub"
+      username: "janedoe"
+      url: "https://github.com/janedoe"
+    - network: "LinkedIn"
+      username: "janedoe"
+      url: "https://linkedin.com/in/janedoe"
+
+# --- Employment History ---
+work:
+  - name: "Acme Cloud Infrastructure"
+    position: "Senior Platform Engineer"
+    url: "https://acmecloud.example.com"
+    startDate: "2021-03-01"
+    # endDate: omit or leave empty for current ongoing position
+    summary: "Leading distributed storage and streaming infrastructure engineering for core SaaS platform."
+    highlights:
+      - "Architected zero-downtime database migration handling 15k req/sec across multi-region infrastructure."
+      - "Spearheaded platform modernization decreasing p99 latency by 45% and cutting compute costs by $320k/year."
+      - "Built automated disaster recovery orchestrator reducing recovery time objective (RTO) from 4 hours to 8 minutes."
+      - "Standardized infrastructure-as-code modules in Terraform, accelerating team deployment velocity by 60%."
+
+  - name: "Apex Distributed Data"
+    position: "Software Engineer"
+    url: "https://apexdata.example.com"
+    startDate: "2018-06-01"
+    endDate: "2021-02-28"
+    summary: "Contributed to distributed consensus algorithms, RPC transport layers, and telemetry pipelines."
+    highlights:
+      - "Implemented raft consensus health-checking subsystem in Go, decreasing node split-brain incidents by 90%."
+      - "Designed automated integration test suite with synthetic network partitioning, catching 20+ edge bugs prior to production."
+      - "Collaborated across 4 engineering squads to roll out unified OpenTelemetry metrics and distributed tracing."
+
+# --- Education ---
+education:
+  - institution: "University of California, Berkeley"
+    url: "https://berkeley.edu"
+    area: "Computer Science"
+    studyType: "Bachelor of Science (B.S.)"
+    startDate: "2014-08-01"
+    endDate: "2018-05-15"
+    score: "3.85 / 4.0"
+    courses:
+      - "Distributed Systems"
+      - "Operating Systems"
+      - "Database Systems"
+      - "Algorithms & Complexity"
+
+# --- Technical & Functional Skills ---
+skills:
+  - name: "Languages & Frameworks"
+    level: "Expert"
+    keywords:
+      - "Go"
+      - "Rust"
+      - "Python"
+      - "TypeScript"
+      - "SQL"
+      - "gRPC"
+
+  - name: "Cloud & Infrastructure"
+    level: "Advanced"
+    keywords:
+      - "Kubernetes"
+      - "Docker"
+      - "AWS (EKS, RDS, S3)"
+      - "Terraform"
+      - "Kafka"
+      - "PostgreSQL"
+      - "Redis"
+
+  - name: "Practices & Methodologies"
+    level: "Advanced"
+    keywords:
+      - "Distributed Systems"
+      - "CI/CD Automation"
+      - "System Architecture"
+      - "Site Reliability Engineering"
+      - "Mentorship"
+
+# --- Notable Projects (Personal, Open Source, or Academic) ---
+projects:
+  - name: "RaftKV — Distributed Consensus Store"
+    description: "Lightweight, embeddable key-value storage engine implementing the Raft consensus protocol in Go."
+    url: "https://github.com/janedoe/raft-kv"
+    startDate: "2023-01-01"
+    endDate: "2023-08-01"
+    keywords:
+      - "Go"
+      - "Raft"
+      - "Distributed Consensus"
+    highlights:
+      - "Supports dynamic cluster membership changes, snapshotting, and log compaction."
+      - "Recognized with 1,200+ GitHub stars and featured on Hacker News front page."
+
+# --- Professional Certifications ---
+certificates:
+  - name: "AWS Certified Solutions Architect – Professional"
+    date: "2023-04-15"
+    issuer: "Amazon Web Services"
+    url: "https://aws.amazon.com/certification/"
+
+  - name: "Certified Kubernetes Administrator (CKA)"
+    date: "2022-09-10"
+    issuer: "Cloud Native Computing Foundation (CNCF)"
+    url: "https://www.cncf.io/certification/cka/"
+
+# --- Languages ---
+languages:
+  - language: "English"
+    fluency: "Native speaker"
+  - language: "Spanish"
+    fluency: "Professional working proficiency"

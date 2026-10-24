@@ -51,7 +51,7 @@ export async function load({ fetch, url }) {
       const res = await fetch(`https://api.github.com/gists/${gistId}`);
       if (!res.ok) throw new Error("Gist not found");
       const gistData = await res.json();
-      
+
       // 1. Fetch Resume
       const resumeFile = Object.keys(gistData.files).find(k => k.match(/resume\.(ya?ml|json)$/i)) || Object.keys(gistData.files)[0];
       const rawResume = gistData.files[resumeFile].content;
@@ -65,14 +65,26 @@ export async function load({ fetch, url }) {
       }
     } else {
       // Local fallback
-      const res = await fetch(`${base}/resume.yaml`); 
+      const res = await fetch(`${base}/resume.yaml`);
       resume = yaml.load(await res.text());
     }
 
-    // 3. Extract embedded _config (and strip it for validation)
+    // 3. Extract embedded studio config (supports meta.studio, meta.studioConfig, meta.config, or legacy _config)
+    const embeddedConfig =
+      resume.meta?.studio ||
+      resume.meta?.studioConfig ||
+      resume.meta?.resumeStudio ||
+      resume.meta?.config ||
+      resume.meta?._config ||
+      resume._config;
+
+    if (embeddedConfig && !userConfig) {
+      userConfig = embeddedConfig;
+    }
+
+    // Strip legacy root _config if present so it doesn't fail schema validation
     if (resume._config) {
-      if (!userConfig) userConfig = resume._config;
-      delete resume._config; 
+      delete resume._config;
     }
 
     // 4. Resolve Theme & Load dynamically (URL param takes precedence)
@@ -96,18 +108,18 @@ export async function load({ fetch, url }) {
 
     // 5. Schema Validation using precompiled local validator
     if (!validateResume(resume)) {
-      return { 
-        error: true, 
-        message: "Invalid JSON Resume schema.", 
+      return {
+        error: true,
+        message: "Invalid JSON Resume schema.",
         details: validateResume.errors,
         gistId: gistId || null,
         isRecruiterView
       };
     }
 
-    return { 
-      resume, 
-      config: finalConfig, 
+    return {
+      resume,
+      config: finalConfig,
       initialTheme: initialThemeData.name,
       initialThemeCss: initialThemeData.css,
       initialThemeConfig: initialThemeData.config,
@@ -120,13 +132,13 @@ export async function load({ fetch, url }) {
         layout: resolvedLayout
       },
       availableThemes,
-      error: false 
+      error: false
     };
 
   } catch (err) {
-    return { 
-      error: true, 
-      message: err.message, 
+    return {
+      error: true,
+      message: err.message,
       details: [],
       gistId: gistId || null,
       isRecruiterView

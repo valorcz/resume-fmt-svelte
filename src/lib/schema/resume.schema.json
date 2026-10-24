@@ -14,6 +14,11 @@
       "description": "link to the version of the schema that can validate the resume",
       "format": "uri"
     },
+    "executiveSummary": {
+      "type": "object",
+      "description": "Executive briefing summary for recruiters and mobile viewers",
+      "additionalProperties": true
+    },
     "basics": {
       "type": "object",
       "additionalProperties": true,

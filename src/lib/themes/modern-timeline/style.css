@@ -134,7 +134,7 @@
   order: 1;
   flex: 0 0 320px;
   max-width: 320px;
-  min-width: 320px;
+  width: 320px;
   padding: 2.5rem 2rem;
   background-color: var(--sidebar-bg);
   border-right: 1px solid var(--border);

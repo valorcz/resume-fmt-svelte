@@ -174,16 +174,48 @@ function lintTheme(themeName, themeDir) {
       ) {
         warnings.push(`Line ${lineNum}: Potentially unscoped selector "${trimmed.split('{')[0].trim()}". Prefix with "${themeClass}".`);
       }
+
+      // Check 6: Mobile safety: 100vw causes mobile horizontal scroll
+      if (!inPrintBlock && trimmed.includes('100vw') && !trimmed.startsWith('/*')) {
+        warnings.push(`Line ${lineNum}: "100vw" detected. Use "100%" or "100dvw" to prevent mobile horizontal scrollbar.`);
+      }
+
+      // Check 7: Rigid min-width on layout elements outside print
+      if (!inPrintBlock && /min-width:\s*[3-9][0-9]{2,}px/.test(trimmed) && !trimmed.startsWith('/*')) {
+        warnings.push(`Line ${lineNum}: Rigid "min-width >= 300px" detected outside @media print. This can break 1-column mobile layouts.`);
+      }
     });
 
-    // Check 6: Check if print styles exist
+    // Check 8: Check if print styles exist
     if (!css.includes('@media print')) {
       errors.push('Missing @media print rules in style.css. All themes must define print optimization.');
     }
 
-    // Check 7: Check for brand icon font-family overrides (Font Awesome Free vs Brands)
+    // Check 9: Check for brand icon font-family overrides (Font Awesome Free vs Brands)
     if (css.includes('contact-profile-github') && !css.includes('Font Awesome 6 Brands') && !css.includes('content: "GitHub"')) {
       warnings.push('GitHub brand icon declared without "Font Awesome 6 Brands" font-family.');
+    }
+
+    // Check 10: Recruiter View & Dossier UI Isolation
+    const RECRUITER_SELECTORS = [
+      '.recruiter-bar',
+      '.recruiter-dossier',
+      '.btn-dossier',
+      '.dossier-headline',
+      '.dossier-metrics',
+      '.competencies-chips',
+      '.highlights-disclosure',
+      '.highlights-summary'
+    ];
+    for (const sel of RECRUITER_SELECTORS) {
+      if (css.includes(sel)) {
+        warnings.push(`Theme attempts to style or override recruiter view selector "${sel}". Themes must style resume content only.`);
+      }
+    }
+
+    // Check 11: Highlights & progressive disclosure integrity
+    if (css.includes('details') && css.includes('display: none') && !css.includes('@media print')) {
+      warnings.push('Hiding <details> elements outside @media print breaks recruiter compact/expanded highlights toggle.');
     }
   }
 

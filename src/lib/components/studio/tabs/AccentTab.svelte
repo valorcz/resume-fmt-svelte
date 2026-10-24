@@ -52,6 +52,7 @@
     <div class="custom-color-inputs">
       <input 
         id="accent-picker"
+        name="accent_picker"
         type="color" 
         class="native-color-picker" 
         bind:value={customColorInput} 
@@ -59,12 +60,15 @@
         aria-label="Custom color picker"
       />
       <input 
+        id="accent-hex-input"
+        name="accent_hex"
         type="text" 
         class="hex-text-input" 
         bind:value={customColorInput}
         onchange={(e) => selectColor(e.currentTarget.value)}
         placeholder="#2563eb"
         maxlength="7"
+        autocomplete="off"
         aria-label="Hex color value"
       />
     </div>

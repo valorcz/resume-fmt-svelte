@@ -1,21 +1,35 @@
 <script>
   import { onMount } from 'svelte';
+  import yaml from 'js-yaml';
   import TimelineSection from '$lib/components/TimelineSection.svelte';
   import SkillsSection from '$lib/components/SkillsSection.svelte';
   import LanguageSection from '$lib/components/LanguageSection.svelte';
   import ReferenceSection from '$lib/components/ReferenceSection.svelte';
   import ConfigDrawer from '$lib/components/ConfigDrawer.svelte';
-  import WelcomeModal from '$lib/components/WelcomeModal.svelte';
+  import HelpModal from '$lib/components/studio/HelpModal.svelte';
+  import YamlSourceModal from '$lib/components/studio/YamlSourceModal.svelte';
+  import { downloadStandaloneHtml } from '$lib/export/htmlBundleExporter.js';
   import PageBreakGuide from '$lib/components/studio/PageBreakGuide.svelte';
   import ZoomControls from '$lib/components/studio/ZoomControls.svelte';
+  import ExecutiveSummaryCard from '$lib/components/recruiter/ExecutiveSummaryCard.svelte';
+  import RecruiterStickyBar from '$lib/components/recruiter/RecruiterStickyBar.svelte';
   import { loadTheme, availableThemes } from '$lib/themeRegistry';
-  
+
   let { data } = $props();
-  
+
   let resume = $derived(data.resume);
   let themesList = $derived(data.availableThemes || availableThemes);
   let isRecruiterView = $derived(data.isRecruiterView || false);
   let gistId = $derived(data.gistId || null);
+
+  // Mobile & Recruiter Mode state
+  let isMobileScreen = $state(false);
+  let compactHighlights = $state(true);
+  let showBriefing = $state(true);
+
+  let isRecruiterModeActive = $derived(
+    isRecruiterView || isMobileScreen
+  );
 
   // User-selected active theme state
   let selectedTheme = $state(null);
@@ -31,11 +45,55 @@
   let screenZoom = $state(1.0);
   let showPageGuides = $state(false);
 
-  // Welcome modal and Drawer controls
+  // Welcome modal, YAML source modal, and Drawer controls
   let showWelcomeModal = $state(false);
+  let showYamlModal = $state(false);
+  let handbookInitialTab = $state('tour');
   let isDrawerOpen = $state(false);
   let drawerActiveTab = $state('style');
   let isSystemDark = $state(false);
+
+  function openHandbook(tab = 'tour') {
+    handbookInitialTab = typeof tab === 'string' ? tab : 'tour';
+    showWelcomeModal = true;
+  }
+
+  function downloadResumeYaml() {
+    if (!resume) return;
+    try {
+      const yamlStr = yaml.dump(resume, { lineWidth: -1, noRefs: true });
+      const blob = new Blob([yamlStr], { type: 'text/yaml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const filename = resume.basics?.name
+        ? `${resume.basics.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-')}-resume.yaml`
+        : 'resume.yaml';
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('Failed to export resume YAML:', err);
+    }
+  }
+
+  function handleExportStandaloneHtml() {
+    downloadStandaloneHtml({
+      resume,
+      activeTheme,
+      activeThemeCss,
+      colorMode,
+      paperFormat,
+      printMargin,
+      printScale,
+      customAccent,
+      effectiveLayout,
+      includeBriefingCard: true,
+      includeStudioConfig: true
+    });
+  }
 
   let isDarkActive = $derived(
     colorMode === 'dark' || (colorMode === 'system' && isSystemDark)
@@ -48,45 +106,59 @@
       const themeHandler = (e) => { isSystemDark = e.matches; };
       mediaQuery.addEventListener('change', themeHandler);
 
+      const mobileQuery = window.matchMedia('(max-width: 768px)');
+      isMobileScreen = mobileQuery.matches;
+      const mobileHandler = (e) => { isMobileScreen = e.matches; };
+      mobileQuery.addEventListener('change', mobileHandler);
+
+      function handleGlobalKeydown(e) {
+        // Intercept Ctrl+S / Cmd+S globally to export and download active resume YAML
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+          downloadResumeYaml();
+          return;
+        }
+
+        // Ignore single-key shortcuts when typing in inputs, textareas, selects, or editable fields
+        const target = e.target;
+        const isInput = target && (
+          target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable
+        );
+
+        if (isInput) return;
+
+        if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
+          e.preventDefault();
+          showWelcomeModal = !showWelcomeModal;
+        } else if (e.key === '/' && !e.shiftKey) {
+          e.preventDefault();
+          showYamlModal = !showYamlModal;
+        } else if (e.key === 'b' || e.key === 'B') {
+          e.preventDefault();
+          showPageGuides = !showPageGuides;
+        } else if (e.key === 'Escape') {
+          if (showYamlModal) showYamlModal = false;
+          if (showWelcomeModal) showWelcomeModal = false;
+        }
+      }
+
+      window.addEventListener('keydown', handleGlobalKeydown);
+
       if (!isRecruiterView) {
         const hasSeen = localStorage.getItem('resume-has-seen-welcome');
         if (!hasSeen) {
           showWelcomeModal = true;
         }
-
-        function handleGlobalKeydown(e) {
-          // Ignore shortcut when typing in inputs, textareas, selects, or editable fields
-          const target = e.target;
-          const isInput = target && (
-            target.tagName === 'INPUT' ||
-            target.tagName === 'TEXTAREA' ||
-            target.tagName === 'SELECT' ||
-            target.isContentEditable
-          );
-
-          if (isInput) return;
-
-          if (e.key === '?' || (e.key === '/' && e.shiftKey)) {
-            e.preventDefault();
-            showWelcomeModal = !showWelcomeModal;
-          } else if (e.key === 'b' || e.key === 'B') {
-            e.preventDefault();
-            showPageGuides = !showPageGuides;
-          } else if (e.key === 'Escape' && showWelcomeModal) {
-            showWelcomeModal = false;
-          }
-        }
-
-        window.addEventListener('keydown', handleGlobalKeydown);
-        return () => {
-          mediaQuery.removeEventListener('change', themeHandler);
-          window.removeEventListener('keydown', handleGlobalKeydown);
-        };
-      } else {
-        return () => {
-          mediaQuery.removeEventListener('change', themeHandler);
-        };
       }
+
+      return () => {
+        mediaQuery.removeEventListener('change', themeHandler);
+        mobileQuery.removeEventListener('change', mobileHandler);
+        window.removeEventListener('keydown', handleGlobalKeydown);
+      };
     }
   });
 
@@ -180,14 +252,15 @@
   let activeLayout = $derived(
     customLayout || activeThemeConfig?.layout || data.config?.layout || { main: [], sidebar: [] }
   );
+  let effectiveLayout = $derived(activeLayout);
   let activeI18n = $derived({ ...activeThemeConfig?.i18n, ...data.config?.i18n });
 
   // The Component Mapping Dictionary
   let sectionRenderer = $derived({
-    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name' } },
+    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name', compact: isRecruiterModeActive, expandAllHighlights: !compactHighlights } },
     education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'studyType', subtitleKey: 'institution', areaKey: 'area' } },
     volunteer: { component: TimelineSection, props: { items: resume?.volunteer, titleKey: 'position', subtitleKey: 'organization' } },
-    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null } },
+    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null, compact: isRecruiterModeActive, expandAllHighlights: !compactHighlights } },
     awards: { component: TimelineSection, props: { items: resume?.awards, titleKey: 'title', subtitleKey: 'awarder', dateKey: 'date', endDateKey: null } },
     publications: { component: TimelineSection, props: { items: resume?.publications, titleKey: 'name', subtitleKey: 'publisher', dateKey: 'releaseDate', endDateKey: null } },
     certificates: { component: TimelineSection, props: { items: resume?.certificates, titleKey: 'name', subtitleKey: 'issuer', dateKey: 'date', endDateKey: null } },
@@ -202,9 +275,20 @@
      if (!path) return "root";
      return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
   }
+
+  // Reactive page title
+  let pageTitle = $derived(
+    data.error
+      ? 'Error | Resume Studio'
+      : resume?.basics?.name
+        ? `${resume.basics.name} — Resume Studio`
+        : 'Resume Studio'
+  );
 </script>
 
 <svelte:head>
+  <title>{pageTitle}</title>
+
   {#if activeThemeCss}
     {@html `<style id="theme-style">${activeThemeCss}</style>`}
   {/if}
@@ -314,10 +398,12 @@
     </div>
   </div>
 {:else}
-  <!-- Welcome & README Onboarding Modal -->
-  <WelcomeModal 
-    isOpen={showWelcomeModal} 
-    {colorMode} 
+  <!-- Comprehensive User Guide & Authoring Handbook -->
+  <HelpModal
+    isOpen={showWelcomeModal}
+    initialTab={handbookInitialTab}
+    {colorMode}
+    {resume}
     onClose={() => showWelcomeModal = false}
     onOpenGistTab={() => {
       showWelcomeModal = false;
@@ -326,17 +412,39 @@
     }}
   />
 
-  <div 
-    class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterView ? 'recruiter-view' : ''}"
+  <!-- Dedicated YAML Source Viewer & Copier -->
+  <YamlSourceModal
+    isOpen={showYamlModal}
+    {resume}
+    {colorMode}
+    {activeTheme}
+    {customAccent}
+    {effectiveLayout}
+    onExportHtml={handleExportStandaloneHtml}
+    onClose={() => showYamlModal = false}
+  />
+
+  {#if isRecruiterModeActive}
+    <RecruiterStickyBar
+      {resume}
+      {colorMode}
+      isDark={isDarkActive}
+      bind:compactHighlights
+      bind:showBriefing
+    />
+  {/if}
+
+  <div
+    class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterModeActive ? 'recruiter-view' : ''}"
     class:is-dark={isDarkActive}
     class:mode-dark={isDarkActive}
-    class:drawer-open={isDrawerOpen && !isRecruiterView}
+    class:drawer-open={isDrawerOpen && !isRecruiterModeActive}
     style="--screen-zoom: {screenZoom};"
   >
-  {#if !isRecruiterView}
-    <ConfigDrawer 
-      themes={themesList} 
-      bind:activeTheme={selectedTheme} 
+  {#if !isRecruiterModeActive}
+    <ConfigDrawer
+      themes={themesList}
+      bind:activeTheme={selectedTheme}
       {activeThemeConfig}
       bind:customAccent={customAccent}
       bind:customLayout={customLayout}
@@ -352,7 +460,8 @@
       bind:activeTab={drawerActiveTab}
       onResetLayout={() => customLayout = null}
       onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; paperFormat = 'a4'; printMargin = '1.5cm'; printScale = 100; }}
-      onOpenGuide={() => showWelcomeModal = true}
+      onOpenGuide={openHandbook}
+      onExportHtml={handleExportStandaloneHtml}
     />
 
     <!-- Canvas Zoom Controls -->
@@ -361,22 +470,31 @@
 
   <div class="cv-wrapper">
     <!-- Non-printing Page Boundary & Straddle Guides -->
-    {#if !isRecruiterView}
-      <PageBreakGuide 
-        {paperFormat} 
-        {printMargin} 
+    {#if !isRecruiterModeActive}
+      <PageBreakGuide
+        {paperFormat}
+        {printMargin}
         {printScale}
-        showGuides={showPageGuides} 
+        showGuides={showPageGuides}
       />
     {/if}
-    
+
+    <!-- Distinct Executive Briefing Card (Dismissible and toggleable from top bar) -->
+    {#if isRecruiterModeActive && showBriefing}
+      <ExecutiveSummaryCard
+        {resume}
+        isDark={isDarkActive}
+        onClose={() => showBriefing = false}
+      />
+    {/if}
+
     <header class="cv-header">
       {#if resume?.basics?.image}
         <img class="cv-image" src={resume.basics.image} alt="Profile" />
       {/if}
       <h1 class="cv-name">{resume?.basics?.name}</h1>
       <h2 class="cv-title">{resume?.basics?.label || resume?.basics?.headline}</h2>
-      
+
       <div class="cv-contact">
         {#if resume?.basics?.location}
           {@const locText = [resume.basics.location.address, resume.basics.location.city, resume.basics.location.region, resume.basics.location.countryCode || resume.basics.location.postalCode].filter(Boolean).join(', ') || [resume.basics.location.city, resume.basics.location.countryCode].filter(Boolean).join(', ')}
@@ -408,22 +526,22 @@
           {/each}
         {/if}
       </div>
-      
+
       {#if resume?.basics?.summary}
         <div class="cv-summary">{@html resume.basics.summary}</div>
       {/if}
     </header>
 
     <div class="cv-layout">
-      
+
       <main class="cv-main">
         {#each activeLayout.main as sectionKey (sectionKey)}
           {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
             {@const Renderer = sectionRenderer[sectionKey].component}
-            <Renderer 
+            <Renderer
               {...sectionRenderer[sectionKey].props}
-              sectionTitle={activeI18n[sectionKey] || sectionKey} 
-              sectionId={sectionKey} 
+              sectionTitle={activeI18n[sectionKey] || sectionKey}
+              sectionId={sectionKey}
             />
           {/if}
         {/each}
@@ -433,10 +551,10 @@
         {#each activeLayout.sidebar as sectionKey (sectionKey)}
           {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
             {@const Renderer = sectionRenderer[sectionKey].component}
-            <Renderer 
+            <Renderer
               {...sectionRenderer[sectionKey].props}
-              sectionTitle={activeI18n[sectionKey] || sectionKey} 
-              sectionId={sectionKey} 
+              sectionTitle={activeI18n[sectionKey] || sectionKey}
+              sectionId={sectionKey}
             />
           {/if}
         {/each}

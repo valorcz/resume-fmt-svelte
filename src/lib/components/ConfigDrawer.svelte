@@ -22,7 +22,8 @@
     activeTab = $bindable('style'),
     onResetLayout = () => {},
     onResetAll = () => {},
-    onOpenGuide = () => {}
+    onOpenGuide = () => {},
+    onExportHtml = () => {}
   } = $props();
 
   // Active columns derived from customLayout or activeThemeConfig.layout
@@ -172,6 +173,7 @@
   bind:colorMode
   bind:isOpen
   {gistId}
+  {resume}
   {hasCustomizations}
   onCycleMode={cycleColorMode}
   onPrint={handlePrint}
@@ -203,4 +205,5 @@
   onResetLayout={handleResetLayout}
   onResetAll={handleResetAllSettings}
   {onOpenGuide}
+  {onExportHtml}
 />

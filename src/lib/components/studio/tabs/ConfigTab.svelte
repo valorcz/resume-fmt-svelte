@@ -22,17 +22,17 @@
   });
 
   let embeddedYamlSnippet = $derived.by(() => {
-    let lines = ['# Add this to the top of your resume.yaml:', '_config:'];
-    lines.push(`  theme: ${activeTheme}`);
-    if (customAccent) lines.push(`  accent: '${customAccent}'`);
-    if (colorMode && colorMode !== 'system') lines.push(`  mode: ${colorMode}`);
-    lines.push('  layout:');
-    lines.push('    main:');
-    if (effectiveLayout.main.length === 0) lines.push('      []');
-    else effectiveLayout.main.forEach(k => lines.push(`      - ${k}`));
-    lines.push('    sidebar:');
-    if (effectiveLayout.sidebar.length === 0) lines.push('      []');
-    else effectiveLayout.sidebar.forEach(k => lines.push(`      - ${k}`));
+    let lines = ['# Add this under meta: in your resume.yaml:', 'meta:', '  studio:'];
+    lines.push(`    theme: ${activeTheme}`);
+    if (customAccent) lines.push(`    accent: '${customAccent}'`);
+    if (colorMode && colorMode !== 'system') lines.push(`    mode: ${colorMode}`);
+    lines.push('    layout:');
+    lines.push('      main:');
+    if (effectiveLayout.main.length === 0) lines.push('        []');
+    else effectiveLayout.main.forEach(k => lines.push(`        - ${k}`));
+    lines.push('      sidebar:');
+    if (effectiveLayout.sidebar.length === 0) lines.push('        []');
+    else effectiveLayout.sidebar.forEach(k => lines.push(`        - ${k}`));
     return lines.join('\n');
   });
 
@@ -51,7 +51,7 @@
   });
 
   let embeddedJsonSnippet = $derived.by(() => {
-    return JSON.stringify({ _config: activeConfigPayload }, null, 2);
+    return JSON.stringify({ meta: { studio: activeConfigPayload } }, null, 2);
   });
 
   let standaloneJsonSnippet = $derived.by(() => {
@@ -116,8 +116,8 @@
     </div>
     <p class="config-card-desc">
       {configFormat === 'yaml' 
-        ? 'Add a top-level _config: block directly into your resume.yaml file.'
-        : 'Add a top-level "_config" key directly into your resume.json object.'}
+        ? 'Add a meta.studio block directly into your resume.yaml file (100% JSON Resume compliant).'
+        : 'Add a "meta": { "studio": { ... } } object into your resume.json file (100% JSON Resume compliant).'}
     </p>
     <pre class="yaml-viewer"><code>{configFormat === 'yaml' ? embeddedYamlSnippet : embeddedJsonSnippet}</code></pre>
   </div>

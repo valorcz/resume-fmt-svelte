@@ -55,10 +55,13 @@
   <!-- Search Filter -->
   <div class="search-box">
     <input 
+      id="theme-search-input"
+      name="theme_search"
       type="text" 
       class="search-input" 
       placeholder="Filter themes..." 
       bind:value={searchQuery}
+      autocomplete="off"
     />
     {#if searchQuery}
       <button class="clear-search-btn" onclick={() => searchQuery = ''}>✕</button>
