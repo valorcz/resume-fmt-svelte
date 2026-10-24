@@ -27,7 +27,8 @@
     onResetAccent = () => {},
     onResetLayout = () => {},
     onResetAll = () => {},
-    onOpenGuide = () => {}
+    onOpenGuide = () => {},
+    onExportHtml = () => {}
   } = $props();
 
   let recruiterFeedback = $state(false);
@@ -69,9 +70,9 @@
 
 {#if isOpen}
   <!-- Backdrop for screens < 1200px -->
-  <div 
-    class="drawer-backdrop" 
-    onclick={() => isOpen = false} 
+  <div
+    class="drawer-backdrop"
+    onclick={() => isOpen = false}
     onkeydown={(e) => e.key === 'Escape' && (isOpen = false)}
     role="button"
     tabindex="0"
@@ -92,9 +93,9 @@
 
       <div class="drawer-header-actions">
         <!-- Recruiter View Link Button -->
-        <button 
-          class="header-pill-btn recruiter-btn" 
-          onclick={copyRecruiterUrl} 
+        <button
+          class="header-pill-btn recruiter-btn"
+          onclick={copyRecruiterUrl}
           title="Copy clean Recruiter URL (?view=recruiter) to clipboard"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -105,9 +106,9 @@
         </button>
 
         <!-- Share URL Button -->
-        <button 
-          class="header-icon-btn" 
-          onclick={copyShareUrl} 
+        <button
+          class="header-icon-btn"
+          onclick={copyShareUrl}
           title="Share direct configuration link"
           aria-label="Share direct configuration link"
         >
@@ -125,9 +126,9 @@
         </button>
 
         <!-- Close Drawer Button -->
-        <button 
-          class="header-icon-btn close-btn" 
-          onclick={() => isOpen = false} 
+        <button
+          class="header-icon-btn close-btn"
+          onclick={() => isOpen = false}
           title="Close Customizer"
           aria-label="Close Customizer"
         >
@@ -138,44 +139,44 @@
 
     <!-- Navigation Tabs (Consolidated 5 tabs, evenly distributed, 0 scrolling) -->
     <nav class="drawer-nav" aria-label="Studio Tabs">
-      <button 
-        class="tab-btn" 
-        class:active={activeTab === 'style' || activeTab === 'theme' || activeTab === 'accent'} 
+      <button
+        class="tab-btn"
+        class:active={activeTab === 'style' || activeTab === 'theme' || activeTab === 'accent'}
         onclick={() => activeTab = 'style'}
       >
         Style
         {#if customAccent}<span class="tab-indicator"></span>{/if}
       </button>
 
-      <button 
-        class="tab-btn" 
-        class:active={activeTab === 'layout'} 
+      <button
+        class="tab-btn"
+        class:active={activeTab === 'layout'}
         onclick={() => activeTab = 'layout'}
       >
         Layout
         {#if customLayout}<span class="tab-indicator"></span>{/if}
       </button>
 
-      <button 
-        class="tab-btn" 
-        class:active={activeTab === 'format' || activeTab === 'mode'} 
+      <button
+        class="tab-btn"
+        class:active={activeTab === 'format' || activeTab === 'mode'}
         onclick={() => activeTab = 'format'}
       >
         Format
       </button>
 
-      <button 
-        class="tab-btn" 
-        class:active={activeTab === 'gist' || activeTab === 'source' || activeTab === 'config'} 
+      <button
+        class="tab-btn"
+        class:active={activeTab === 'gist' || activeTab === 'source' || activeTab === 'config'}
         onclick={() => activeTab = 'gist'}
       >
         Gist
         {#if gistId}<span class="tab-indicator gist-dot"></span>{/if}
       </button>
 
-      <button 
-        class="tab-btn" 
-        class:active={activeTab === 'audit'} 
+      <button
+        class="tab-btn"
+        class:active={activeTab === 'audit'}
         onclick={() => activeTab = 'audit'}
       >
         Check
@@ -188,25 +189,32 @@
     <!-- Drawer Body -->
     <div class="drawer-body">
       {#if activeTab === 'style' || activeTab === 'theme' || activeTab === 'accent'}
-        <StyleTab 
-          {themes} 
-          bind:activeTheme 
-          bind:customAccent 
-          {onSelectTheme} 
-          {onResetAccent} 
+        <StyleTab
+          {themes}
+          bind:activeTheme
+          bind:customAccent
+          {onSelectTheme}
+          {onResetAccent}
         />
       {:else if activeTab === 'layout'}
         <LayoutTab {activeThemeConfig} bind:customLayout {onResetLayout} />
       {:else if activeTab === 'format' || activeTab === 'mode'}
-        <ModeTab bind:colorMode bind:paperFormat bind:printMargin bind:printScale bind:showPageGuides />
+        <ModeTab
+          bind:colorMode
+          bind:paperFormat
+          bind:printMargin
+          bind:printScale
+          bind:showPageGuides
+          {onExportHtml}
+        />
       {:else if activeTab === 'gist' || activeTab === 'source' || activeTab === 'config'}
-        <GistTab 
-          {gistId} 
-          {activeTheme} 
-          {customAccent} 
-          {colorMode} 
-          {effectiveLayout} 
-          {onOpenGuide} 
+        <GistTab
+          {gistId}
+          {activeTheme}
+          {customAccent}
+          {colorMode}
+          {effectiveLayout}
+          {onOpenGuide}
         />
       {:else if activeTab === 'audit'}
         <AuditTab {auditReport} {atsPlainText} />

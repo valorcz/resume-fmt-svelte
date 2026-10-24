@@ -137,7 +137,7 @@
           <div class="step-content">
             <h3 class="step-title">Distraction-Free Recruiter View & Style Sync</h3>
             <p class="step-text">
-              Share clean, distraction-free links using <code>?view=recruiter</code> (or click <strong>Recruiter Link</strong> in Studio) which hides all floating toolbars. To permanently lock your chosen theme, accent, and layout into your Gist, copy the ready-to-use <code>_config</code> snippet from the <strong>Gist</strong> tab.
+              Share clean, distraction-free links using <code>?view=recruiter</code> (or click <strong>Recruiter Link</strong> in Studio) which hides all floating toolbars. To permanently lock your chosen theme, accent, and layout into your Gist, copy the ready-to-use <code>meta.studio</code> snippet from the <strong>Gist</strong> tab.
             </p>
           </div>
         </div>

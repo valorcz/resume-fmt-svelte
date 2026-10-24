@@ -4,8 +4,17 @@
     paperFormat = $bindable('a4'),
     printMargin = $bindable('1.5cm'),
     printScale = $bindable(100),
-    showPageGuides = $bindable(false)
+    showPageGuides = $bindable(false),
+    onExportHtml = () => {}
   } = $props();
+
+  let exportFeedback = $state(false);
+
+  function handleTriggerExport() {
+    exportFeedback = true;
+    onExportHtml();
+    setTimeout(() => exportFeedback = false, 2500);
+  }
 
   const printScales = [
     { val: 100, label: '100% (Default standard)', desc: 'Normal 1:1 scale' },
@@ -63,8 +72,8 @@
 
   <div class="mode-options-list">
     {#each modes as m}
-      <button 
-        class="mode-card" 
+      <button
+        class="mode-card"
         class:active={colorMode === m.id}
         onclick={() => colorMode = m.id}
       >
@@ -89,8 +98,8 @@
 
   <div class="format-grid">
     {#each paperFormats as pf}
-      <button 
-        class="format-btn" 
+      <button
+        class="format-btn"
         class:active={paperFormat === pf.id}
         onclick={() => selectPaperFormat(pf.id)}
       >
@@ -130,13 +139,48 @@
       </div>
       <span class="toggle-subtext">Visual cutline indicator showing print page boundaries (Shortcut: B)</span>
     </label>
-    <input 
+    <input
       id="show-guides-checkbox"
       name="show_page_guides"
-      type="checkbox" 
-      class="toggle-checkbox" 
-      bind:checked={showPageGuides} 
+      type="checkbox"
+      class="toggle-checkbox"
+      bind:checked={showPageGuides}
     />
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- STANDALONE HTML PACKAGE EXPORT -->
+  <h3 class="group-title">Self-Contained HTML Package</h3>
+  <p class="group-desc">
+    Export a standalone, 100% offline <code>.html</code> file with embedded theme styles, print CSS, interactive recruiter briefing toggle, and bundled original YAML.
+  </p>
+
+  <div class="package-export-card">
+    <div class="package-features-list">
+      <div class="package-feature-item">
+        <span class="feature-bullet">✓</span>
+        <span>Single-file bundle — zero external scripts or servers required</span>
+      </div>
+      <div class="package-feature-item">
+        <span class="feature-bullet">✓</span>
+        <span>Includes Executive Briefing Card & Recruiter quick-toggle</span>
+      </div>
+      <div class="package-feature-item">
+        <span class="feature-bullet">✓</span>
+        <span>Embedded original & configured YAML source for ATS/recruiters</span>
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="btn-package-export"
+      class:btn-exported={exportFeedback}
+      onclick={handleTriggerExport}
+    >
+      <span class="btn-icon">{exportFeedback ? '✓' : '📦'}</span>
+      <span>{exportFeedback ? 'Downloaded Standalone HTML!' : 'Export Standalone HTML (.html)'}</span>
+    </button>
   </div>
 </div>
 
@@ -509,5 +553,73 @@
     width: 16px;
     height: 16px;
     cursor: pointer;
+  }
+
+  /* Standalone Package Card */
+  .package-export-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  :global(.mode-dark) .package-export-card,
+  :global(.is-dark) .package-export-card {
+    background: #181a20;
+    border-color: #27272a;
+  }
+
+  .package-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.76rem;
+    color: #475569;
+  }
+  :global(.mode-dark) .package-features-list,
+  :global(.is-dark) .package-features-list {
+    color: #94a3b8;
+  }
+
+  .package-feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+  }
+
+  .feature-bullet {
+    color: #10b981;
+    font-weight: 700;
+  }
+
+  .btn-package-export {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #2563eb;
+    border: 1px solid #2563eb;
+    color: #ffffff;
+    transition: all 0.15s ease;
+    font-family: inherit;
+  }
+
+  .btn-package-export:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+  }
+
+  .btn-package-export.btn-exported {
+    background: #10b981 !important;
+    border-color: #10b981 !important;
+    color: #ffffff !important;
   }
 </style>

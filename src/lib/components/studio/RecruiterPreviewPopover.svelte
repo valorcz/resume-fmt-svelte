@@ -16,33 +16,35 @@
 
   let evalReport = $derived(evaluateRecruiterSummary(resume));
 
-  const YAML_TEMPLATE = `executiveSummary:
-  headline: "Principal Engineer with 12+ years designing resilient distributed systems and driving high-velocity engineering orgs."
-  experienceYears: 12
-  availability: "Available for Senior / Principal advisory & leadership roles"
-  targetRoles:
-    - Principal Software Engineer
-    - Solutions Architect
-    - Staff Infrastructure Engineer
-  keyMetrics:
-    - label: "Experience"
-      value: "12+ Years"
-    - label: "Cloud Scale"
-      value: "10M+ Daily DAU"
-    - label: "Infrastructure"
-      value: "99.99% Uptime"
-    - label: "Team Leadership"
-      value: "15+ Engineers"
-  coreCompetencies:
-    - Distributed Systems
-    - Cloud Infrastructure
-    - System Architecture
-    - DevOps & CI/CD
-    - Team Mentorship
-  topHighlights:
-    - "Architected zero-downtime database migration handling 15k req/sec across multi-region AWS infrastructure."
-    - "Spearheaded platform modernization decreasing p99 latency by 45% and cutting AWS compute costs by $250k/year."
-    - "Grew infrastructure engineering group from 4 to 16 engineers and standardized internal developer tooling."`;
+  const YAML_TEMPLATE = `# Add under meta: in your resume.yaml (100% JSON Resume compliant):
+meta:
+  executiveSummary:
+    headline: "Principal Engineer with 12+ years designing resilient distributed systems and driving high-velocity engineering orgs."
+    experienceYears: 12
+    availability: "Available for Senior / Principal advisory & leadership roles"
+    targetRoles:
+      - Principal Software Engineer
+      - Solutions Architect
+      - Staff Infrastructure Engineer
+    keyMetrics:
+      - label: "Experience"
+        value: "12+ Years"
+      - label: "Cloud Scale"
+        value: "10M+ Daily DAU"
+      - label: "Infrastructure"
+        value: "99.99% Uptime"
+      - label: "Team Leadership"
+        value: "15+ Engineers"
+    coreCompetencies:
+      - Distributed Systems
+      - Cloud Infrastructure
+      - System Architecture
+      - DevOps & CI/CD
+      - Team Mentorship
+    topHighlights:
+      - "Architected zero-downtime database migration handling 15k req/sec across multi-region AWS infrastructure."
+      - "Spearheaded platform modernization decreasing p99 latency by 45% and cutting AWS compute costs by $250k/year."
+      - "Grew infrastructure engineering group from 4 to 16 engineers and standardized internal developer tooling."`;
 
   function copyRecruiterUrl() {
     if (typeof window !== 'undefined') {
@@ -148,7 +150,7 @@
           <div class="fallback-notice-banner">
             <div class="notice-icon">ℹ</div>
             <div class="notice-text">
-              <strong>Previewing heuristic fallback.</strong> Your resume has no <code>executiveSummary:</code> block defined in YAML. Customizing it lets you showcase tailored metrics and target roles.
+              <strong>Previewing heuristic fallback.</strong> Your resume has no <code>meta.executiveSummary:</code> block defined in YAML. Customizing it lets you showcase tailored metrics and target roles.
             </div>
             <button class="btn-template-mini" onclick={() => activeView = 'checks'}>
               View Diagnostics & YAML

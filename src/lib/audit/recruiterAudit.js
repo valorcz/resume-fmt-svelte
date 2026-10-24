@@ -41,7 +41,7 @@ export function evaluateRecruiterSummary(resume) {
       passed: false,
       points: 20,
       earned: 5,
-      message: 'No "executiveSummary" block defined in YAML/JSON. The recruiter view is running in automated heuristic fallback mode.'
+      message: 'No executiveSummary block defined (checked meta.executiveSummary and root). The recruiter view is running in automated heuristic fallback mode.'
     });
   } else {
     checks.push({
@@ -410,5 +410,129 @@ export function evaluateRecruiterSummary(resume) {
       warnings: warningCount,
       errors: errorCount
     }
+  };
+}
+
+/**
+ * Synthesizes a complete executiveSummary specification for a resume.
+ * If explicit fields exist, they are preserved. Any missing fields are
+ * auto-derived from work experience, skills, and basics data.
+ *
+ * @param {object} resume JSON Resume object
+ * @returns {object} Synthesized executiveSummary object
+ */
+export function synthesizeExecutiveSummary(resume) {
+  if (!resume) return {};
+
+  const explicit = resume.executiveSummary || resume.meta?.executiveSummary || {};
+
+  // Calculate experience years from work history if not explicit
+  let calculatedYears = explicit.experienceYears;
+  if (!calculatedYears && Array.isArray(resume.work) && resume.work.length > 0) {
+    let earliest = Infinity;
+    let latest = -Infinity;
+    const currentYear = new Date().getFullYear();
+
+    for (const job of resume.work) {
+      if (job.startDate) {
+        const y = parseInt(String(job.startDate).substring(0, 4), 10);
+        if (!isNaN(y) && y < earliest) earliest = y;
+      }
+      if (job.endDate) {
+        const y = parseInt(String(job.endDate).substring(0, 4), 10);
+        if (!isNaN(y) && y > latest) latest = y;
+      } else {
+        latest = currentYear;
+      }
+    }
+
+    if (earliest !== Infinity) {
+      calculatedYears = Math.max(1, (latest === -Infinity ? currentYear : latest) - earliest);
+    }
+  }
+
+  // Headline
+  const headline = explicit.headline ||
+    resume.basics?.headline ||
+    resume.basics?.label ||
+    (resume.work?.[0]?.position ? `${resume.work[0].position} with extensive professional track record` : 'Technical Professional');
+
+  // Availability
+  const availability = explicit.availability || 'Exploring opportunities';
+
+  // Target Roles
+  let targetRoles = explicit.targetRoles;
+  if (!Array.isArray(targetRoles) || targetRoles.length === 0) {
+    const defaultRole = resume.basics?.label || resume.work?.[0]?.position;
+    targetRoles = defaultRole ? [defaultRole] : ['Software Engineer'];
+  }
+
+  // Key Metrics
+  let keyMetrics = explicit.keyMetrics;
+  if (!Array.isArray(keyMetrics) || keyMetrics.length === 0) {
+    keyMetrics = [];
+    if (calculatedYears) {
+      keyMetrics.push({ label: 'Experience', value: `${calculatedYears}+ Years` });
+    }
+    if (Array.isArray(resume.projects) && resume.projects.length > 0) {
+      keyMetrics.push({ label: 'Projects', value: `${resume.projects.length}+ Shipped` });
+    }
+    if (Array.isArray(resume.work) && resume.work.length > 0) {
+      keyMetrics.push({ label: 'Roles', value: `${resume.work.length} Positions` });
+    }
+    if (keyMetrics.length === 0) {
+      keyMetrics.push({ label: 'Track Record', value: 'Verified' });
+    }
+  }
+
+  // Core Competencies
+  let coreCompetencies = explicit.coreCompetencies;
+  if (!Array.isArray(coreCompetencies) || coreCompetencies.length === 0) {
+    const gathered = [];
+    if (Array.isArray(resume.skills)) {
+      for (const skill of resume.skills) {
+        if (Array.isArray(skill.keywords)) {
+          gathered.push(...skill.keywords);
+        } else if (skill.name) {
+          gathered.push(skill.name);
+        }
+      }
+    }
+    coreCompetencies = Array.from(new Set(gathered)).slice(0, 5);
+    if (coreCompetencies.length === 0) {
+      coreCompetencies = ['Software Engineering', 'System Architecture'];
+    }
+  }
+
+  // Top Highlights
+  let topHighlights = explicit.topHighlights;
+  if (!Array.isArray(topHighlights) || topHighlights.length === 0) {
+    topHighlights = [];
+    if (Array.isArray(resume.work)) {
+      for (const job of resume.work) {
+        if (Array.isArray(job.highlights) && job.highlights.length > 0) {
+          topHighlights.push(job.highlights[0]);
+          if (topHighlights.length >= 2) break;
+        }
+      }
+    }
+    if (topHighlights.length === 0 && Array.isArray(resume.projects)) {
+      for (const proj of resume.projects) {
+        if (Array.isArray(proj.highlights) && proj.highlights.length > 0) {
+          topHighlights.push(proj.highlights[0]);
+          if (topHighlights.length >= 2) break;
+        }
+      }
+    }
+  }
+
+  return {
+    headline,
+    experienceYears: calculatedYears || 1,
+    availability,
+    targetRoles,
+    keyMetrics,
+    coreCompetencies,
+    topHighlights
   };
 }

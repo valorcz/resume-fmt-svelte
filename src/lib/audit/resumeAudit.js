@@ -272,7 +272,7 @@ export function auditResume(resume, effectiveLayout = { main: [], sidebar: [] })
     points: 10,
     message: recruiterEval.isExplicit
       ? `Dedicated executiveSummary defined (${recruiterEval.score}% quality score · ${recruiterEval.statusLabel}).`
-      : 'No "executiveSummary" block defined in YAML/JSON. Recruiter view (?view=recruiter) operates in automated heuristic fallback mode.'
+      : 'No "executiveSummary" block defined (checked meta.executiveSummary and root). Recruiter view (?view=recruiter) operates in automated heuristic fallback mode.'
   });
 
   // =========================================================================

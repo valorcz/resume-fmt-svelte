@@ -22,7 +22,8 @@
     activeTab = $bindable('style'),
     onResetLayout = () => {},
     onResetAll = () => {},
-    onOpenGuide = () => {}
+    onOpenGuide = () => {},
+    onExportHtml = () => {}
   } = $props();
 
   // Active columns derived from customLayout or activeThemeConfig.layout
@@ -204,4 +205,5 @@
   onResetLayout={handleResetLayout}
   onResetAll={handleResetAllSettings}
   {onOpenGuide}
+  {onExportHtml}
 />

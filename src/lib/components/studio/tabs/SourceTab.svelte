@@ -95,9 +95,14 @@
       <li>Paste your JSON Resume standard data.</li>
       <li>Copy the Gist URL or ID into the box above.</li>
     </ol>
-    <button class="callout-guide-btn" onclick={onOpenGuide}>
-      Open Quick Guide modal for step-by-step instructions →
-    </button>
+    <div class="callout-actions">
+      <button class="callout-guide-btn" onclick={() => onOpenGuide('migrate')}>
+        Migrating an existing Word / PDF resume? View AI Guide →
+      </button>
+      <a href="/resume.template.yaml" download="resume.template.yaml" class="callout-template-link">
+        📥 Download Canonical resume.template.yaml
+      </a>
+    </div>
   </div>
 </div>
 
@@ -288,6 +293,13 @@
     margin-bottom: 0.2rem;
   }
 
+  .callout-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-top: 0.5rem;
+  }
+
   .callout-guide-btn {
     background: none;
     border: none;
@@ -297,10 +309,25 @@
     font-weight: 600;
     color: #2563eb;
     cursor: pointer;
+    text-align: left;
     text-decoration: underline;
   }
   :global(.mode-dark) .callout-guide-btn,
   :global(.is-dark) .callout-guide-btn {
     color: #60a5fa;
+  }
+
+  .callout-template-link {
+    font-size: 0.73rem;
+    font-weight: 600;
+    color: #2563eb;
+    text-decoration: none;
+  }
+  .callout-template-link:hover {
+    text-decoration: underline;
+  }
+  :global(.mode-dark) .callout-template-link,
+  :global(.is-dark) .callout-template-link {
+    color: #93c5fd;
   }
 </style>

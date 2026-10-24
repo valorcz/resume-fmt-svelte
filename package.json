@@ -9,13 +9,16 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"lint:themes": "node scripts/lint-themes.js",
-		"check:support": "node scripts/check-support.js"
+		"check:support": "node scripts/check-support.js",
+		"check:svelte": "svelte-check --tsconfig ./jsconfig.json"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.1",
 		"@sveltejs/kit": "^2.70.3",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"svelte": "^5.57.2",
+		"svelte-check": "^4.7.7",
+		"typescript": "^5.7.3",
 		"vite": "^7.3.7"
 	},
 	"dependencies": {
@@ -23,6 +26,7 @@
 		"ajv": "^8.20.0",
 		"ajv-draft-04": "^1.0.0",
 		"ajv-formats": "^3.0.1",
-		"js-yaml": "^4.3.2"
+		"js-yaml": "^4.3.2",
+		"marked": "^18.1.1"
 	}
 }

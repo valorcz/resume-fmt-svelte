@@ -34,8 +34,12 @@ lint: ## Lint resume themes and configurations
 check-support: ## Check if Node and dependencies are active and supported (not EOL)
 	$(PNPM) run check:support
 
+.PHONY: check-svelte
+check-svelte: ## Run Svelte static analyzer and identifier checks
+	$(PNPM) run check:svelte
+
 .PHONY: check
-check: lint check-support build ## Run all linters, EOL checks, and verify production build
+check: lint check-support check-svelte build ## Run all linters, Svelte static checks, EOL checks, and verify production build
 
 .PHONY: outdated
 outdated: ## Check for outdated dependencies

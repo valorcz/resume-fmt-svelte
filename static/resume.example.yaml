@@ -1,46 +1,77 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json
 
 # ==============================================================================
-# RESUME CONFIGURATION (Optional resume-fmt-svelte metadata & styling block)
-# You can customize these settings directly or via the on-screen Resume Studio.
+# RESUME METADATA & CONFIGURATION (Standard JSON Resume meta block)
+# Tooling and Studio settings live inside meta.studio, keeping the document
+# 100% compliant with standard JSON Resume v1.0.0 validators.
 # ==============================================================================
-_config:
-  # Base typographic & layout archetype
-  # Options: classic, modern-timeline, editorial, europass, executive-slate, 
-  #          executive-baseline, noir-city, bio-vision, elegant-split, vibe-glow,
-  #          tailwind-blueprint, the-verge, terminal, cyber-script, 8bit-demo, etc.
-  theme: modern-timeline
+meta:
+  version: "v1.0.0"
+  studio:
+    # Base typographic & layout archetype
+    # Options: classic, modern-timeline, editorial, europass, executive-slate,
+    #          executive-baseline, noir-city, bio-vision, elegant-split, vibe-glow,
+    #          tailwind-blueprint, the-verge, terminal, cyber-script, 8bit-demo, etc.
+    theme: modern-timeline
 
-  # Accent color override (HEX). Omit or set null for theme default.
-  accent: '#2563eb'
+    # Accent color override (HEX). Omit or set null for theme default.
+    accent: '#2563eb'
 
-  # Color display mode: 'system' | 'light' | 'dark'
-  mode: system
+    # Color display mode: 'system' | 'light' | 'dark'
+    mode: system
 
-  # Print paper format: 'a4' (210×297mm) | 'letter' (8.5×11in)
-  paperFormat: a4
+    # Print paper format: 'a4' (210×297mm) | 'letter' (8.5×11in)
+    paperFormat: a4
 
-  # Print margins: '1.0cm', '1.5cm', '2.0cm' (A4) or '0.5in', '0.75in', '1.0in' (Letter)
-  printMargin: '1.5cm'
+    # Print margins: '1.0cm', '1.5cm', '2.0cm' (A4) or '0.5in', '0.75in', '1.0in' (Letter)
+    printMargin: '1.5cm'
 
-  # Print scale squeeze percentage: 100, 95, 90, 85, 80, 75
-  printScale: 100
+    # Print scale squeeze percentage: 100, 95, 90, 85, 80, 75
+    printScale: 100
 
-  # Column layout ordering for themes supporting multi-column layouts
-  layout:
-    main:
-      - work
-      - projects
-      - volunteer
-      - publications
-    sidebar:
-      - skills
-      - education
-      - certificates
-      - awards
-      - languages
-      - interests
-      - references
+    # Column layout ordering for themes supporting multi-column layouts
+    layout:
+      main:
+        - work
+        - projects
+        - volunteer
+        - publications
+      sidebar:
+        - skills
+        - education
+        - certificates
+        - awards
+        - languages
+        - interests
+        - references
+
+  executiveSummary:
+    headline: "Senior Staff Systems Architect with 12+ years scaling cloud platforms and distributed systems."
+    experienceYears: 12
+    availability: "Available for Senior / Staff Architecture roles"
+    targetRoles:
+      - "Senior Staff Systems Architect"
+      - "Principal Software Engineer"
+      - "Head of Platform Engineering"
+    keyMetrics:
+      - label: "Experience"
+        value: "12+ Years"
+      - label: "Scale"
+        value: "20M+ Daily DAU"
+      - label: "Uptime"
+        value: "99.99%"
+      - label: "Team Size"
+        value: "25+ Engineers"
+    coreCompetencies:
+      - "Distributed Systems"
+      - "Cloud Infrastructure & Kubernetes"
+      - "Go & Rust"
+      - "Site Reliability & Observability"
+      - "Technical Leadership"
+    topHighlights:
+      - "Architected zero-downtime database migration handling 15k req/sec across multi-region AWS infrastructure."
+      - "Spearheaded platform modernization decreasing p99 latency by 45% and cutting AWS compute costs by $250k/year."
+      - "Grew infrastructure engineering group from 4 to 16 engineers and standardized internal developer tooling."
 
 # ==============================================================================
 # BASICS / CONTACT INFORMATION
@@ -100,7 +131,7 @@ work:
     startDate: '2018-06-01'
     endDate: '2021-02-28'
     summary: >
-      Led core transaction processing engine development and API infrastructure for 
+      Led core transaction processing engine development and API infrastructure for
       high-frequency institutional payments and settlement systems.
     highlights:
       - Designed and built a transactional ledger engine in Go and PostgreSQL supporting 12,000 transactions per second with strict ACID guarantees.
@@ -329,5 +360,5 @@ interests:
 references:
   - name: Available Upon Request
     reference: >
-      Professional and executive references from former engineering directors, 
+      Professional and executive references from former engineering directors,
       principal architects, and team mentees available upon request.
