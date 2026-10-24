@@ -172,6 +172,7 @@
   bind:colorMode
   bind:isOpen
   {gistId}
+  {resume}
   {hasCustomizations}
   onCycleMode={cycleColorMode}
   onPrint={handlePrint}

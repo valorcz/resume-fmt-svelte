@@ -8,6 +8,8 @@
   import WelcomeModal from '$lib/components/WelcomeModal.svelte';
   import PageBreakGuide from '$lib/components/studio/PageBreakGuide.svelte';
   import ZoomControls from '$lib/components/studio/ZoomControls.svelte';
+  import ExecutiveSummaryCard from '$lib/components/recruiter/ExecutiveSummaryCard.svelte';
+  import RecruiterStickyBar from '$lib/components/recruiter/RecruiterStickyBar.svelte';
   import { loadTheme, availableThemes } from '$lib/themeRegistry';
   
   let { data } = $props();
@@ -16,6 +18,15 @@
   let themesList = $derived(data.availableThemes || availableThemes);
   let isRecruiterView = $derived(data.isRecruiterView || false);
   let gistId = $derived(data.gistId || null);
+
+  // Mobile & Recruiter Mode state
+  let isMobileScreen = $state(false);
+  let compactHighlights = $state(true);
+  let showBriefing = $state(true);
+
+  let isRecruiterModeActive = $derived(
+    isRecruiterView || isMobileScreen
+  );
 
   // User-selected active theme state
   let selectedTheme = $state(null);
@@ -47,6 +58,11 @@
       isSystemDark = mediaQuery.matches;
       const themeHandler = (e) => { isSystemDark = e.matches; };
       mediaQuery.addEventListener('change', themeHandler);
+
+      const mobileQuery = window.matchMedia('(max-width: 768px)');
+      isMobileScreen = mobileQuery.matches;
+      const mobileHandler = (e) => { isMobileScreen = e.matches; };
+      mobileQuery.addEventListener('change', mobileHandler);
 
       if (!isRecruiterView) {
         const hasSeen = localStorage.getItem('resume-has-seen-welcome');
@@ -184,10 +200,10 @@
 
   // The Component Mapping Dictionary
   let sectionRenderer = $derived({
-    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name' } },
+    work: { component: TimelineSection, props: { items: resume?.work, titleKey: 'position', subtitleKey: 'name', compact: isRecruiterModeActive, expandAllHighlights: !compactHighlights } },
     education: { component: TimelineSection, props: { items: resume?.education, titleKey: 'studyType', subtitleKey: 'institution', areaKey: 'area' } },
     volunteer: { component: TimelineSection, props: { items: resume?.volunteer, titleKey: 'position', subtitleKey: 'organization' } },
-    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null } },
+    projects: { component: TimelineSection, props: { items: resume?.projects, titleKey: 'name', summaryKey: 'description', subtitleKey: null, compact: isRecruiterModeActive, expandAllHighlights: !compactHighlights } },
     awards: { component: TimelineSection, props: { items: resume?.awards, titleKey: 'title', subtitleKey: 'awarder', dateKey: 'date', endDateKey: null } },
     publications: { component: TimelineSection, props: { items: resume?.publications, titleKey: 'name', subtitleKey: 'publisher', dateKey: 'releaseDate', endDateKey: null } },
     certificates: { component: TimelineSection, props: { items: resume?.certificates, titleKey: 'name', subtitleKey: 'issuer', dateKey: 'date', endDateKey: null } },
@@ -202,9 +218,20 @@
      if (!path) return "root";
      return path.replace(/\//g, '.').replace(/\.(\d+)/g, '[$1]').replace(/^\./, '');
   }
+
+  // Reactive page title
+  let pageTitle = $derived(
+    data.error
+      ? 'Error | Resume Studio'
+      : resume?.basics?.name
+        ? `${resume.basics.name} — Resume Studio`
+        : 'Resume Studio'
+  );
 </script>
 
 <svelte:head>
+  <title>{pageTitle}</title>
+
   {#if activeThemeCss}
     {@html `<style id="theme-style">${activeThemeCss}</style>`}
   {/if}
@@ -326,14 +353,24 @@
     }}
   />
 
+  {#if isRecruiterModeActive}
+    <RecruiterStickyBar 
+      {resume} 
+      {colorMode}
+      isDark={isDarkActive} 
+      bind:compactHighlights 
+      bind:showBriefing
+    />
+  {/if}
+
   <div 
-    class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterView ? 'recruiter-view' : ''}"
+    class="app-container theme-{activeTheme} mode-{colorMode} {isRecruiterModeActive ? 'recruiter-view' : ''}"
     class:is-dark={isDarkActive}
     class:mode-dark={isDarkActive}
-    class:drawer-open={isDrawerOpen && !isRecruiterView}
+    class:drawer-open={isDrawerOpen && !isRecruiterModeActive}
     style="--screen-zoom: {screenZoom};"
   >
-  {#if !isRecruiterView}
+  {#if !isRecruiterModeActive}
     <ConfigDrawer 
       themes={themesList} 
       bind:activeTheme={selectedTheme} 
@@ -361,12 +398,21 @@
 
   <div class="cv-wrapper">
     <!-- Non-printing Page Boundary & Straddle Guides -->
-    {#if !isRecruiterView}
+    {#if !isRecruiterModeActive}
       <PageBreakGuide 
         {paperFormat} 
         {printMargin} 
         {printScale}
         showGuides={showPageGuides} 
+      />
+    {/if}
+
+    <!-- Distinct Executive Briefing Card (Dismissible and toggleable from top bar) -->
+    {#if isRecruiterModeActive && showBriefing}
+      <ExecutiveSummaryCard 
+        {resume} 
+        isDark={isDarkActive} 
+        onClose={() => showBriefing = false}
       />
     {/if}
     

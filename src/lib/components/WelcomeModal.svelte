@@ -165,7 +165,12 @@
     <!-- Modal Footer -->
     <div class="modal-footer">
       <label class="remember-checkbox">
-        <input type="checkbox" bind:checked={dontShowAgain} />
+        <input 
+          id="welcome-dont-show-again" 
+          name="dont_show_again" 
+          type="checkbox" 
+          bind:checked={dontShowAgain} 
+        />
         <span>Don't show this guide on startup</span>
       </label>
 

@@ -52,10 +52,13 @@
 
     <div class="gist-input-row">
       <input 
+        id="gist-input-field"
+        name="gist_input"
         type="text" 
         class="gist-input-field" 
         placeholder="Paste Gist ID or full GitHub Gist URL..." 
         bind:value={gistInput}
+        autocomplete="off"
         onkeydown={(e) => e.key === 'Enter' && handleLoadGist()}
       />
       <button class="btn btn-primary" onclick={handleLoadGist}>

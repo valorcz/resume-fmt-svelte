@@ -104,7 +104,7 @@
     <label class="margin-label" for="print-margin-select">
       Print Margins ({paperFormat === 'letter' ? 'inches' : 'centimeters'}):
     </label>
-    <select id="print-margin-select" class="margin-select" bind:value={printMargin}>
+    <select id="print-margin-select" name="print_margin" class="margin-select" bind:value={printMargin}>
       {#each currentMargins as mg}
         <option value={mg.id}>{mg.name}</option>
       {/each}
@@ -115,7 +115,7 @@
     <label class="margin-label" for="print-scale-select">
       Print Scale (Squeeze):
     </label>
-    <select id="print-scale-select" class="margin-select" bind:value={printScale}>
+    <select id="print-scale-select" name="print_scale" class="margin-select" bind:value={printScale}>
       {#each printScales as sc}
         <option value={sc.val}>{sc.label}</option>
       {/each}
@@ -132,6 +132,7 @@
     </label>
     <input 
       id="show-guides-checkbox"
+      name="show_page_guides"
       type="checkbox" 
       class="toggle-checkbox" 
       bind:checked={showPageGuides} 

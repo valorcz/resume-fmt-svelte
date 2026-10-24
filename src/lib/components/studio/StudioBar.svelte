@@ -1,5 +1,7 @@
 <script>
   import { formatName } from './studioUtils.js';
+  import RecruiterPreviewPopover from './RecruiterPreviewPopover.svelte';
+  import { evaluateRecruiterSummary } from '$lib/audit/recruiterAudit.js';
 
   let {
     themes = [],
@@ -7,6 +9,7 @@
     colorMode = $bindable('system'),
     isOpen = $bindable(false),
     gistId = null,
+    resume = null,
     hasCustomizations = false,
     onCycleMode = () => {},
     onPrint = () => {},
@@ -14,9 +17,19 @@
     onOpenGistTab = () => {}
   } = $props();
 
+  let isRecruiterPopoverOpen = $state(false);
+  let recruiterEval = $derived(evaluateRecruiterSummary(resume));
+
   let isDarkMode = $derived(
     colorMode === 'dark' || (colorMode === 'system' && typeof window !== 'undefined' && window.matchMedia?.('(prefers-color-scheme: dark)').matches)
   );
+
+  // Close inspector popover if the full customizer drawer opens
+  $effect(() => {
+    if (isOpen) {
+      isRecruiterPopoverOpen = false;
+    }
+  });
 </script>
 
 <div class="floating-controls-wrapper mode-{colorMode}" class:is-dark={isDarkMode} class:mode-dark={isDarkMode}>
@@ -51,6 +64,8 @@
     <div class="bar-group">
       <span class="bar-label">STYLE</span>
       <select 
+        id="studio-quick-theme-select"
+        name="studio_quick_theme"
         class="bar-select" 
         bind:value={activeTheme} 
         title="Select Theme"
@@ -100,6 +115,23 @@
 
     <div class="bar-divider"></div>
 
+    <!-- Recruiter Briefing Health & Preview Popover Trigger -->
+    <button 
+      class="bar-btn briefing-pill" 
+      class:active={isRecruiterPopoverOpen}
+      onclick={() => isRecruiterPopoverOpen = !isRecruiterPopoverOpen}
+      title="Recruiter Briefing: {recruiterEval.statusLabel} ({recruiterEval.score}%). Click to inspect & preview."
+      aria-label="Inspect Recruiter Briefing"
+    >
+      <span class="briefing-dot" style="background-color: {recruiterEval.gradeColor}"></span>
+      <span>Briefing</span>
+      {#if recruiterEval.score !== undefined}
+        <span class="briefing-score-badge" style="color: {recruiterEval.gradeColor}">{recruiterEval.score}%</span>
+      {/if}
+    </button>
+
+    <div class="bar-divider"></div>
+
     <!-- Customize Drawer Trigger Button -->
     <button 
       class="bar-btn" 
@@ -128,9 +160,36 @@
       <span>Print</span>
     </button>
   </div>
+
+  <!-- Embedded Inspector Popover -->
+  <RecruiterPreviewPopover 
+    {resume}
+    isDark={isDarkMode}
+    isOpen={isRecruiterPopoverOpen}
+    onClose={() => isRecruiterPopoverOpen = false}
+  />
 </div>
 
 <style>
+  .briefing-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .briefing-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .briefing-score-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, monospace;
+    opacity: 0.9;
+  }
   .floating-controls-wrapper {
     position: fixed;
     top: 1.25rem;

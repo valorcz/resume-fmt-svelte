@@ -34,6 +34,8 @@
     <span class="switcher-label">STYLE</span>
     
     <select 
+      id="theme-switcher-select"
+      name="theme"
       class="switcher-select" 
       value={activeTheme || currentTheme} 
       onchange={(e) => activeTheme = e.currentTarget.value} 

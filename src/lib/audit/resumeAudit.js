@@ -1,3 +1,5 @@
+import { evaluateRecruiterSummary } from './recruiterAudit.js';
+
 /**
  * Common action verbs recommended for high-impact resume bullet points
  */
@@ -255,6 +257,22 @@ export function auditResume(resume, effectiveLayout = { main: [], sidebar: [] })
     message: isSingleColumn
       ? 'Single-column linear layout active. Optimal for automated ATS resume parsers.'
       : `Two-column layout active (${sidebarCount} section(s) in sidebar). HTML DOM renders main sections before sidebar for sequential PDF print stream; older legacy corporate portals (Taleo) prefer single-column.`
+  });
+
+  // =========================================================================
+  // CATEGORY 6: RECRUITER DOSSIER & QUICK-SCAN READINESS
+  // =========================================================================
+  const recruiterEval = evaluateRecruiterSummary(resume);
+  checks.push({
+    id: 'recruiter_dossier',
+    category: 'Recruiter',
+    title: 'Recruiter Briefing Specification',
+    passed: recruiterEval.isExplicit && recruiterEval.score >= 70,
+    isInfo: !recruiterEval.isExplicit,
+    points: 10,
+    message: recruiterEval.isExplicit
+      ? `Dedicated executiveSummary defined (${recruiterEval.score}% quality score · ${recruiterEval.statusLabel}).`
+      : 'No "executiveSummary" block defined in YAML/JSON. Recruiter view (?view=recruiter) operates in automated heuristic fallback mode.'
   });
 
   // =========================================================================
