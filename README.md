@@ -3,7 +3,7 @@
 A privacy-first, zero-backend resume studio and print engine built on the open [JSON Resume standard](https://jsonresume.org/schema/). Author in clean YAML, switch between 18 responsive themes, customize typography and layouts, and generate pixel-perfect, ATS-verified PDFs.
 
 <p align="center">
-  <img src="static/assets/preview.jpg" alt="Resume Studio & Theme Customizer Preview" width="100%" />
+  <img src="docs/assets/preview.png" alt="Resume Studio & Theme Customizer Preview" width="100%" />
 </p>
 
 ---

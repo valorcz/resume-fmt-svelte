@@ -11,7 +11,8 @@
 		"lint:themes": "node scripts/lint-themes.js",
 		"check:support": "node scripts/check-support.js",
 		"check:svelte": "svelte-check --tsconfig ./jsconfig.json",
-		"test:print": "node scripts/test-print.js"
+		"test:print": "node scripts/test-print.js",
+		"preview:generate": "node scripts/generate-preview.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.1",
