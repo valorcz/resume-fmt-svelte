@@ -42,6 +42,12 @@ export async function load({ fetch, url }) {
   const urlLayout = urlLayoutRaw ? decodeLayout(urlLayoutRaw) : null;
   const urlView = url.searchParams.get('view') || url.searchParams.get('mode_view');
   const isRecruiterView = urlView === 'recruiter' || urlView === 'clean' || url.searchParams.has('clean');
+  const urlSrc = url.searchParams.get('src') || url.searchParams.get('resume');
+  const urlFormat = url.searchParams.get('format') || url.searchParams.get('paper');
+  const validFormat = ['a4', 'letter'].includes(urlFormat?.toLowerCase()) ? urlFormat.toLowerCase() : null;
+  const urlMargin = url.searchParams.get('margin');
+  const urlScale = url.searchParams.get('scale') ? parseInt(url.searchParams.get('scale'), 10) : null;
+  const urlAnnex = url.searchParams.has('annex') ? (url.searchParams.get('annex') !== 'false' && url.searchParams.get('annex') !== '0') : null;
 
   let resume = null;
   let userConfig = null;
@@ -63,6 +69,13 @@ export async function load({ fetch, url }) {
         const rawConfig = gistData.files[configFile].content;
         userConfig = configFile.endsWith('.json') ? JSON.parse(rawConfig) : yaml.load(rawConfig);
       }
+    } else if (urlSrc) {
+      // Dynamic fixture or custom resume path
+      const cleanSrc = urlSrc.startsWith('/') ? urlSrc.slice(1) : urlSrc;
+      const res = await fetch(`${base}/${cleanSrc}`);
+      if (!res.ok) throw new Error(`Custom resume source not found: ${cleanSrc}`);
+      const rawText = await res.text();
+      resume = cleanSrc.endsWith('.json') ? JSON.parse(rawText) : yaml.load(rawText);
     } else {
       // Local fallback
       const res = await fetch(`${base}/resume.yaml`);
@@ -129,7 +142,11 @@ export async function load({ fetch, url }) {
         theme: validTheme,
         accent: resolvedAccent,
         mode: resolvedMode,
-        layout: resolvedLayout
+        layout: resolvedLayout,
+        format: validFormat,
+        margin: urlMargin,
+        scale: urlScale,
+        annex: urlAnnex
       },
       availableThemes,
       error: false

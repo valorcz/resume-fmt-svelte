@@ -133,10 +133,24 @@
   .theme-classic .cv-layout { display: block !important; }
   .theme-classic .cv-main, .theme-classic .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
   
-  /* Keep the section grid for print */
-  .theme-classic .cv-section { display: grid !important; grid-template-columns: 160px 1fr !important; align-items: start !important; }
-  .theme-classic .section-title { display: block !important; font-size: 11pt !important; align-self: start !important; }
-  .theme-classic .section-content { display: block !important; }
+  /* Section Layout for Print:
+     We use fragmentable block flow with a floated left rail instead of CSS Grid.
+     In Blink/Chromium print engines, CSS Grid containers are monolithic and cannot fragment
+     across pages without creating massive blank gaps or pushing the entire section to Page 2.
+     Floated rail maintains the visual 2-column aesthetic while allowing individual item cards
+     to break naturally across page boundaries. */
+  .theme-classic .cv-section { display: block !important; margin-bottom: 1.1rem !important; }
+  .theme-classic .cv-section::after { content: ""; display: table; clear: both; }
+  .theme-classic .section-title { 
+    float: left !important; 
+    width: 140px !important; 
+    font-size: 11pt !important; 
+    margin: 0 !important; 
+    break-after: avoid-page !important; 
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+  }
+  .theme-classic .section-content { margin-left: 155px !important; display: block !important; }
   
   .theme-classic .item-title { font-size: 10pt !important; }
   .theme-classic .item-subtitle { font-size: 9pt !important; }

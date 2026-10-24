@@ -42,8 +42,19 @@
   let paperFormat = $state('a4');
   let printMargin = $state('1.5cm');
   let printScale = $state(100);
+  let annexBreak = $state(false);
   let screenZoom = $state(1.0);
   let showPageGuides = $state(false);
+
+  // Sync initial URL print params reactively
+  $effect(() => {
+    if (data.urlParams?.format) paperFormat = data.urlParams.format;
+    if (data.urlParams?.margin) printMargin = data.urlParams.margin;
+    if (data.urlParams?.scale) printScale = data.urlParams.scale;
+    if (data.urlParams?.annex !== null && data.urlParams?.annex !== undefined) {
+      annexBreak = data.urlParams.annex;
+    }
+  });
 
   // Welcome modal, YAML source modal, and Drawer controls
   let showWelcomeModal = $state(false);
@@ -147,7 +158,13 @@
 
       window.addEventListener('keydown', handleGlobalKeydown);
 
-      if (!isRecruiterView) {
+      const isCustomOrTestUrl = Boolean(
+        data.urlParams?.format || 
+        data.urlParams?.scale || 
+        (typeof window !== 'undefined' && window.location.search.includes('src='))
+      );
+
+      if (!isRecruiterView && !isCustomOrTestUrl) {
         const hasSeen = localStorage.getItem('resume-has-seen-welcome');
         if (!hasSeen) {
           showWelcomeModal = true;
@@ -452,6 +469,7 @@
       bind:paperFormat={paperFormat}
       bind:printMargin={printMargin}
       bind:printScale={printScale}
+      bind:annexBreak={annexBreak}
       bind:showPageGuides={showPageGuides}
       {gistId}
       {resume}
@@ -459,7 +477,7 @@
       bind:isOpen={isDrawerOpen}
       bind:activeTab={drawerActiveTab}
       onResetLayout={() => customLayout = null}
-      onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; paperFormat = 'a4'; printMargin = '1.5cm'; printScale = 100; }}
+      onResetAll={() => { customAccent = null; customLayout = null; colorMode = 'system'; paperFormat = 'a4'; printMargin = '1.5cm'; printScale = 100; annexBreak = false; }}
       onOpenGuide={openHandbook}
       onExportHtml={handleExportStandaloneHtml}
     />
@@ -468,14 +486,15 @@
     <ZoomControls bind:zoom={screenZoom} />
   {/if}
 
-  <div class="cv-wrapper">
+  <div class="cv-wrapper paper-{paperFormat}">
     <!-- Non-printing Page Boundary & Straddle Guides -->
     {#if !isRecruiterModeActive}
       <PageBreakGuide
         {paperFormat}
         {printMargin}
-        {printScale}
+        bind:printScale={printScale}
         showGuides={showPageGuides}
+        workCount={resume?.work?.length || 0}
       />
     {/if}
 
@@ -535,14 +554,18 @@
     <div class="cv-layout">
 
       <main class="cv-main">
-        {#each activeLayout.main as sectionKey (sectionKey)}
+        {#each activeLayout.main as sectionKey, sIdx (sectionKey)}
           {#if sectionRenderer[sectionKey] && sectionRenderer[sectionKey].props.items?.length > 0}
             {@const Renderer = sectionRenderer[sectionKey].component}
-            <Renderer
-              {...sectionRenderer[sectionKey].props}
-              sectionTitle={activeI18n[sectionKey] || sectionKey}
-              sectionId={sectionKey}
-            />
+            {@const isAnnexSection = ['projects', 'publications', 'volunteer', 'awards'].includes(sectionKey)}
+            {@const isFirstAnnex = annexBreak && isAnnexSection && !activeLayout.main.slice(0, sIdx).some(k => ['projects', 'publications', 'volunteer', 'awards'].includes(k))}
+            <div class={isFirstAnnex ? 'cv-annex-break print-break-before-page' : ''}>
+              <Renderer
+                {...sectionRenderer[sectionKey].props}
+                sectionTitle={activeI18n[sectionKey] || sectionKey}
+                sectionId={sectionKey}
+              />
+            </div>
           {/if}
         {/each}
       </main>

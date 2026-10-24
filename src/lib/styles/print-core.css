@@ -19,7 +19,15 @@
   }
 
   .app-container { padding: 0; background: none !important; }
-  .no-print { display: none !important; }
+  .no-print,
+  .modal-backdrop,
+  .popover-backdrop,
+  .modal-dialog,
+  .studio-bar,
+  .config-drawer,
+  .studio-drawer,
+  .zoom-controls-container,
+  .page-break-container { display: none !important; }
 
   /* Reset Wrapper for Paper */
   .cv-wrapper {
@@ -56,13 +64,14 @@
     break-inside: auto !important;
   }
 
-  /* Section Break Mechanics */
+  /* Section Break Mechanics: Allow multi-page section continuation without monolithic locking */
   .cv-section {
     break-inside: auto;
     page-break-inside: auto;
     margin-bottom: 1.2rem;
   }
 
+  /* Anti-Widow Section Headings: A heading must never sit alone at the bottom of a page */
   .section-title {
     break-after: avoid-page !important;
     page-break-after: avoid !important;
@@ -70,13 +79,14 @@
     page-break-inside: avoid !important;
   }
 
-  /* Anti-Orphan & Clean Item Pagination (Prevents huge blank gaps) */
+  /* Anti-Orphan & Clean Item Pagination (Allows multi-item sections to flow across pages) */
   .item-card, .side-item {
     break-inside: auto;
     page-break-inside: auto;
     margin-bottom: 1rem !important; 
   }
 
+  /* Anti-Widow Item Headings: Role title, company, and dates stay intact */
   .item-header {
     break-inside: avoid !important;
     page-break-inside: avoid !important;
@@ -84,22 +94,69 @@
     page-break-after: avoid !important;
   }
 
-  .item-summary,
-  .item-highlights {
-    orphans: 3;
-    widows: 3;
+  /* Bind item header to its immediate content: prevents heading separation from description */
+  .item-header + .item-summary,
+  .item-header + .item-highlights {
+    break-before: avoid-page !important;
+    page-break-before: avoid !important;
   }
 
+  /* Typographic Orphan & Widow Control: Minimum 3 lines before/after page boundary */
+  .cv-summary,
+  .item-summary,
+  .item-highlights {
+    orphans: 3 !important;
+    widows: 3 !important;
+  }
+
+  /* Anti-Severing: Prevent individual bullet points from splitting in half */
   .item-highlights li {
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
     margin-bottom: 0.2rem;
   }
 
   .skill-group {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Compact Print Density for High-Signal Sidebar Sections (Languages & Certificates) */
+  .cv-section-languages .item-card,
+  .cv-section-certificates .item-card,
+  .cv-section-awards .item-card,
+  .cv-sidebar .side-item {
+    margin-bottom: 0.55rem !important;
     break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 0.8rem;
+  }
+
+  .cv-section-languages .item-header,
+  .cv-section-certificates .item-header {
+    margin-bottom: 0.2rem !important;
+  }
+
+  /* Explicit Annex Page Break (starts supplemental sections cleanly on Page 3) */
+  .print-break-before-page,
+  .cv-annex-break,
+  .cv-section.annex-start {
+    break-before: page !important;
+    page-break-before: always !important;
+    padding-top: 1rem !important;
+  }
+
+  /* Letter Paper Height Equalization (compensate for 17.6mm height deficit vs A4) */
+  .paper-letter .cv-section {
+    margin-bottom: 0.95rem !important;
+  }
+
+  .paper-letter .item-card {
+    margin-bottom: 0.75rem !important;
+  }
+
+  .paper-letter .item-highlights li {
+    margin-bottom: 0.15rem !important;
   }
 
   /* Universal Print Cleanup: Strip all glowing shadows, neon effects, and animations */

@@ -237,10 +237,21 @@
   .theme-europass .cv-layout { display: block !important; }
   .theme-europass .cv-main, .theme-europass .cv-sidebar { flex: none !important; max-width: 100% !important; padding-right: 0 !important; }
   
-  /* Scale the master grids for paper */
-  .theme-europass .cv-header, .theme-europass .cv-section { display: grid !important; grid-template-columns: 140px 1fr !important; gap: 1.5rem !important; align-items: start !important; }
-  .theme-europass .section-title { display: block !important; font-size: 9.5pt !important; align-self: start !important; }
-  .theme-europass .section-content { display: block !important; border-left: 1.5pt solid var(--accent) !important;}
+  /* Scale the master grids for paper with fragmentable flow:
+     Uses left-rail floated titles and left-bordered content instead of CSS Grid.
+     Prevents Blink from forcing the whole section onto a new page when overflow occurs. */
+  .theme-europass .cv-header { display: grid !important; grid-template-columns: 140px 1fr !important; gap: 1.5rem !important; align-items: start !important; }
+  .theme-europass .cv-section { display: block !important; margin-bottom: 1.2rem !important; }
+  .theme-europass .cv-section::after { content: ""; display: table; clear: both; }
+  .theme-europass .section-title { 
+    float: left !important; 
+    width: 130px !important; 
+    font-size: 9.5pt !important; 
+    break-after: avoid-page !important; 
+    page-break-after: avoid !important;
+    break-inside: avoid !important;
+  }
+  .theme-europass .section-content { margin-left: 145px !important; display: block !important; border-left: 1.5pt solid var(--accent) !important; padding-left: 1rem !important; }
   
   /* Print-safe flattened items */
   .theme-europass .item-card, .theme-europass .side-item { display: flex !important; flex-direction: column !important; margin-bottom: 1.2rem !important; }

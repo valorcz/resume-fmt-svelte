@@ -4,6 +4,7 @@
     paperFormat = $bindable('a4'),
     printMargin = $bindable('1.5cm'),
     printScale = $bindable(100),
+    annexBreak = $bindable(false),
     showPageGuides = $bindable(false),
     onExportHtml = () => {}
   } = $props();
@@ -145,6 +146,23 @@
       type="checkbox"
       class="toggle-checkbox"
       bind:checked={showPageGuides}
+    />
+  </div>
+
+  <div class="toggle-row">
+    <label class="toggle-label" for="annex-break-checkbox">
+      <div class="toggle-title-row">
+        <span>Page 3+ Supplemental Annex Break</span>
+        <span class="annex-badge">ATS Golden Ratio</span>
+      </div>
+      <span class="toggle-subtext">Starts Projects & Supplemental sections cleanly on Page 3, keeping Pages 1–2 dedicated to Core Experience & Skills.</span>
+    </label>
+    <input
+      id="annex-break-checkbox"
+      name="annex_break"
+      type="checkbox"
+      class="toggle-checkbox"
+      bind:checked={annexBreak}
     />
   </div>
 
@@ -537,6 +555,25 @@
     background: #27272a;
     border-color: #3f3f46;
     color: #e4e4e7;
+  }
+
+  .annex-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.1rem 0.4rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 999px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #1d4ed8;
+    line-height: 1;
+  }
+  :global(.mode-dark) .annex-badge,
+  :global(.is-dark) .annex-badge {
+    background: #1e293b;
+    border-color: #3b82f6;
+    color: #93c5fd;
   }
 
   .toggle-subtext {

@@ -319,9 +319,10 @@
     display: flex !important;
     align-items: flex-start !important;
   }
-  
+
   .theme-neural-botany .cv-section {
-    page-break-inside: avoid !important;
-    break-inside: avoid !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    margin-bottom: 1rem !important;
   }
 }

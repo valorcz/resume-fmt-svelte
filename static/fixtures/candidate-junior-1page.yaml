@@ -1,0 +1,77 @@
+meta:
+  version: "v1.0.0"
+  studio:
+    theme: "classic"
+    accent: "#059669"
+    mode: "system"
+  executiveSummary:
+    headline: "Junior Full-Stack Software Engineer with strong foundation in TypeScript, React, and Node.js."
+    experienceYears: 1
+    availability: "Available for Junior / Associate Software Engineer roles"
+    targetRoles:
+      - "Junior Software Engineer"
+      - "Frontend Developer"
+      - "Full-Stack Developer"
+    keyMetrics:
+      - label: "Education"
+        value: "BS in CS"
+      - label: "GPA"
+        value: "3.9 / 4.0"
+      - label: "Shipped Projects"
+        value: "6+ Web Apps"
+    coreCompetencies:
+      - "JavaScript & TypeScript"
+      - "React & Svelte"
+      - "Node.js & Express"
+      - "REST APIs & SQL"
+
+basics:
+  name: "Marcus Vance"
+  label: "Junior Software Engineer"
+  email: "marcus.vance@example.com"
+  phone: "+1 (555) 234-5678"
+  url: "https://marcusvance.dev"
+  summary: "Enthusiastic and detail-oriented junior software engineer with a strong foundation in modern web technologies, algorithm design, and collaborative development. Eager to contribute to high-impact products and learn from senior engineers."
+  location:
+    city: "Chicago"
+    region: "Illinois"
+    countryCode: "US"
+  profiles:
+    - network: "GitHub"
+      username: "marcusvance"
+      url: "https://github.com/marcusvance"
+    - network: "LinkedIn"
+      username: "marcusvance"
+      url: "https://linkedin.com/in/marcusvance"
+
+work:
+  - name: "Apex Digital Solutions"
+    position: "Software Engineering Intern"
+    location: "Chicago, IL"
+    startDate: "2023-06-01"
+    endDate: "2023-12-01"
+    summary: "Contributed to customer dashboard features and internal developer tooling."
+    highlights:
+      - "Developed interactive data visualization widgets in React, reducing page load by 18%."
+      - "Authored unit and integration test suites with Jest and Playwright, improving test coverage by 22%."
+      - "Fixed 25+ frontend bug tickets and refactored legacy CSS into modular Tailwind components."
+
+education:
+  - institution: "University of Illinois Urbana-Champaign"
+    studyType: "Bachelor of Science"
+    area: "Computer Science"
+    startDate: "2020-09-01"
+    endDate: "2024-05-01"
+    score: "3.90 GPA (High Honors)"
+
+skills:
+  - name: "Frontend Development"
+    keywords: ["TypeScript", "JavaScript", "React", "Svelte", "HTML5", "CSS3", "Tailwind CSS"]
+  - name: "Backend & Databases"
+    keywords: ["Node.js", "Express", "PostgreSQL", "SQLite", "REST APIs", "Git"]
+
+languages:
+  - language: "English"
+    fluency: "Native"
+  - language: "French"
+    fluency: "Intermediate"

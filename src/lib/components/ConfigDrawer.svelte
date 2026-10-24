@@ -14,6 +14,7 @@
     paperFormat = $bindable('a4'),
     printMargin = $bindable('1.5cm'),
     printScale = $bindable(100),
+    annexBreak = $bindable(false),
     showPageGuides = $bindable(false),
     gistId = null,
     resume = null,
@@ -194,6 +195,7 @@
   bind:paperFormat
   bind:printMargin
   bind:printScale
+  bind:annexBreak
   bind:showPageGuides
   {gistId}
   {resume}

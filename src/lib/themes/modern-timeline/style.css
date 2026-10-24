@@ -315,7 +315,7 @@
   .theme-modern-timeline .cv-header {
     background-color: var(--accent) !important;
     color: #ffffff !important;
-    padding: 1.8rem 2rem !important;
+    padding: 1.2rem 1.5rem !important;
     border-bottom: 2pt solid var(--accent-light) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -323,7 +323,7 @@
 
   .theme-modern-timeline .cv-name {
     color: #ffffff !important;
-    font-size: 1.8rem !important;
+    font-size: 1.6rem !important;
   }
 
   .theme-modern-timeline .cv-title {
@@ -347,11 +347,11 @@
 
   .theme-modern-timeline .cv-sidebar {
     order: 1 !important;
-    flex: 0 0 240px !important;
-    max-width: 240px !important;
-    min-width: 240px !important;
+    flex: 0 0 230px !important;
+    max-width: 230px !important;
+    min-width: 230px !important;
     background-color: var(--sidebar-bg) !important;
-    padding: 1.5rem 1.2rem !important;
+    padding: 1.1rem 1rem !important;
     border-right: 1px solid var(--border) !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
@@ -362,12 +362,12 @@
     flex: 1 1 auto !important;
     min-width: 0 !important;
     background-color: var(--bg) !important;
-    padding: 1.5rem 2rem !important;
+    padding: 1.1rem 1.5rem !important;
   }
 
   .theme-modern-timeline .cv-main .item-card {
     border-left: 1.5pt solid var(--border) !important;
-    padding: 0 0 1.2rem 1.2rem !important;
+    padding: 0 0 0.95rem 1rem !important;
     break-inside: auto !important;
   }
 

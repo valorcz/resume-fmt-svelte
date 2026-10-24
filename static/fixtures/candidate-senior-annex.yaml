@@ -1,0 +1,133 @@
+meta:
+  version: "v1.0.0"
+  studio:
+    theme: "classic"
+    accent: "#4f46e5"
+    mode: "system"
+  executiveSummary:
+    headline: "Staff Infrastructure Architect with 12+ years driving planetary-scale cloud architecture."
+    experienceYears: 12
+    availability: "Available for Staff / Principal advisory roles"
+    targetRoles:
+      - "Staff Infrastructure Architect"
+      - "Principal Systems Engineer"
+    keyMetrics:
+      - label: "Experience"
+        value: "12+ Years"
+      - label: "Scale"
+        value: "50M+ DAU"
+      - label: "Uptime"
+        value: "99.999%"
+      - label: "Patents & Papers"
+        value: "4 Published"
+    coreCompetencies:
+      - "Planetary Scale Systems"
+      - "Distributed Storage"
+      - "Kubernetes Ecosystem"
+      - "High Reliability Org"
+
+basics:
+  name: "Dr. Elena Rostova"
+  label: "Staff Infrastructure Architect"
+  email: "elena.rostova@example.com"
+  phone: "+1 (555) 987-6543"
+  url: "https://elenarostova.io"
+  summary: "Principal infrastructure architect with 12+ years designing distributed storage engines, fault-tolerant consensus systems, and hybrid-cloud orchestrators. Co-author of 4 peer-reviewed systems papers and frequent keynote speaker."
+  location:
+    city: "New York"
+    region: "New York"
+    countryCode: "US"
+  profiles:
+    - network: "GitHub"
+      username: "erostova"
+      url: "https://github.com/erostova"
+    - network: "LinkedIn"
+      username: "erostova"
+      url: "https://linkedin.com/in/erostova"
+
+work:
+  - name: "Helios Cloud Infrastructure"
+    position: "Staff Systems Architect"
+    location: "New York, NY"
+    startDate: "2020-01-01"
+    summary: "Chief architect for global multi-region storage and compute infrastructure."
+    highlights:
+      - "Designed globally distributed geo-replicated object store serving 50M+ requests per second."
+      - "Led infrastructure resilience initiatives achieving 99.999% uptime across 8 global regions."
+      - "Instituted automated disaster recovery chaos testing pipeline across 140 Kubernetes clusters."
+
+  - name: "Chronos Distributed Systems"
+    position: "Lead Infrastructure Engineer"
+    location: "Boston, MA"
+    startDate: "2016-04-01"
+    endDate: "2019-12-01"
+    summary: "Led core consensus and distributed messaging engineering team."
+    highlights:
+      - "Implemented Raft-based distributed metadata service handling 250k transactions/sec."
+      - "Spearheaded datacenter consolidation migrating 4,000 physical hosts to containerized infra."
+      - "Cut annual cloud networking egress costs by $1.4M via software-defined edge routing."
+
+  - name: "Vanguard Network Platforms"
+    position: "Senior Systems Engineer"
+    location: "Boston, MA"
+    startDate: "2012-08-01"
+    endDate: "2016-03-01"
+    summary: "Built high-performance Linux kernel network drivers and traffic shapers."
+    highlights:
+      - "Engineered eBPF packet inspection filter with sub-10 microsecond overhead."
+      - "Standardized automated infrastructure-as-code deployments across all customer edge nodes."
+
+education:
+  - institution: "Massachusetts Institute of Technology (MIT)"
+    studyType: "Ph.D."
+    area: "Distributed Systems & Computer Science"
+    startDate: "2008-09-01"
+    endDate: "2012-06-01"
+
+skills:
+  - name: "Architecture & Systems"
+    keywords: ["Distributed Systems", "Consensus Algorithms", "eBPF", "Linux Internals", "Chaos Engineering"]
+  - name: "Cloud & Orchestration"
+    keywords: ["Kubernetes", "BGP / Service Mesh", "Terraform", "AWS", "GCP", "Bare Metal"]
+  - name: "Languages"
+    keywords: ["Rust", "C++", "Go", "Python", "Assembly", "SQL"]
+
+languages:
+  - language: "English"
+    fluency: "Native"
+  - language: "German"
+    fluency: "Fluent"
+
+certificates:
+  - name: "AWS Certified Advanced Networking – Specialty"
+    issuer: "Amazon Web Services"
+    date: "2022-11-10"
+
+projects:
+  - name: "OpenRaft-Lite"
+    description: "High-performance minimal Raft consensus engine written in Rust with formal TLA+ specifications."
+    highlights:
+      - "Adopted by 15+ production systems with over 4,500 GitHub stars."
+      - "Maintains zero reported data loss incidents across 3 years in production."
+
+  - name: "eBPF FlowGuard"
+    description: "Kernel-level transparent DDoS mitigation daemon using eBPF and XDP."
+    highlights:
+      - "Processes 14.8M packets/second per CPU core without user-space context switches."
+
+publications:
+  - name: "Deterministic Consensus at Microsecond Scales in Heterogeneous Networks"
+    publisher: "USENIX OSDI '21"
+    releaseDate: "2021-07-14"
+    summary: "Presented a novel consensus protocol achieving sub-millisecond tail latencies across multi-datacenter clusters."
+
+  - name: "Practical Chaos Engineering for Geo-Distributed Kubernetes Clusters"
+    publisher: "ACM SIGOPS Operating Systems Review"
+    releaseDate: "2019-10-05"
+    summary: "Comprehensive empirical analysis of automated chaos testing methodologies in enterprise infrastructure."
+
+volunteer:
+  - organization: "Cloud Native Computing Foundation (CNCF)"
+    position: "Technical Advisory Group Member"
+    startDate: "2019-01-01"
+    summary: "Contribute to technical evaluations and security reviews for sandbox and incubation projects."

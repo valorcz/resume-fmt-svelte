@@ -38,6 +38,10 @@ check-support: ## Check if Node and dependencies are active and supported (not E
 check-svelte: ## Run Svelte static analyzer and identifier checks
 	$(PNPM) run check:svelte
 
+.PHONY: test-print
+test-print: build ## Run headless Chromium print-to-pdf and ATS extraction tests across all themes
+	$(PNPM) run test:print
+
 .PHONY: check
 check: lint check-support check-svelte build ## Run all linters, Svelte static checks, EOL checks, and verify production build
 

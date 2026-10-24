@@ -1,0 +1,113 @@
+meta:
+  version: "v1.0.0"
+  studio:
+    theme: "classic"
+    accent: "#2563eb"
+    mode: "system"
+  executiveSummary:
+    headline: "Senior Cloud & Distributed Systems Engineer with 8+ years architecting high-throughput microservices."
+    experienceYears: 8
+    availability: "Available for Senior / Staff Platform Engineer roles"
+    targetRoles:
+      - "Senior Platform Engineer"
+      - "Distributed Systems Architect"
+    keyMetrics:
+      - label: "Experience"
+        value: "8+ Years"
+      - label: "Platform Scale"
+        value: "10M+ DAU"
+      - label: "Availability"
+        value: "99.99%"
+      - label: "Cost Savings"
+        value: "$180k/yr"
+    coreCompetencies:
+      - "Distributed Systems"
+      - "Kubernetes & Docker"
+      - "Go & Rust"
+      - "AWS & Cloud Architecture"
+    topHighlights:
+      - "Architected event-driven ingestion pipeline processing 45k msgs/sec with sub-40ms p99 latency."
+      - "Reduced cloud infrastructure expenditures by 28% via automated pod rightsizing and spot instances."
+
+basics:
+  name: "Alex Rivera"
+  label: "Senior Cloud & Platform Engineer"
+  email: "alex.rivera@example.com"
+  phone: "+1 (555) 432-8765"
+  url: "https://alexrivera.dev"
+  summary: "Results-driven platform engineer with 8+ years designing fault-tolerant cloud services, high-throughput streaming pipelines, and Kubernetes infrastructure. Strong advocate for observability, developer velocity, and resilient systems."
+  location:
+    city: "Seattle"
+    region: "Washington"
+    countryCode: "US"
+  profiles:
+    - network: "GitHub"
+      username: "alexrivera"
+      url: "https://github.com/alexrivera"
+    - network: "LinkedIn"
+      username: "alexrivera"
+      url: "https://linkedin.com/in/alexrivera"
+
+work:
+  - name: "CloudScale Systems"
+    position: "Senior Platform Engineer"
+    location: "Seattle, WA"
+    startDate: "2021-03-01"
+    summary: "Led platform architecture for multi-tenant Kubernetes clusters serving 10M+ active users."
+    highlights:
+      - "Architected multi-region service mesh reducing cross-region egress latency by 35%."
+      - "Automated continuous delivery pipelines with ArgoCD and Helm, reducing deploy times from 40 to 6 minutes."
+      - "Engineered distributed tracing with OpenTelemetry, cutting mean time to resolution (MTTR) by 45%."
+      - "Mentored 6 engineers on Go concurrency and cloud-native reliability patterns."
+
+  - name: "DataStream Analytics"
+    position: "Distributed Systems Engineer"
+    location: "San Francisco, CA"
+    startDate: "2018-06-01"
+    endDate: "2021-02-01"
+    summary: "Designed and scaled high-throughput event processing systems and Kafka clusters."
+    highlights:
+      - "Engineered real-time Kafka streaming platform handling 2 billion events daily."
+      - "Implemented zero-downtime database migration for 15TB PostgreSQL cluster to Amazon Aurora."
+      - "Wrote custom Prometheus exporters and Alertmanager rules for proactive incident prevention."
+
+  - name: "Nexus Web Technologies"
+    position: "Backend Software Engineer"
+    location: "Austin, TX"
+    startDate: "2016-01-01"
+    endDate: "2018-05-01"
+    summary: "Built scalable RESTful microservices and backend data pipelines in Go and Python."
+    highlights:
+      - "Developed authentication and RBAC microservice handling 12,000 requests per second."
+      - "Optimized Redis caching layer, reducing p99 API response times from 180ms to 24ms."
+      - "Collaborated with frontend engineers to deliver performant GraphQL and REST endpoints."
+
+education:
+  - institution: "University of Washington"
+    studyType: "Bachelor of Science"
+    area: "Computer Science & Systems"
+    startDate: "2012-09-01"
+    endDate: "2015-12-01"
+    score: "3.85 GPA"
+
+skills:
+  - name: "Cloud & Infrastructure"
+    keywords: ["AWS", "Kubernetes", "Docker", "Terraform", "ArgoCD", "Linux"]
+  - name: "Programming Languages"
+    keywords: ["Go", "Rust", "Python", "TypeScript", "Bash", "SQL"]
+  - name: "Distributed Systems"
+    keywords: ["Kafka", "gRPC", "PostgreSQL", "Redis", "OpenTelemetry", "Prometheus"]
+
+languages:
+  - language: "English"
+    fluency: "Native / Bilingual"
+  - language: "Spanish"
+    fluency: "Professional Working"
+
+certificates:
+  - name: "AWS Certified Solutions Architect – Professional"
+    issuer: "Amazon Web Services"
+    date: "2023-04-15"
+  - name: "Certified Kubernetes Administrator (CKA)"
+    issuer: "Cloud Native Computing Foundation"
+    date: "2022-08-20"
